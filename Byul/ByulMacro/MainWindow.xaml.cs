@@ -20,15 +20,15 @@ namespace ByulMacro
     /// </summary>
     public partial class MainWindow : Window
     {
+        GUI.Overlay overlay = new GUI.Overlay();
         public MainWindow()
         {
             InitializeComponent(); 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            GUI.Overlay.Run();
+        { 
+            overlay.Run();
         }
     }
 }
