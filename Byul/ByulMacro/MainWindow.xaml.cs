@@ -88,14 +88,18 @@ namespace ByulMacro
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var windowScreen = Pixel.Utility.CaptureScreenToCvInputArray();
-            var template = Pixel.Utility.LoadFileToInputArray("template.png");
+            var template = Pixel.Utility.LoadFileToInputArray("test/template.png");
 
-            Mat windowScreenGray = new OpenCvSharp.Mat(windowScreen.Size(), OpenCvSharp.MatType.CV_8U);
+            Mat windowScreenGray = new OpenCvSharp.Mat(windowScreen.Size(), OpenCvSharp.MatType.CV_8U); 
             OpenCvSharp.Cv2.CvtColor(windowScreen, windowScreenGray, ColorConversionCodes.BGR2GRAY);
-
+            windowScreenGray.SaveImage("test/windowScreenGray.png");
+       
+            
             Mat templateGray = new OpenCvSharp.Mat(template.Size(), OpenCvSharp.MatType.CV_8U);
-            OpenCvSharp.Cv2.CvtColor(windowScreen, windowScreenGray, ColorConversionCodes.BGR2GRAY);
-
+            OpenCvSharp.Cv2.CvtColor(template, templateGray, ColorConversionCodes.BGR2GRAY);
+            templateGray.SaveImage("test/templateGray.png");
+        
+            
             using var result = new Mat();
 
             Cv2.MatchTemplate(windowScreenGray, templateGray, result, TemplateMatchModes.CCoeffNormed, null);
@@ -106,7 +110,7 @@ namespace ByulMacro
             var bs = Imaging.CreateBitmapSourceFromHBitmap(h, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             test.Source = bs;
 
-            result.SaveImage("a.png");
+            result.SaveImage("test/a.png");
         }
     }
 }
