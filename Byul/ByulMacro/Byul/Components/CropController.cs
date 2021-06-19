@@ -28,7 +28,11 @@ namespace ByulMacro.Byul.Components
 
         public Mat result = null;
         public Point dbgCenter;
-        public CreateImage latestCroppedImg = null; 
+        public CreateImage latestCroppedImg = null;
+
+
+
+        private int ___ = 0;
         public CropController()
         {
             Console.WriteLine("Initialize Crop Controller");
@@ -41,6 +45,16 @@ namespace ByulMacro.Byul.Components
                     if (latestCroppedImg != null)
                     { 
                         Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, latestCroppedImg.Bitmap); 
+
+                        if(oResult == null)
+                        {
+                            ___++;
+                            if(___ == 3)
+                            { 
+                                result = null;
+                            }
+                            continue;
+                        }
                         dbgCenter = oCenter;
                         result = oResult; 
                     }

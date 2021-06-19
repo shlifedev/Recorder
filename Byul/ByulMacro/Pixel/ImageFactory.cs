@@ -29,14 +29,8 @@ namespace Pixel
         {
             if (tag == null) return;
 
-            if(imageContainer.ContainsKey(tag) == false)
-            {
-                imageContainer.Add(tag, img);
-            }
-            else
-            {
-                
-            }
+            if(imageContainer.ContainsKey(tag) == false) 
+                imageContainer.Add(tag, img); 
         }
         public static CreateImage CreateScreenCropImage(OpenCvSharp.Point start, OpenCvSharp.Point end, string tag)
         {
