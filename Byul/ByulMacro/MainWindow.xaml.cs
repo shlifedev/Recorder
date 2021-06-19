@@ -90,11 +90,7 @@ namespace ByulMacro
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ((Bitmap)Bitmap.FromFile("test/src.png")).Match(out var result, out var center, out var maxLoc, (Bitmap)Bitmap.FromFile("test/temp.png"));
-            Cv2.ImShow("result", result);
-
-
-
-
+            Cv2.ImShow("result", result);  
         }
     }
 }
