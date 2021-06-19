@@ -15,10 +15,28 @@ namespace Pixel
   
     public static class ImageFactory
     {
+        public static Dictionary<string, CreateImage> imageContainer = new Dictionary<string, CreateImage>();
 
 
-        public static CreateImage GetCIWithTag(string tag) {
-            return null;
+        public static CreateImage GetImageWithTag(string tag) {
+            var result = imageContainer.TryGetValue(tag, out CreateImage value);
+            if (result == false)
+                return null;
+            else
+                return value; 
+        }   
+        private static void RegImage(CreateImage img, string tag)
+        {
+            if (tag == null) return;
+
+            if(imageContainer.ContainsKey(tag) == false)
+            {
+                imageContainer.Add(tag, img);
+            }
+            else
+            {
+                
+            }
         }
         public static CreateImage CreateScreenCropImage(OpenCvSharp.Point start, OpenCvSharp.Point end, string tag)
         {
@@ -27,7 +45,20 @@ namespace Pixel
             var sliceMat = screen.SubMat(new Rect(start.X, start.Y, end.X, end.Y));
             ci.Bitmap = sliceMat.ToBitmap();
             ci.tag = tag;
+            if (tag == null)
+            {
+                System.Random r = new Random();
+                string rsTemp = null;
+                for(int i = 0; i < 8; i++)
+                {
+                    var val =  r.Next(int.MinValue, int.MaxValue);
+                    rsTemp += val.ToString();
+                }
+                ci.tag = rsTemp;
+            }
+
             ci.filename = null;
+            RegImage(ci, tag);
             return ci;
         }
 
@@ -40,7 +71,8 @@ namespace Pixel
             {
                 ci.tag = filename;
             }
-            ci.filename = filename;
+            ci.filename = filename; 
+            RegImage(ci, tag);
             return ci;
         }
     }

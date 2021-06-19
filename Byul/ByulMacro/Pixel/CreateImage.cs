@@ -12,23 +12,19 @@ namespace Pixel
         /// <summary>
         /// 구분태그
         /// </summary>
-        public string tag = ""; 
+        public string tag = "";
         /// <summary>
         /// 경로
         /// </summary>
         public string filename = "";
-
-        private Mat mat;  
-
+        private Mat mat;
         private Bitmap bitmap;
         private ImageSource imageSource;
-         
         public Type CreatedType;
-
         public CreateImage(Type createdType)
         {
             CreatedType = createdType;
-        } 
+        }
         public Mat Mat
         {
             get

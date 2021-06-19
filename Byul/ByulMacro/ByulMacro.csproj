@@ -23,4 +23,8 @@
     <Folder Include="WPFGUI\ImageCrop\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>

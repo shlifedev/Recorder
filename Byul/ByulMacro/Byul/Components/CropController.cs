@@ -28,9 +28,25 @@ namespace ByulMacro.Byul.Components
 
         public Mat result = null;
         public Point dbgCenter;
+        public CreateImage latestCroppedImg = null;
         public CropController()
         {
             Console.WriteLine("Initialize Crop Controller");
+
+
+            _ = Task.Run(() =>
+            { 
+                while (true)
+                { 
+                    if (latestCroppedImg != null)
+                    {
+                        Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, latestCroppedImg.Bitmap);
+                        dbgCenter = oCenter;
+                        result = oResult; 
+                    }
+                }
+            });
+
             Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) =>
             {
                 startX = x;
@@ -43,12 +59,14 @@ namespace ByulMacro.Byul.Components
                 lastY = y;
                 distX = (lastX - startX);
                 distY = (lastY - startY);
-                
+
                 //이미지 크랍
-                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(startX, startY), new OpenCvSharp.Point(distX, distY), "test");
-                
+                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(startX, startY), new OpenCvSharp.Point(distX, distY), null);
+                latestCroppedImg = croppedScreeen;
                 //현재 스크린에 크랍 이미지 체크
-                Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap); 
+                Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
+              
+                
                 dbgCenter = oCenter;
                 result = oResult;
                 cropSwitch = false;
@@ -70,9 +88,12 @@ namespace ByulMacro.Byul.Components
             {
                 gfx.ClearScene();
 
-                gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
-                gfx.DrawRectangle(gf.GetBrush("red"), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
+                if (result != null)
+                {
+                    gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
+                    gfx.DrawRectangle(gf.GetBrush("red"), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
 
+                }
                 if (cropSwitch)
                 {
                     gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), startX, startY, lastX, lastY, 3);
@@ -80,6 +101,9 @@ namespace ByulMacro.Byul.Components
                 }
             });
             cropRenderer.Run();
+
+
+   
         }
     }
 }

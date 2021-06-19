@@ -73,21 +73,13 @@ namespace ByulMacro
         {
             AllocConsole(); // 콘솔 할당
             InitializeComponent(); //component 초기화
-            InitializeExOverlayGUI(); // gui 초기화  
-            InitializeHookEvent();
+            InitializeExOverlayGUI(); // gui 초기화   
             // InitializeCoroutine(); 
 
             Hook.HookInit(); // 입력 이벤트 추가
 
             cropController = new CropController();
-        }
-
-        //이미지 크랍
-        private int startX, startY, lastX, lastY, distX, distY; 
-        private void InitializeHookEvent()
-        { 
-            
-        }
+        } 
         private static IEnumerator<Wait> WaitSeconds()
         {
             yield return new Wait(1);
