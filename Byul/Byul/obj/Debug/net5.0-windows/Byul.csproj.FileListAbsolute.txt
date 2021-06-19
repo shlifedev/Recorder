@@ -1,0 +1,17 @@
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\bin\Debug\net5.0-windows\Byul.deps.json
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\bin\Debug\net5.0-windows\Byul.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\bin\Debug\net5.0-windows\ref\Byul.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\bin\Debug\net5.0-windows\Byul.pdb
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.csproj.AssemblyReference.cache
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\UserControl1.g.cs
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul_MarkupCompile.cache
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul_MarkupCompile.lref
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\UserControl1.baml
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.g.resources
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.AssemblyInfoInputs.cache
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.AssemblyInfo.cs
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.csproj.CoreCompileInputs.cache
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\ref\Byul.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\Byul\obj\Debug\net5.0-windows\Byul.pdb

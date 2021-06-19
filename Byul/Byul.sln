@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByulMacro", "ByulMacro\ByulMacro.csproj", "{BED17D91-2C5D-407E-884F-A608D627F47A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickableTransparentOverlay", "ClickableTransparentOverlay\ClickableTransparentOverlay.csproj", "{EF20B75B-0967-4389-92D1-FF2630B95413}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BED17D91-2C5D-407E-884F-A608D627F47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED17D91-2C5D-407E-884F-A608D627F47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED17D91-2C5D-407E-884F-A608D627F47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED17D91-2C5D-407E-884F-A608D627F47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF20B75B-0967-4389-92D1-FF2630B95413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF20B75B-0967-4389-92D1-FF2630B95413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF20B75B-0967-4389-92D1-FF2630B95413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF20B75B-0967-4389-92D1-FF2630B95413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A65F4A7-2B54-416C-87EB-189014DEAC18}
+	EndGlobalSection
+EndGlobal
