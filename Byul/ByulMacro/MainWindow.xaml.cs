@@ -23,6 +23,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ByulMacro.Input;
 using HOSAuto.Overlay;
+using ByulMacro.Byul.Components;
 
 namespace ByulMacro
 {
@@ -37,6 +38,7 @@ namespace ByulMacro
 
 
         private Renderer externalOverlay = null;
+        private CropController cropController;
         private GUI.Overlay overlay = new GUI.Overlay();
         private DateTime lastTime;
 
@@ -49,13 +51,11 @@ namespace ByulMacro
                 gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
             });
             externalOverlay.Run();
-        }
-
-
+        } 
         /// <summary>
         /// 새로운 쓰래드에 코루틴용 틱 계산기 할당 
         /// </summary>
-        public void InitCoroutine()
+        public void InitializeCoroutine()
         {
             Task.Run(() =>
             {
@@ -73,49 +73,20 @@ namespace ByulMacro
         {
             AllocConsole(); // 콘솔 할당
             InitializeComponent(); //component 초기화
-            InitializeExOverlayGUI(); // gui 초기화 
-            Hook.HookInit(); // 입력 후크
-            Test(); 
-            InitCoroutine();
+            InitializeExOverlayGUI(); // gui 초기화  
+            InitializeHookEvent();
+            // InitializeCoroutine(); 
+
+            Hook.HookInit(); // 입력 이벤트 추가
+
+            cropController = new CropController();
         }
 
-        int startX, startY, lastX, lastY, distX, distY;
-
- 
-
-        private void Test()
-        {
-            Console.WriteLine("id:" + Thread.CurrentThread.ManagedThreadId);
-            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) =>
-            {
-                Console.WriteLine("end");
-
-                lastX = x;
-                lastY = y;
-
-                distX = (lastX - startX);
-                distY = (lastY - startY);
-
-                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(startX, startY), new OpenCvSharp.Point(distX, distY), "test");
-                Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, croppedScreeen.Bitmap);
-                result.SaveImage("test/result.png");
-
-                Dispatcher.Invoke(() => {
-                    resultImg.Source = Pixel.Utility.MatToImageSource(result);
-                    Cv2.ImShow("t", result);
-                });
-        
-
-            });
-            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) =>
-            {
-                Console.WriteLine("start");
-                startX = x;
-                startY = y;
-
-
-            });
-
+        //이미지 크랍
+        private int startX, startY, lastX, lastY, distX, distY; 
+        private void InitializeHookEvent()
+        { 
+            
         }
         private static IEnumerator<Wait> WaitSeconds()
         {
