@@ -100,9 +100,12 @@ namespace ByulMacro
             templateGray.SaveImage("test/templateGray.png");
         
             
-            using var result = new Mat();
+            using var result = new Mat(); 
+            Cv2.MatchTemplate(windowScreenGray, templateGray, result, TemplateMatchModes.SqDiff, null);
+            result.SaveImage("test/a.png");
 
-            Cv2.MatchTemplate(windowScreenGray, templateGray, result, TemplateMatchModes.CCoeffNormed, null);
+
+
 
 
             var b = windowScreenGray.ToBitmap();
@@ -110,7 +113,7 @@ namespace ByulMacro
             var bs = Imaging.CreateBitmapSourceFromHBitmap(h, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             test.Source = bs;
 
-            result.SaveImage("test/a.png");
+        
         }
     }
 }
