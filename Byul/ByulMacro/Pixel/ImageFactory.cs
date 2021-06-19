@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByulMacro.Pixel
+namespace Pixel
 {
-    class ImageFactory
+    public class ImageFactory
     {
+        public void LoadAllImages()
+        {
+            
+        }
+        public void AddImage()
+        {
+
+        }
     }
 }

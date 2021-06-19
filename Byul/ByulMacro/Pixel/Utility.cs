@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -16,9 +18,52 @@ namespace Pixel
         /// </summary>
         /// <returns></returns>
         public static Image CaptureScreen()
-        {
-         
+        { 
             return CaptureWindow(User32.GetDesktopWindow());
+        }
+
+        /// <summary>
+        /// OpenCv 의 인풋 어레이로 변환
+        /// </summary>
+        /// <returns></returns>
+        public static InputArray CaptureScreenToCvInputArray()
+        {
+            var mat = BitmapConverter.ToMat(CaptureScreenToBitmap());
+            var iarray = OpenCvSharp.InputArray.Create(mat);
+            return iarray;
+        }
+        /// <summary>
+        /// OpenCv 의 Mat으로 변환
+        /// </summary>
+        /// <returns></returns>
+        public static Mat CaptureScreenToCvMat()
+        {
+            var mat = BitmapConverter.ToMat(CaptureScreenToBitmap()); 
+            return mat;
+        }
+
+
+        public static InputArray CreateInputArray(Bitmap bitmap) {
+            var mat = BitmapConverter.ToMat(bitmap);
+            var iarray = OpenCvSharp.InputArray.Create(mat);
+            return iarray;
+        }
+
+        public static Bitmap LoadFileToBitmap(string path)
+        {
+            var bitmap = System.Drawing.Bitmap.FromFile(path);
+            return (Bitmap)bitmap;
+        }
+
+
+        public static InputArray LoadFileToInputArray(string path)
+        {
+            var bitmap = (Bitmap)System.Drawing.Bitmap.FromFile(path);
+            return CreateInputArray(bitmap);
+        }
+        public static void SaveMat(Mat m, string filename)
+        {
+            BitmapConverter.ToBitmap(m).Save(filename);
         }
 
         /// <summary>

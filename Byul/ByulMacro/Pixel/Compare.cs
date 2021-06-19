@@ -8,8 +8,11 @@ namespace Pixel
 {
     public class Compare
     {
+
+
         public bool IsMatch()
         {
+          
             return true;
         }
     }
