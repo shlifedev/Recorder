@@ -28,7 +28,10 @@ Very Simple Customizingable Macro
 
 5. 커스텀 `HID드라이버` 방식 (하드웨어 인풋, undetectable)  
 - https://github.com/changeofpace/MouClassInputInjection  
-- https://github.com/changeofpace/MouHidInputHook
+- https://github.com/changeofpace/MouHidInputHook  
+
+이 경우 좀 귀찮은건 드라이버와 통신 가능한 C#코드를 작성해야함
+
 
 ## 이미지 서칭 및 크랍방식
 
