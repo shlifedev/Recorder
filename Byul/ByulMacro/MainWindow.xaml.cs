@@ -77,7 +77,7 @@ namespace ByulMacro
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Pixel.Utility.CaptureScreenToFile("test.png", ImageFormat.Png);
+           
         }
     }
 }

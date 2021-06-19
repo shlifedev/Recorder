@@ -13,7 +13,11 @@ namespace ByulMacro.Byul.Core
         {
             foreach(var logic in commandList)
             {
-                
+                var result = logic.Execute();
+                if(result == false)
+                {
+                    
+                }
             }
         }
     }
