@@ -3,6 +3,7 @@ using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -87,31 +88,8 @@ namespace ByulMacro
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var windowScreen = Pixel.Utility.CaptureScreenToCvInputArray();
-            var template = Pixel.Utility.LoadFileToInputArray("test/template.png");
+            Pixel.Compare.TestCompare((Bitmap)Bitmap.FromFile("test/src.png"), (Bitmap)Bitmap.FromFile("test/temp.png"));
 
-            Mat windowScreenGray = new OpenCvSharp.Mat(windowScreen.Size(), OpenCvSharp.MatType.CV_8U); 
-            OpenCvSharp.Cv2.CvtColor(windowScreen, windowScreenGray, ColorConversionCodes.BGR2GRAY);
-            windowScreenGray.SaveImage("test/windowScreenGray.png");
-       
-            
-            Mat templateGray = new OpenCvSharp.Mat(template.Size(), OpenCvSharp.MatType.CV_8U);
-            OpenCvSharp.Cv2.CvtColor(template, templateGray, ColorConversionCodes.BGR2GRAY);
-            templateGray.SaveImage("test/templateGray.png");
-        
-            
-            using var result = new Mat(); 
-            Cv2.MatchTemplate(windowScreenGray, templateGray, result, TemplateMatchModes.SqDiff, null);
-            result.SaveImage("test/a.png");
-
-
-
-
-
-            var b = windowScreenGray.ToBitmap();
-            var h = b.GetHbitmap();
-            var bs = Imaging.CreateBitmapSourceFromHBitmap(h, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            test.Source = bs;
 
         
         }
