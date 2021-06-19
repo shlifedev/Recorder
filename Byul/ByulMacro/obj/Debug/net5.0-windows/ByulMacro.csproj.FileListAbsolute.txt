@@ -63,3 +63,7 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-window
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ClickableTransparentOverlay.pdb
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ClickableTransparentOverlay.xml
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.CopyComplete
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\GameOverlay.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\SharpDX.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\SharpDX.Direct2D1.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\SharpDX.DXGI.dll

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Coroutine" Version="2.1.1" />
+    <PackageReference Include="GameOverlay.Net" Version="4.3.1" />
     <PackageReference Include="LowLevelInput.Net" Version="1.36.6" />
     <PackageReference Include="OpenCvSharp4" Version="4.5.2.20210404" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.5.2.20210404" />
@@ -19,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="OverlayGUI\" />
     <Folder Include="WPFGUI\ImageCrop\" />
   </ItemGroup>
 

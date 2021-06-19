@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ByulMacro.Input;
+using HOSAuto.Overlay;
 
 namespace ByulMacro
 {
@@ -34,8 +35,21 @@ namespace ByulMacro
         [DllImport("kernel32.dll", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern int AllocConsole();
 
+
+        private Renderer externalOverlay = null;
         private GUI.Overlay overlay = new GUI.Overlay();
         private DateTime lastTime;
+
+
+
+        public void InitializeExOverlayGUI()
+        {
+            externalOverlay  = new Renderer(1920, 1080, (gf, gfx)=> {
+                gfx.ClearScene(); 
+                gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
+            });
+            externalOverlay.Run();
+        }
 
 
         /// <summary>
@@ -54,23 +68,20 @@ namespace ByulMacro
                 }
             });
             CoroutineHandler.Start(WaitSeconds());
-        }
-        bool pressed = false;
+        } 
         public MainWindow()
         {
-            InitializeComponent();
-            AllocConsole();
-            Hook.HookInit();
-            Test();
+            AllocConsole(); // 콘솔 할당
+            InitializeComponent(); //component 초기화
+            InitializeExOverlayGUI(); // gui 초기화 
+            Hook.HookInit(); // 입력 후크
+            Test(); 
             InitCoroutine();
         }
 
         int startX, startY, lastX, lastY, distX, distY;
 
-        public static void Sex(Mat m)
-        {
-
-        }
+ 
 
         private void Test()
         {
