@@ -17,4 +17,10 @@
     <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Macro\Action\" />
+    <Folder Include="Macro\Condtiion\" />
+    <Folder Include="WPFGUI\ImageCrop\" />
+  </ItemGroup>
+
 </Project>

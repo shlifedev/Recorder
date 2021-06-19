@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,8 @@ namespace ByulMacro
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        { 
-            overlay.Run();
+        {
+            Pixel.Utility.CaptureScreenToFile("test.png", ImageFormat.Png);
         }
     }
 }

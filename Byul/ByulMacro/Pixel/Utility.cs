@@ -17,6 +17,7 @@ namespace Pixel
         /// <returns></returns>
         public static Image CaptureScreen()
         {
+         
             return CaptureWindow(User32.GetDesktopWindow());
         }
 

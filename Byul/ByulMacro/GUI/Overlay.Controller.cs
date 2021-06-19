@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 namespace ByulMacro.GUI
 {
     public partial class Overlay
-    { 
+    {
+  
         public void Run()
         {
-            CoroutineHandler.Start(Logic()); 
+            CoroutineHandler.Start(Logic());
+            CoroutineHandler.Start(Logger.Logic());
             ClickableTransparentOverlay.Overlay.RunInfiniteLoop();
         }
 
