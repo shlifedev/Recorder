@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net5.0-windows7.0": {
-      "Coroutine/2.0.0": {
+      "Coroutine/2.1.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Coroutine.dll": {}
@@ -1073,14 +1073,14 @@
     }
   },
   "libraries": {
-    "Coroutine/2.0.0": {
-      "sha512": "CQoKpexi5ojzTU4nVOTRwxaxqdkALh83TDZNnZ6O6plPGY8ChQ7sBE6xwt1iWS95ZmjS+tIVrVxHfv6g3CsySg==",
+    "Coroutine/2.1.1": {
+      "sha512": "5BXUwm1rsWu9IMORWYrDcJ0xnf9y8b1dP97Bjoz3xPN44KC+vGPoHSJupniVZVsboikmWljx1EPhFqlLHBezYw==",
       "type": "package",
-      "path": "coroutine/2.0.0",
+      "path": "coroutine/2.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "coroutine.2.0.0.nupkg.sha512",
+        "coroutine.2.1.1.nupkg.sha512",
         "coroutine.nuspec",
         "lib/netstandard2.0/Coroutine.dll",
         "lib/netstandard2.0/Coroutine.xml"
@@ -3873,6 +3873,7 @@
   "projectFileDependencyGroups": {
     "net5.0-windows7.0": [
       "ClickableTransparentOverlay >= 2.0.4",
+      "Coroutine >= 2.1.1",
       "LowLevelInput.Net >= 1.36.6",
       "OpenCvSharp4 >= 4.5.2.20210404",
       "OpenCvSharp4.Windows >= 4.5.2.20210404",
@@ -3927,6 +3928,10 @@
       "net5.0-windows7.0": {
         "targetAlias": "net5.0-windows",
         "dependencies": {
+          "Coroutine": {
+            "target": "Package",
+            "version": "[2.1.1, )"
+          },
           "LowLevelInput.Net": {
             "target": "Package",
             "version": "[1.36.6, )"

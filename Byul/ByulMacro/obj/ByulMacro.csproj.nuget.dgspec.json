@@ -48,6 +48,10 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "dependencies": {
+            "Coroutine": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
             "LowLevelInput.Net": {
               "target": "Package",
               "version": "[1.36.6, )"
