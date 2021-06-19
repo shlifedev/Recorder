@@ -16,7 +16,8 @@ Very Simple Customizingable Macro
  - 특정 좌표지점 이미지 인식
  - 특정 이미지 서치를 위한 스크린 크랍 & 이미지 불러오기 기능
  - Condition 과 Action을 명확히한다.
-
+ - 하드웨어 및 소프트웨어 기반 인풋제공
+ - 앱플레이어를 위한 설정 제공
 
 ## 개발 예정 인풋방식 
 1. `SendMessage` 방식 (백그라운드 인풋, detectable)
