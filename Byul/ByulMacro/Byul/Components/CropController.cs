@@ -18,105 +18,120 @@ namespace ByulMacro.Byul.Components
     /// </summary> 
     public class CropController
     {
-        private int startX, startY, lastX, lastY, distX, distY;
-        private bool use = false;
-        public Renderer cropRenderer;
-        public Graphics gfx;
-        public bool Use { get => use; set => use = value; }
+        private int _sX, _sY, _lX, _lY, _distX, _distY;
+        private bool _use = false; 
 
-        public bool cropSwitch = false;  
+        /// <summary>
+        /// 크랍 컨트롤러를 사용하는경우
+        /// </summary>
+        public bool Use { get => _use; set => _use = value; } 
 
-        public Mat result = null;
-        public Point dbgCenter;
-        public CreateImage latestCroppedImg = null;
+        /// <summary>
+        /// 현재 크랍을 시도중일때 true
+        /// </summary>
+        public bool Cropping = false;
 
 
-
-        private int ___ = 0;
-        public CropController()
+        private Mat outputResult = null;
+        private Point outputCenter;
+        private CreateImage cropImage = null;
+        private bool _enableDebug = true; 
+        private int _debugStack = 0;  
+        public void InitializeDebug()
         {
-            Console.WriteLine("Initialize Crop Controller");
-             
+
             //계속 이미지 서칭을 하면서 테스트하기위한 쓰레드
             _ = Task.Run(() =>
-            { 
+            {
                 while (true)
-                { 
-                    if (latestCroppedImg != null)
-                    { 
-                        Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, latestCroppedImg.Bitmap); 
-
-                        if(oResult == null)
-                        {
-                            ___++;
-                            if(___ == 3)
-                            { 
-                                result = null;
+                {
+                    if (_enableDebug)
+                    {
+                        //크랍 이미지가 존재하는 경우에만 디버그 시도
+                        if (cropImage != null)
+                        { 
+                            Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, cropImage.Bitmap);
+                            if (oResult == null)
+                            {
+                                _debugStack++;
+                                //자연스럽게 사각형을 랜더링 하기위해 사용
+                                if (_debugStack == 3) 
+                                    outputResult = null; 
+                                continue;
                             }
-                            continue;
+                          
+                            outputCenter = oCenter;
+                            outputResult = oResult;
                         }
-                        dbgCenter = oCenter;
-                        result = oResult; 
+                    }
+
+                    else
+                    {
+                        System.Threading.Thread.Sleep(100);
                     }
                 }
             });
 
+        }
 
+        public void InitializeHookEvent()
+        {
 
-
+            //마우스를 클릭한경우
             Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) =>
-            { 
-                startX = x;
-                startY = y;
-                cropSwitch = true;
+            {
+                _sX = x;
+                _sY = y;
+                Cropping = true;
             });
-            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) =>
-            {  
-                lastX = x;
-                lastY = y;
-                distX = (lastX - startX);
-                distY = (lastY - startY);
-                cropSwitch = false;
-                System.Threading.Thread.Sleep(500);
-                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(startX, startY), new OpenCvSharp.Point(distX, distY), null); 
-                //현재 스크린에 크랍 이미지 체크   
-                Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap); 
-                latestCroppedImg = croppedScreeen;
-                dbgCenter = oCenter;
-                result = oResult; 
-            });
-            //랜더링 초기화
 
+            //마우스를 Up한경우
+            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) =>
+            {
+                _lX = x;
+                _lY = y;
+                _distX = (_lX - _sX);
+                _distY = (_lY - _sY);
+                Cropping = false;
+                System.Threading.Thread.Sleep(500);
+                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(_sX, _sY), new OpenCvSharp.Point(_distX, _distY), null);
+                //현재 스크린에 크랍 이미지 체크   
+                Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
+                cropImage = croppedScreeen;
+                outputCenter = oCenter;
+                outputResult = oResult;
+            });
+            //마우스를 움직이는 도중
             Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Invalid, LowLevelInput.Hooks.KeyState.None, (x, y) =>
             {
-                if (cropSwitch)
+                if (Cropping)
                 {
-                    lastX = x;
-                    lastY = y;
-                    distX = (lastX - startX);
-                    distY = (lastY - startY);
+                    _lX = x;
+                    _lY = y;
+                    _distX = (_lX - _sX);
+                    _distY = (_lY - _sY);
                 }
             });
-            //랜더
-            cropRenderer = new Renderer(1920, 1080, (gf, gfx) =>
-            {
-                    this.gfx = gfx;
-                    gfx.ClearScene();  
-                    if (result != null)
-                    {
-                        gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
-                        gfx.DrawRectangle(gf.GetBrush("red"), dbgCenter.X - 20, dbgCenter.Y - 20, dbgCenter.X + 20, dbgCenter.Y + 20, 3);
-                    }
-                    if (cropSwitch)
-                    {
-                        gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), startX, startY, lastX, lastY, 3);
-                        gfx.DrawRectangle(gf.GetBrush("green"), startX, startY, lastX, lastY, 3);
-                    }  
-            });
-            cropRenderer.Run();
-        
+        }
 
-   
+        public void Render(GraphicsFactory gf, Graphics gfx) { 
+            gfx.ClearScene();
+            if (outputResult != null)
+            {
+                gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), outputCenter.X - 20, outputCenter.Y - 20, outputCenter.X + 20, outputCenter.Y + 20, 3);
+                gfx.DrawRectangle(gf.GetBrush("red"), outputCenter.X - 20, outputCenter.Y - 20, outputCenter.X + 20, outputCenter.Y + 20, 3);
+            }
+            if (Cropping)
+            {
+                gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), _sX, _sY, _lX, _lY, 3);
+                gfx.DrawRectangle(gf.GetBrush("green"), _sX, _sY, _lX, _lY, 3);
+            }
+        }
+        public CropController()
+        { 
+            InitializeDebug();
+            InitializeHookEvent();
+            new Renderer(1920, 1080, Render).Run();  
         }
     }
 }
