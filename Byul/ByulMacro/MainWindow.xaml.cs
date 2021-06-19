@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ByulMacro.Input;
 
 namespace ByulMacro
 {
@@ -43,14 +44,14 @@ namespace ByulMacro
         public void InitCoroutine()
         {
             Task.Run(() =>
-            {
+            { 
                 while (true)
                 {
                     var currTime = DateTime.Now;
                     CoroutineHandler.Tick(currTime - lastTime);
                     lastTime = currTime;
-                    Thread.Sleep(1);
-                }
+                    Thread.Sleep(1); 
+                } 
             });
 
             CoroutineHandler.Start(WaitSeconds());
@@ -59,9 +60,15 @@ namespace ByulMacro
         {
             InitializeComponent();
             AllocConsole();
-            InitCoroutine();
+            Hook.HookInit();
+            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Lbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) => {
+                Console.WriteLine($"{x},{y}");
+            });
+            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Lbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) => {
+                Console.WriteLine($"{x},{y}");
+            });
 
-
+            InitCoroutine(); 
         }
         private static IEnumerator<Wait> WaitSeconds()
         {
@@ -88,11 +95,19 @@ namespace ByulMacro
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ((Bitmap)Bitmap.FromFile("test/src.png")).Match(out var result, out var center, out var maxLoc, (Bitmap)Bitmap.FromFile("test/temp.png"));
+        {  
+            CreateImage test = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(300, 410), new OpenCvSharp.Point(150, 40), "test"); 
+                        test.Mat.SaveImage("test/test.png"); 
+            Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
+           
             Cv2.ImShow("result", result); 
-            CreateImage a = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(center.X-20, center.Y-20), new OpenCvSharp.Point(center.X+20, center.Y+20), "test");
+        }
 
+
+        bool cropSwitch = true;
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+          
         }
     }
 }

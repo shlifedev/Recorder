@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ByulMacro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="155" Width="255">
     <Grid>
-        <Button Content="Test&#xD;&#xA;" HorizontalAlignment="Left" Height="396" Margin="10,10,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click"/>
-        <Image x:Name="test" HorizontalAlignment="Left" Height="407" Margin="92,10,0,0" VerticalAlignment="Top" Width="692" RenderTransformOrigin="-0.624,-0.436"/>
+        <Button Content="Test&#xD;&#xA;" HorizontalAlignment="Center" Height="22" Margin="0,10,0,0" VerticalAlignment="Top" Width="235" Click="Button_Click"/>
+        <Button Content="Start Crop" HorizontalAlignment="Center" Height="22" Margin="0,37,0,0" VerticalAlignment="Top" Width="235" Click="Button_Click2"/>
 
     </Grid>
 </Window>
