@@ -18,7 +18,8 @@ Very Simple Customizingable Macro
  - Condition 과 Action을 명확히한다.
  - 하드웨어 및 소프트웨어 기반 인풋제공
  - 앱플레이어를 위한 설정 제공
-
+ - 매우 깔끔하고 편리한 GUI
+ 
 ## 개발 예정 인풋방식 
 1. `SendMessage` 방식 (백그라운드 인풋, detectable)
 2. `SendInput` 방식 (글로벌 인풋, detectable)
