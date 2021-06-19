@@ -2,6 +2,7 @@
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
+using Pixel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -88,10 +89,12 @@ namespace ByulMacro
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Pixel.Compare.TestCompare((Bitmap)Bitmap.FromFile("test/src.png"), (Bitmap)Bitmap.FromFile("test/temp.png"));
+            ((Bitmap)Bitmap.FromFile("test/src.png")).Match(out var result, out var center, out var maxLoc, (Bitmap)Bitmap.FromFile("test/temp.png"));
+            Cv2.ImShow("result", result);
 
 
-        
+
+
         }
     }
 }
