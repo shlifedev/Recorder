@@ -14,7 +14,7 @@ namespace ByulMacro.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static void HookInit()
-        {
+        { 
             var inputManager = new LowLevelInput.Hooks.InputManager(); 
             // you may not need those when you use InputManager
             var keyboardHook = new LowLevelKeyboardHook();
@@ -30,8 +30,9 @@ namespace ByulMacro.Input
 
         public static void AddMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback)
         {
+ 
             MouseHook.Add((key, state), callback);
-            Console.Write(key);
+           
         }
         public static void AddKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback)
         {
@@ -50,11 +51,16 @@ namespace ByulMacro.Input
             {
                 callback?.Invoke(x,y);
             }
+            //if(key != VirtualKeyCode.Invalid)
+            //Console.WriteLine($"{key}, {state}");
+
         }
 
         private static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
         {
             System.Action callback;
+
+            //Console.WriteLine($"{key}, {state}");
             KeyboardHook.TryGetValue((key, state), out callback);
             if (callback == null)
             {

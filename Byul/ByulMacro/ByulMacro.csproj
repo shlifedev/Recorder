@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="OverlayGUI\" />
     <Folder Include="WPFGUI\ImageCrop\" />
   </ItemGroup>
 

@@ -44,31 +44,67 @@ namespace ByulMacro
         public void InitCoroutine()
         {
             Task.Run(() =>
-            { 
+            {
                 while (true)
                 {
                     var currTime = DateTime.Now;
                     CoroutineHandler.Tick(currTime - lastTime);
                     lastTime = currTime;
-                    Thread.Sleep(1); 
-                } 
+                    Thread.Sleep(1);
+                }
             });
-
             CoroutineHandler.Start(WaitSeconds());
         }
+        bool pressed = false;
         public MainWindow()
         {
             InitializeComponent();
             AllocConsole();
             Hook.HookInit();
-            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Lbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) => {
-                Console.WriteLine($"{x},{y}");
+            Test();
+            InitCoroutine();
+        }
+
+        int startX, startY, lastX, lastY, distX, distY;
+
+        public static void Sex(Mat m)
+        {
+
+        }
+
+        private void Test()
+        {
+            Console.WriteLine("id:" + Thread.CurrentThread.ManagedThreadId);
+            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) =>
+            {
+                Console.WriteLine("end");
+
+                lastX = x;
+                lastY = y;
+
+                distX = (lastX - startX);
+                distY = (lastY - startY);
+
+                CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(startX, startY), new OpenCvSharp.Point(distX, distY), "test");
+                Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, croppedScreeen.Bitmap);
+                result.SaveImage("test/result.png");
+
+                Dispatcher.Invoke(() => {
+                    resultImg.Source = Pixel.Utility.MatToImageSource(result);
+                    Cv2.ImShow("t", result);
+                });
+        
+
             });
-            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Lbutton, LowLevelInput.Hooks.KeyState.Up, (x, y) => {
-                Console.WriteLine($"{x},{y}");
+            Hook.AddMouseEvent(LowLevelInput.Hooks.VirtualKeyCode.Rbutton, LowLevelInput.Hooks.KeyState.Down, (x, y) =>
+            {
+                Console.WriteLine("start");
+                startX = x;
+                startY = y;
+
+
             });
 
-            InitCoroutine(); 
         }
         private static IEnumerator<Wait> WaitSeconds()
         {
@@ -95,19 +131,12 @@ namespace ByulMacro
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
-        {  
-            CreateImage test = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(300, 410), new OpenCvSharp.Point(150, 40), "test"); 
-                        test.Mat.SaveImage("test/test.png"); 
-            Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
-           
-            Cv2.ImShow("result", result); 
-        }
-
-
-        bool cropSwitch = true;
-        private void Button_Click2(object sender, RoutedEventArgs e)
         {
-          
+            CreateImage test = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(300, 410), new OpenCvSharp.Point(150, 40), "test");
+            test.Mat.SaveImage("test/test.png");
+            Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
+
+            Cv2.ImShow("result", result);
         }
     }
 }
