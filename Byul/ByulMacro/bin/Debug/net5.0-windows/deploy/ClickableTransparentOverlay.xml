@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClickableTransparentOverlay</name>
+    </assembly>
+    <members>
+        <member name="T:ClickableTransparentOverlay.ImGuiController">
+            <summary>
+            A modified version of Veldrid.ImGui's ImGuiRenderer.
+            Manages input for ImGui and handles rendering ImGui's DrawLists with Veldrid.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.#ctor(Veldrid.GraphicsDevice,Veldrid.OutputDescription,System.Int32,System.Int32)">
+            <summary>
+            Constructs a new ImGuiController.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.GetOrCreateImGuiBinding(Veldrid.ResourceFactory,Veldrid.TextureView)">
+            <summary>
+            Gets or creates a handle for a texture to be drawn with ImGui.
+            E.G. Pass the returned handle to Image() or ImageButton().
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.RemoveImGuiBinding(Veldrid.TextureView)">
+            <summary>
+            Removes the texture from the resources.
+            </summary>
+            <param name="textureView">texture to remove</param>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.RemoveImGuiBinding(Veldrid.Texture)">
+            <summary>
+            Removes the texture from the resources.
+            </summary>
+            <param name="texture">texture to remove</param>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.GetOrCreateImGuiBinding(Veldrid.ResourceFactory,Veldrid.Texture)">
+            <summary>
+            Gets or creates a handle for a texture to be drawn with ImGui.
+            Pass the returned handle to Image() or ImageButton().
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.GetImageResourceSet(System.IntPtr)">
+            <summary>
+            Retrieves the shader texture binding for the given helper handle.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.RecreateFontDeviceTexture(Veldrid.GraphicsDevice)">
+            <summary>
+            Recreates the device texture used to render text.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.Render(Veldrid.GraphicsDevice,Veldrid.CommandList)">
+            <summary>
+            Renders the ImGui draw list data.
+            This method requires a <see cref="T:Veldrid.GraphicsDevice"/> because it may create new DeviceBuffers if the size of vertex
+            or index data has increased beyond the capacity of the existing buffers.
+            A <see cref="T:Veldrid.CommandList"/> is needed to submit drawing and resource update commands.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.Update(System.Single,Veldrid.InputSnapshot,System.IntPtr)">
+            <summary>
+            Updates ImGui input and IO configuration state.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.SetPerFrameImGuiData(System.Single)">
+            <summary>
+            Sets per-frame data based on the associated window.
+            This is called by Update(float).
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.ImGuiController.Dispose">
+            <summary>
+            Frees all graphics resources used by the renderer.
+            </summary>
+        </member>
+        <member name="T:ClickableTransparentOverlay.NativeMethods">
+            <summary>
+            This class allow user to access Win32 API functions. 
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.NativeMethods.IsClickable">
+            <summary>
+            Gets a value indicating whether the overlay is clickable or not.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.NativeMethods.InitTransparency(System.IntPtr)">
+            <summary>
+            Allows the SDL2Window to become transparent.
+            </summary>
+            <param name="handle">
+            Veldrid window handle in IntPtr format.
+            </param>
+        </member>
+        <member name="M:ClickableTransparentOverlay.NativeMethods.SetOverlayClickable(System.IntPtr,System.Boolean)">
+            <summary>
+            Enables (clickable) / Disables (not clickable) the SDL2Window keyboard/mouse inputs.
+            NOTE: This function depends on InitTransparency being called when the SDL2Winhdow was created.
+            </summary>
+            <param name="handle">Veldrid window handle in IntPtr format.</param>
+            <param name="WantClickable">Set to true if you want to make the window clickable otherwise false.</param>
+        </member>
+        <member name="M:ClickableTransparentOverlay.NativeMethods.SetConsoleWindow(System.Boolean)">
+            <summary>
+            Allows showing/hiding the console window.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.NativeMethods.GetCursorPosition(System.IntPtr)">
+            <summary>
+            Returns the current mouse position w.r.t the window in Vector2 format.
+            Also, returns Zero in case of any errors.
+            </summary>
+            <param name="hWnd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClickableTransparentOverlay.NativeMethods.IsKeyPressed(System.Int32)">
+            <summary>
+            Returns true if the key is pressed.
+            For keycode information visit: https://www.pinvoke.net/default.aspx/user32.getkeystate
+            NOTE: This function can return True multiple times per single keypress.
+                  It depends on how long the user pressed the key for and
+                  how many times caller called this function while the key was pressed.
+                  Caller of this function is responsible to mitigate this behaviour.
+            </summary>
+            <param name="nVirtKey">key to look for.</param>
+            <returns>weather the key is pressed or not.</returns>
+        </member>
+        <member name="T:ClickableTransparentOverlay.Overlay">
+            <summary>
+            A class to create clickable transparent overlay.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.#cctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ClickableTransparentOverlay.Overlay"/> class.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.RunInfiniteLoop">
+            <summary>
+            Infinitely renders the over (and execute co-routines) till it's closed.
+            </summary>
+        </member>
+        <member name="F:ClickableTransparentOverlay.Overlay.OnRender">
+            <summary>
+            To submit ImGui code for generating the UI.
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.Close">
+            <summary>
+            Safely Closes the Overlay.
+            Doesn't matter if you set it to true multiple times.
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.Visible">
+            <summary>
+            Makes the overlay visible or invisible. Invisible Overlay
+            will not call OnRender coroutines, however time based
+            coroutines are still called.
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.TerminalWindow">
+            <summary>
+            Gets or sets a value indicating whether to hide the terminal window.
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.Position">
+            <summary>
+            Gets or sets the position of the overlay window.
+            </summary>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.NumberVideoDisplays">
+            <summary>
+            Gets the number of displays available on the computer.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.GetDisplayBounds(System.Int32)">
+            <summary>
+            Gets the monitor bounds based on the monitor number.
+            </summary>
+            <param name="num">Monitor number starting from 0.</param>
+            <returns>screen box in which the window is moved to.</returns>
+        </member>
+        <member name="P:ClickableTransparentOverlay.Overlay.Size">
+            <summary>
+            Gets or sets the size of the overlay window.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.AddOrGetImagePointer(System.String,System.IntPtr@,System.UInt32@,System.UInt32@)">
+            <summary>
+            Adds the image to the Graphic Device as a texture.
+            Then returns the pointer of the added texture. It also
+            cache the image internally rather than creating a new texture on every call,
+            so this function can be called multiple times per frame.
+            </summary>
+            <param name="filePath">
+            Path to the image on disk. If the image is loaded in the memory
+            save it on the disk before sending to this function. Reason for this
+            is to cache the Image Texture using filePath as the key.
+            </param>
+            <param name="handle">output pointer to the image in the graphic device.</param>
+            <param name="width">width of the loaded image.</param>
+            <param name="height">height of the loaded image.</param>
+        </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.Dispose">
+            <summary>
+            Free all resources acquired by the overlay.
+            </summary>
+        </member>
+        <member name="M:ClickableTransparentOverlay.SDL2Functions.SDL_GetDisplayBounds(System.Int32,Veldrid.Rectangle@)">
+            <summary>
+            Gets the bounding box of the monitor display.
+            </summary>
+            <param name="displayIndex">monitor display number, starting from zero.</param>
+            <param name="rect">bounding box information, passed by reference</param>
+            <returns>non-zero in case of any errors.</returns>
+        </member>
+    </members>
+</doc>
