@@ -75,7 +75,7 @@
         </member>
         <member name="T:ClickableTransparentOverlay.NativeMethods">
             <summary>
-            This class allow user to access Win32 API functions.
+            This class allow user to access Win32 API functions. 
             </summary>
         </member>
         <member name="P:ClickableTransparentOverlay.NativeMethods.IsClickable">

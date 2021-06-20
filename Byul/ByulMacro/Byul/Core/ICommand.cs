@@ -11,3 +11,4 @@ namespace ByulMacro.Byul.Core
         public bool Execute();
     }
 }
+ 

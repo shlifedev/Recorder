@@ -14,6 +14,19 @@
           }
         }
       },
+      "Costura.Fody/5.3.0": {
+        "dependencies": {
+          "Fody": "6.5.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Costura.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.0"
+          }
+        }
+      },
+      "Fody/6.5.1": {},
       "GameOverlay.Net/4.3.1": {
         "dependencies": {
           "SharpDX.Direct2D1": "4.2.0"
@@ -302,6 +315,17 @@
           "lib/netcoreapp3.1/OpenCvSharp.WpfExtensions.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "PropertyChanged.Fody/3.4.0": {
+        "dependencies": {
+          "Fody": "6.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.1/PropertyChanged.dll": {
+            "assemblyVersion": "3.4.0.0",
+            "fileVersion": "3.4.0.0"
           }
         }
       },
@@ -1570,6 +1594,20 @@
       "path": "coroutine/2.1.1",
       "hashPath": "coroutine.2.1.1.nupkg.sha512"
     },
+    "Costura.Fody/5.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fb04fy7bJ7dNV7u3Ys0yvuINePnICWSwzpmtRjvQKuOl9nm0xxccsk2B1U3mLMFFCrb1luSMyu6vp/YWFIZRqw==",
+      "path": "costura.fody/5.3.0",
+      "hashPath": "costura.fody.5.3.0.nupkg.sha512"
+    },
+    "Fody/6.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DEw9rPG5vrpaK4vPPze0f4q6Zd0mfzjGNKy49nrmINkftIHpkyf8KH+uC/qF8y6v1askPWu9NbJS9bkmN5wXaA==",
+      "path": "fody/6.5.1",
+      "hashPath": "fody.6.5.1.nupkg.sha512"
+    },
     "GameOverlay.Net/4.3.1": {
       "type": "package",
       "serviceable": true,
@@ -1688,6 +1726,13 @@
       "sha512": "sha512-IN6JOZQMhl+4hxLfYJnM2hvLvCHWL4PUF+eEbPsnqQijEfKszSKrGTLAlcY7Xim/Lu6ExfX3TDMIiJgib8N59A==",
       "path": "opencvsharp4.wpfextensions/4.5.2.20210404",
       "hashPath": "opencvsharp4.wpfextensions.4.5.2.20210404.nupkg.sha512"
+    },
+    "PropertyChanged.Fody/3.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IAZyq0uolKo2WYm4mjx+q7A8fSGFT0x2e1s3y+ODn4JI0kqTDoo9GF2tdaypUzRFJZfdMxfC5HZW9QzdJLtOnA==",
+      "path": "propertychanged.fody/3.4.0",
+      "hashPath": "propertychanged.fody.3.4.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

@@ -10,8 +10,11 @@
       "ClickableTransparentOverlay/2.0.4": {
         "dependencies": {
           "Coroutine": "2.0.0",
+          "Costura.Fody": "5.3.0",
+          "Fody": "6.5.1",
           "ImGui.NET": "1.78.0",
           "NETStandard.Library": "2.0.3",
+          "PropertyChanged.Fody": "3.4.0",
           "Veldrid": "4.9.0-g6e9e71e698",
           "Veldrid.ImageSharp": "4.9.0-g6e9e71e698",
           "Veldrid.SDL2": "4.9.0-g6e9e71e698",
@@ -29,6 +32,19 @@
           }
         }
       },
+      "Costura.Fody/5.3.0": {
+        "dependencies": {
+          "Fody": "6.5.1",
+          "NETStandard.Library": "2.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Costura.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.0"
+          }
+        }
+      },
+      "Fody/6.5.1": {},
       "ImGui.NET/1.78.0": {
         "dependencies": {
           "System.Buffers": "4.5.0",
@@ -156,6 +172,17 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.1.19813"
+          }
+        }
+      },
+      "PropertyChanged.Fody/3.4.0": {
+        "dependencies": {
+          "Fody": "6.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/PropertyChanged.dll": {
+            "assemblyVersion": "3.4.0.0",
+            "fileVersion": "3.4.0.0"
           }
         }
       },
@@ -801,6 +828,20 @@
       "path": "coroutine/2.0.0",
       "hashPath": "coroutine.2.0.0.nupkg.sha512"
     },
+    "Costura.Fody/5.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fb04fy7bJ7dNV7u3Ys0yvuINePnICWSwzpmtRjvQKuOl9nm0xxccsk2B1U3mLMFFCrb1luSMyu6vp/YWFIZRqw==",
+      "path": "costura.fody/5.3.0",
+      "hashPath": "costura.fody.5.3.0.nupkg.sha512"
+    },
+    "Fody/6.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DEw9rPG5vrpaK4vPPze0f4q6Zd0mfzjGNKy49nrmINkftIHpkyf8KH+uC/qF8y6v1askPWu9NbJS9bkmN5wXaA==",
+      "path": "fody/6.5.1",
+      "hashPath": "fody.6.5.1.nupkg.sha512"
+    },
     "ImGui.NET/1.78.0": {
       "type": "package",
       "serviceable": true,
@@ -870,6 +911,13 @@
       "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
+    },
+    "PropertyChanged.Fody/3.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IAZyq0uolKo2WYm4mjx+q7A8fSGFT0x2e1s3y+ODn4JI0kqTDoo9GF2tdaypUzRFJZfdMxfC5HZW9QzdJLtOnA==",
+      "path": "propertychanged.fody/3.4.0",
+      "hashPath": "propertychanged.fody.3.4.0.nupkg.sha512"
     },
     "runtime.native.System/4.0.0": {
       "type": "package",

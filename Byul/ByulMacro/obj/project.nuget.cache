@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "BFhMtI3wpo+igf/p/LtSm0DhhwaW19JtLQFzVyNfen1RL92MbFQV9j3m/IYC1yNKx1QZzN9Xo0bZuUe7OD4AQg==",
+  "dgSpecHash": "JQ58uJICMIGHLy2xIYLpWFtPrxgcAJ1gsKcbtUSBNTUcsP0i/fs1eFwnO9JwHz1HovBke2swE84a4joLWZVpvg==",
   "success": true,
   "projectFilePath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ByulMacro\\ByulMacro.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shlif\\.nuget\\packages\\coroutine\\2.1.1\\coroutine.2.1.1.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\costura.fody\\5.3.0\\costura.fody.5.3.0.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\fody\\6.5.1\\fody.6.5.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\gameoverlay.net\\4.3.1\\gameoverlay.net.4.3.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\imgui.net\\1.78.0\\imgui.net.1.78.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\lowlevelinput.net\\1.36.6\\lowlevelinput.net.1.36.6.nupkg.sha512",
@@ -22,6 +24,7 @@
     "C:\\Users\\shlif\\.nuget\\packages\\opencvsharp4.runtime.win\\4.5.2.20210404\\opencvsharp4.runtime.win.4.5.2.20210404.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\opencvsharp4.windows\\4.5.2.20210404\\opencvsharp4.windows.4.5.2.20210404.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\opencvsharp4.wpfextensions\\4.5.2.20210404\\opencvsharp4.wpfextensions.4.5.2.20210404.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\propertychanged.fody\\3.4.0\\propertychanged.fody.3.4.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

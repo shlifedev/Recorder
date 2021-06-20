@@ -11,6 +11,29 @@
           "lib/netstandard2.0/Coroutine.dll": {}
         }
       },
+      "Costura.Fody/5.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Fody": "6.5.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Costura.dll": {}
+        },
+        "build": {
+          "build/Costura.Fody.props": {},
+          "build/Costura.Fody.targets": {}
+        }
+      },
+      "Fody/6.5.1": {
+        "type": "package",
+        "build": {
+          "build/Fody.targets": {}
+        }
+      },
       "GameOverlay.Net/4.3.1": {
         "type": "package",
         "dependencies": {
@@ -325,6 +348,21 @@
         },
         "runtime": {
           "lib/netcoreapp3.1/OpenCvSharp.WpfExtensions.dll": {}
+        }
+      },
+      "PropertyChanged.Fody/3.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Fody": "6.5.1"
+        },
+        "compile": {
+          "lib/netstandard2.1/PropertyChanged.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/PropertyChanged.dll": {}
+        },
+        "build": {
+          "build/PropertyChanged.Fody.props": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -1788,6 +1826,7 @@
         "dependencies": {
           "Coroutine": "2.0.0",
           "ImGui.NET": "1.78.0",
+          "PropertyChanged.Fody": "3.4.0",
           "Veldrid": "4.9.0-g6e9e71e698",
           "Veldrid.ImageSharp": "4.9.0-g6e9e71e698",
           "Veldrid.Sdl2": "4.9.0-g6e9e71e698",
@@ -1814,6 +1853,60 @@
         "coroutine.nuspec",
         "lib/netstandard2.0/Coroutine.dll",
         "lib/netstandard2.0/Coroutine.xml"
+      ]
+    },
+    "Costura.Fody/5.3.0": {
+      "sha512": "fb04fy7bJ7dNV7u3Ys0yvuINePnICWSwzpmtRjvQKuOl9nm0xxccsk2B1U3mLMFFCrb1luSMyu6vp/YWFIZRqw==",
+      "type": "package",
+      "path": "costura.fody/5.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Costura.Fody.props",
+        "build/Costura.Fody.targets",
+        "costura.fody.5.3.0.nupkg.sha512",
+        "costura.fody.nuspec",
+        "icon.png",
+        "lib/netstandard1.0/Costura.dll",
+        "lib/netstandard1.0/Costura.pdb",
+        "lib/netstandard1.0/Costura.xml",
+        "netclassicweaver/Costura.Fody.dll",
+        "netclassicweaver/Costura.Fody.xcf",
+        "netstandardweaver/Costura.Fody.dll",
+        "netstandardweaver/Costura.Fody.xcf"
+      ]
+    },
+    "Fody/6.5.1": {
+      "sha512": "DEw9rPG5vrpaK4vPPze0f4q6Zd0mfzjGNKy49nrmINkftIHpkyf8KH+uC/qF8y6v1askPWu9NbJS9bkmN5wXaA==",
+      "type": "package",
+      "path": "fody/6.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "build/Fody.targets",
+        "fody.6.5.1.nupkg.sha512",
+        "fody.nuspec",
+        "netclassictask/Fody.dll",
+        "netclassictask/FodyCommon.dll",
+        "netclassictask/FodyHelpers.dll",
+        "netclassictask/FodyIsolated.dll",
+        "netclassictask/Mono.Cecil.Pdb.dll",
+        "netclassictask/Mono.Cecil.Pdb.pdb",
+        "netclassictask/Mono.Cecil.Rocks.dll",
+        "netclassictask/Mono.Cecil.Rocks.pdb",
+        "netclassictask/Mono.Cecil.dll",
+        "netclassictask/Mono.Cecil.pdb",
+        "netstandardtask/Fody.dll",
+        "netstandardtask/FodyCommon.dll",
+        "netstandardtask/FodyHelpers.dll",
+        "netstandardtask/FodyIsolated.dll",
+        "netstandardtask/Mono.Cecil.Pdb.dll",
+        "netstandardtask/Mono.Cecil.Pdb.pdb",
+        "netstandardtask/Mono.Cecil.Rocks.dll",
+        "netstandardtask/Mono.Cecil.Rocks.pdb",
+        "netstandardtask/Mono.Cecil.dll",
+        "netstandardtask/Mono.Cecil.pdb"
       ]
     },
     "GameOverlay.Net/4.3.1": {
@@ -2184,6 +2277,28 @@
         "lib/netcoreapp3.1/OpenCvSharp.WpfExtensions.xml",
         "opencvsharp4.wpfextensions.4.5.2.20210404.nupkg.sha512",
         "opencvsharp4.wpfextensions.nuspec"
+      ]
+    },
+    "PropertyChanged.Fody/3.4.0": {
+      "sha512": "IAZyq0uolKo2WYm4mjx+q7A8fSGFT0x2e1s3y+ODn4JI0kqTDoo9GF2tdaypUzRFJZfdMxfC5HZW9QzdJLtOnA==",
+      "type": "package",
+      "path": "propertychanged.fody/3.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/PropertyChanged.Fody.props",
+        "lib/net40/PropertyChanged.dll",
+        "lib/net40/PropertyChanged.xml",
+        "lib/netstandard1.0/PropertyChanged.dll",
+        "lib/netstandard1.0/PropertyChanged.xml",
+        "lib/netstandard2.0/PropertyChanged.dll",
+        "lib/netstandard2.0/PropertyChanged.xml",
+        "lib/netstandard2.1/PropertyChanged.dll",
+        "lib/netstandard2.1/PropertyChanged.xml",
+        "propertychanged.fody.3.4.0.nupkg.sha512",
+        "propertychanged.fody.nuspec",
+        "weaver/PropertyChanged.Fody.dll",
+        "weaver/PropertyChanged.Fody.xcf"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -5992,11 +6107,14 @@
     "net5.0-windows7.0": [
       "ClickableTransparentOverlay >= 2.0.4",
       "Coroutine >= 2.1.1",
+      "Costura.Fody >= 5.3.0",
+      "Fody >= 6.5.1",
       "GameOverlay.Net >= 4.3.1",
       "LowLevelInput.Net >= 1.36.6",
       "OpenCvSharp4 >= 4.5.2.20210404",
       "OpenCvSharp4.Windows >= 4.5.2.20210404",
-      "OpenCvSharp4.runtime.win >= 4.5.2.20210404"
+      "OpenCvSharp4.runtime.win >= 4.5.2.20210404",
+      "PropertyChanged.Fody >= 3.4.0"
     ]
   },
   "packageFolders": {
@@ -6051,6 +6169,18 @@
             "target": "Package",
             "version": "[2.1.1, )"
           },
+          "Costura.Fody": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[5.3.0, )"
+          },
+          "Fody": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[6.5.1, )"
+          },
           "GameOverlay.Net": {
             "target": "Package",
             "version": "[4.3.1, )"
@@ -6070,6 +6200,10 @@
           "OpenCvSharp4.runtime.win": {
             "target": "Package",
             "version": "[4.5.2.20210404, )"
+          },
+          "PropertyChanged.Fody": {
+            "target": "Package",
+            "version": "[3.4.0, )"
           }
         },
         "imports": [

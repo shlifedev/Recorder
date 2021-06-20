@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace ClickableTransparentOverlay
 {
     /// <summary>
-    /// This class allow user to access Win32 API functions.
+    /// This class allow user to access Win32 API functions. 
     /// </summary>
     public static class NativeMethods
     {

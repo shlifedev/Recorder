@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "WMpOOzLUwO9VBnNYh6dmmPobSIw4EWr4hPeG9G/ldN6wylwHZkNMHavwBRCatualkZmZE/vk73EuSDXaQ9LlOw==",
+  "dgSpecHash": "4030vr447OoprTv88qXX1kzFw8IINjeOmC+mYXE5hncnW7JxEtGkgai/Nl9+Xg0dEOMRmDBhhKi4ZiEXZwEoeg==",
   "success": true,
   "projectFilePath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shlif\\.nuget\\packages\\coroutine\\2.0.0\\coroutine.2.0.0.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\costura.fody\\5.3.0\\costura.fody.5.3.0.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\fody\\6.5.1\\fody.6.5.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\imgui.net\\1.78.0\\imgui.net.1.78.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
@@ -15,6 +17,7 @@
     "C:\\Users\\shlif\\.nuget\\packages\\nativelibraryloader\\1.0.12\\nativelibraryloader.1.0.12.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\propertychanged.fody\\3.4.0\\propertychanged.fody.3.4.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\sharpgen.runtime\\1.2.1\\sharpgen.runtime.1.2.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\sixlabors.imagesharp\\1.0.0-rc0002\\sixlabors.imagesharp.1.0.0-rc0002.nupkg.sha512",

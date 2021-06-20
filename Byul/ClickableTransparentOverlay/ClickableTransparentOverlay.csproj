@@ -33,7 +33,16 @@
 
   <ItemGroup>
     <PackageReference Include="Coroutine" Version="2.0.0" />
+    <PackageReference Include="Costura.Fody" Version="5.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.5.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="ImGui.NET" Version="1.78.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="Veldrid" Version="4.9.0-g6e9e71e698" />
     <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0-g6e9e71e698" />
     <PackageReference Include="Veldrid.Sdl2" Version="4.9.0-g6e9e71e698" />

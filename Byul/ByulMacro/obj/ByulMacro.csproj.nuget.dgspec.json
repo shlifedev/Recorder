@@ -52,6 +52,18 @@
               "target": "Package",
               "version": "[2.1.1, )"
             },
+            "Costura.Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.5.1, )"
+            },
             "GameOverlay.Net": {
               "target": "Package",
               "version": "[4.3.1, )"
@@ -71,6 +83,10 @@
             "OpenCvSharp4.runtime.win": {
               "target": "Package",
               "version": "[4.5.2.20210404, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.4.0, )"
             }
           },
           "imports": [
@@ -139,6 +155,18 @@
               "target": "Package",
               "version": "[2.0.0, )"
             },
+            "Costura.Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.5.1, )"
+            },
             "ImGui.NET": {
               "target": "Package",
               "version": "[1.78.0, )"
@@ -148,6 +176,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.4.0, )"
             },
             "Veldrid": {
               "target": "Package",

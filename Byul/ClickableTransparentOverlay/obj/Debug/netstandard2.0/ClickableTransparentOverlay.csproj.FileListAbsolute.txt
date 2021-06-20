@@ -31,3 +31,4 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ClickableTransparentOverlay\obj\D
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ClickableTransparentOverlay\obj\Debug\netstandard2.0\ClickableTransparentOverlay.dll
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ClickableTransparentOverlay\obj\Debug\netstandard2.0\ClickableTransparentOverlay.xml
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ClickableTransparentOverlay\obj\Debug\netstandard2.0\ClickableTransparentOverlay.pdb
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ClickableTransparentOverlay\obj\Debug\netstandard2.0\ClickableTransparentOverlay.csproj.Fody.CopyLocal.cache
