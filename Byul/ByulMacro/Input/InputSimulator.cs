@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
             Mouse = 0,
             Keyboard = 1,
             Hardware = 2
-        }
+        } 
 
         [Flags]
         private enum KeyEventF

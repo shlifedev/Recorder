@@ -12,9 +12,7 @@ namespace HOSAuto.Overlay
     public class Renderer : IDisposable
     {
         private GraphicsWindow _window;
-        private GameOverlay.Drawing.Graphics gfx;
-        private CancellationTokenSource _cts;
-
+        private GameOverlay.Drawing.Graphics gfx; 
         public System.Action<GraphicsFactory, GameOverlay.Drawing.Graphics> onDraw;
         public GraphicsFactory GF;
         public Renderer(int sizeX, int sizeY, System.Action<GraphicsFactory, GameOverlay.Drawing.Graphics> onDraw)

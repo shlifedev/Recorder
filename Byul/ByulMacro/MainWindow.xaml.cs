@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Controls; 
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -24,6 +24,7 @@ using System.Windows.Shapes;
 using ByulMacro.Input;
 using HOSAuto.Overlay;
 using ByulMacro.Byul.Components;
+using ByulMacro.GUI;
 
 namespace ByulMacro
 {
@@ -55,7 +56,7 @@ namespace ByulMacro
         /// <summary>
         /// 새로운 쓰래드에 코루틴용 틱 계산기 할당 
         /// </summary>
-        public void InitializeCoroutine()
+        public void InitializeCoroutine() 
         {
             Task.Run(() =>
             {
@@ -72,12 +73,14 @@ namespace ByulMacro
         public MainWindow()
         {
             AllocConsole(); // 콘솔 할당
+
+    
             InitializeComponent(); //component 초기화
             InitializeExOverlayGUI(); // gui 초기화   
             // InitializeCoroutine(); 
 
             Hook.HookInit(); // 입력 이벤트 추가
-
+            Overlay.Run();
             cropController = new CropController();
         } 
         private static IEnumerator<Wait> WaitSeconds()

@@ -2,6 +2,7 @@
 using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -13,11 +14,169 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static Pixel.Utility.User32;
 
 namespace Pixel
 {
+
+  
     public static class Utility
-    { 
+    {
+        public class AppCaptrue
+        {
+            [DllImport("user32.dll")]
+            public static extern bool GetWindowRect(IntPtr hWnd, out AppCaptureRect lpRect);
+            [DllImport("user32.dll")]
+            public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
+
+            public static Bitmap CaptrueHwnd(IntPtr hWnd)
+            { 
+                AppCaptureRect rc;
+                GetWindowRect(hWnd, out rc);
+
+                Bitmap bmp = new Bitmap(rc.Width, rc.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                Graphics gfxBmp = Graphics.FromImage(bmp);
+                IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+                PrintWindow(hWnd, hdcBitmap, 0);
+
+                gfxBmp.ReleaseHdc(hdcBitmap);
+                gfxBmp.Dispose();
+
+                return bmp;
+            }
+
+            public static Bitmap Captrue(string procName)
+            {
+                var proc = Process.GetProcessesByName(procName)[0];
+                Console.WriteLine(proc.HandleCount);
+                return CaptrueHwnd(proc.MainWindowHandle);
+            }
+            [StructLayout(LayoutKind.Sequential)]
+            public struct AppCaptureRect
+            {
+                private int _Left;
+                private int _Top;
+                private int _Right;
+                private int _Bottom;
+
+                public AppCaptureRect(AppCaptureRect Rectangle) : this(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom)
+                {
+                }
+                public AppCaptureRect(int Left, int Top, int Right, int Bottom)
+                {
+                    _Left = Left;
+                    _Top = Top;
+                    _Right = Right;
+                    _Bottom = Bottom;
+                }
+
+                public int X
+                {
+                    get { return _Left; }
+                    set { _Left = value; }
+                }
+                public int Y
+                {
+                    get { return _Top; }
+                    set { _Top = value; }
+                }
+                public int Left
+                {
+                    get { return _Left; }
+                    set { _Left = value; }
+                }
+                public int Top
+                {
+                    get { return _Top; }
+                    set { _Top = value; }
+                }
+                public int Right
+                {
+                    get { return _Right; }
+                    set { _Right = value; }
+                }
+                public int Bottom
+                {
+                    get { return _Bottom; }
+                    set { _Bottom = value; }
+                }
+                public int Height
+                {
+                    get { return _Bottom - _Top; }
+                    set { _Bottom = value + _Top; }
+                }
+                public int Width
+                {
+                    get { return _Right - _Left; }
+                    set { _Right = value + _Left; }
+                }
+                public System.Drawing.Point Location
+                {
+                    get { return new System.Drawing.Point(Left, Top); }
+                    set
+                    {
+                        _Left = value.X;
+                        _Top = value.Y;
+                    }
+                }
+                public System.Drawing.Size Size
+                {
+                    get { return new System.Drawing.Size(Width, Height); }
+                    set
+                    {
+                        _Right = value.Width + _Left;
+                        _Bottom = value.Height + _Top;
+                    }
+                }
+
+                public static implicit operator Rectangle(AppCaptureRect Rectangle)
+                {
+                    return new Rectangle(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height);
+                }
+                public static implicit operator AppCaptureRect(Rectangle Rectangle)
+                {
+                    return new AppCaptureRect(Rectangle.Left, Rectangle.Top, Rectangle.Right, Rectangle.Bottom);
+                }
+                public static bool operator ==(AppCaptureRect Rectangle1, AppCaptureRect Rectangle2)
+                {
+                    return Rectangle1.Equals(Rectangle2);
+                }
+                public static bool operator !=(AppCaptureRect Rectangle1, AppCaptureRect Rectangle2)
+                {
+                    return !Rectangle1.Equals(Rectangle2);
+                }
+
+                public override string ToString()
+                {
+                    return "{Left: " + _Left + "; " + "Top: " + _Top + "; Right: " + _Right + "; Bottom: " + _Bottom + "}";
+                }
+
+                public override int GetHashCode()
+                {
+                    return ToString().GetHashCode();
+                }
+
+                public bool Equals(AppCaptureRect Rectangle)
+                {
+                    return Rectangle.Left == _Left && Rectangle.Top == _Top && Rectangle.Right == _Right && Rectangle.Bottom == _Bottom;
+                }
+
+                public override bool Equals(object Object)
+                {
+                    if (Object is AppCaptureRect)
+                    {
+                        return Equals((AppCaptureRect)Object);
+                    }
+                    else if (Object is Rectangle)
+                    {
+                        return Equals(new AppCaptureRect((Rectangle)Object));
+                    }
+
+                    return false;
+                }
+            }
+        }
         public static ImageSource BitMapToImageSource(this Bitmap bitmap)
         {
             var h = bitmap.GetHbitmap();
@@ -75,8 +234,11 @@ namespace Pixel
             return ms.ToArray();
 
         }
+   
+         
+
         public static Image CaptureWindow(IntPtr handle)
-        {
+        { 
             IntPtr hdcSrc = User32.GetWindowDC(handle);
             User32.RECT windowRect = new();
             _ = User32.GetWindowRect(handle, ref windowRect);
@@ -103,7 +265,7 @@ namespace Pixel
             Image img = CaptureScreen();
             img.Save(filename, format);
         }
-
+         
         /// <summary>
         /// 데스크톱 윈도우의 핸들을 캡쳐함
         /// </summary>
@@ -153,7 +315,7 @@ namespace Pixel
             [DllImport("gdi32.dll")]
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
-        private class User32
+        public class User32
         {
             [StructLayout(LayoutKind.Sequential)]
             public struct RECT

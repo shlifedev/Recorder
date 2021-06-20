@@ -11,14 +11,49 @@ using System.Threading.Tasks;
 using Point = OpenCvSharp.Point;
 
 namespace Pixel
-{
-
+{ 
+    /// <summary>
+    /// 이미지 비교 클래스
+    /// </summary>
     public static class Compare
     {
-
-        public static bool isMatchImg(Bitmap src, Bitmap cur, double mAccuray)
+        public class Result : IDisposable
         {
-            bool flag = false;
+            public Bitmap src;
+            public Bitmap template; 
+            public Mat resultMat;
+            /// <summary>
+            /// 서칭된 포인트의 중앙값
+            /// </summary>
+            public Point center;
+            /// <summary>
+            /// Loc
+            /// </summary>
+            public Point maxLoc;
+            /// <summary>
+            /// 이미지 정확도
+            /// </summary>
+            public double maxVal;
+            /// <summary>
+            /// 회색 음영으로 테스트 했는지에 대한 여부
+            /// </summary>
+            public bool isGrayScale;
+            public double accurity;
+
+            public void Dispose()
+            {
+                resultMat.Dispose();
+            }
+
+            public bool IsMatch() { return maxVal >= accurity; }
+
+        }
+        /// <summary>
+        /// 이미지 정확도에 따라 true false 반환
+        /// </summary> 
+        public static bool isMatchImg(Bitmap src, Bitmap cur, double accurity)
+        {
+            bool isMatch = false;
             using (Mat mat1 = src.ToMat())
             {
                 using (Mat mat2 = cur.ToMat())
@@ -26,19 +61,25 @@ namespace Pixel
                     using (Mat mat3 = new Mat())
                     {
                         Cv2.MatchTemplate((InputArray)mat1, (InputArray)mat2, (OutputArray)mat3, TemplateMatchModes.CCoeffNormed);
-                        double num = mAccuray * 0.01;
-                        double maxVal;
-                        Cv2.MinMaxLoc((InputArray)mat3, out double _, out maxVal, out OpenCvSharp.Point _, out OpenCvSharp.Point _);
-                        if (maxVal >= num)
-                            flag = true;
+                        double n = accurity * 0.01;
+                        double oVal;
+                        Cv2.MinMaxLoc((InputArray)mat3, out double _, out oVal, out OpenCvSharp.Point _, out OpenCvSharp.Point _);
+                        if (oVal >= n)
+                            isMatch = true;
                     }
                 }
             }
-            return flag;
+            return isMatch;
+        }
+
+        public static Result Match(this Bitmap src, Bitmap template, double accurity = 0.75f, bool grayscaleCheck = true)
+        {
+            Result result = new Result();
+            Match(src, out result.resultMat, out result.center, out result.maxLoc, template, accurity, grayscaleCheck);
+            return result;
         }
         public static void Match(this Bitmap src, out Mat oResult, out Point oCenter, out Point oMaxLoc, Bitmap template, double accurity = 0.75f, bool grayscaleCheck = true)
-        {
-
+        { 
             double threshhold = accurity;
 
             using Mat _src = BitmapConverter.ToMat(src);
