@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.Byul.Core.Action
 {
-    public abstract class Action : ILogic
+    public abstract class Action : ICommand
     {
         public abstract bool Execute();
     }

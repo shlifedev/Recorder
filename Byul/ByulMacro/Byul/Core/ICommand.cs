@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.Byul.Core
 {
-    public interface ILogic
-    {
+    public interface ICommand
+    { 
         public bool Execute();
     }
 }

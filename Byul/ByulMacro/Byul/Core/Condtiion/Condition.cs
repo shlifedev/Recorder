@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.Byul.Core.Condtiion
 {
-    public abstract class Condition : ILogic
+    public abstract class Condition : ICommand
     {
         public abstract bool Execute();
     }

@@ -1,6 +1,9 @@
-﻿using ClickableTransparentOverlay;
+﻿using ByulMacro.GUI.Command;
+using ByulMacro.Input;
+using ClickableTransparentOverlay;
 using Coroutine;
 using ImGuiNET;
+using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,13 +17,29 @@ namespace ByulMacro.GUI
 {
     public partial class Overlay
     {
+        
+        private static bool showMainMenu = true;
+        public static List<ICommandRenderer> test = new List<ICommandRenderer>();
         public static void Run()
         {
-            Task.Run(() => {
+            test.Add(new CommandRenderer());
+            test.Add(new CommandRenderer() { index = 1});
+            test.Add(new CommandRenderer() { index = 2});
+            Task.Run(() =>
+            {
                 CoroutineHandler.Start(MainLogic());
+                MainLogicInputHook();
 
                 ClickableTransparentOverlay.Overlay.RunInfiniteLoop();
-            }); 
+            });
+        }
+
+        public static void MainLogicInputHook()
+        {
+            Hook.KeyboardHook.Add((VirtualKeyCode.Insert, KeyState.Up), () =>
+            {
+                showMainMenu = !showMainMenu;
+            });
         }
 
         private static IEnumerator<Wait> MainLogic()
@@ -28,27 +47,13 @@ namespace ByulMacro.GUI
             while (true)
             {
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
-                ImGui.Begin("이벤트 관리자");
-                ImGui.ShowStyleEditor();
-                ImGui.SetWindowSize(new Vector2(300, 400));
-                if (ImGui.BeginMenu("이미지 찾기"))
+                if (showMainMenu)
                 {
-                    ImGui.Button("test 1");
-                    ImGui.Text("test 2");
-                    ImGui.Text("test 3");
-                    ImGui.Text("test 4");
-                    if (ImGui.BeginMenu("찾은 경우")) {
-                        ImGui.Text("test 1");
-                        ImGui.Text("test 2");
-                        ImGui.Text("test 3");
-                        ImGui.Text("test 4");
-                    }
-                        
-                        
-                    ImGui.EndMenu();
+                    foreach(var commandRenderer in test)
+                    {
+                        commandRenderer.Render();
+                    } 
                 }
-                ImGui.EndMenu();  
-                ImGui.End();
             }
         }
     }

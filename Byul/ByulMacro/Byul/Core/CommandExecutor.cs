@@ -8,7 +8,7 @@ namespace ByulMacro.Byul.Core
 {
     public class CommandExecutor
     {
-        public List<ILogic> commandList = new List<ILogic>();
+        public List<ICommand> commandList = new List<ICommand>();
         public void UpdateAndExecute()
         {
             foreach(var logic in commandList)

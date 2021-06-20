@@ -51,8 +51,8 @@ namespace ByulMacro.Byul.Components
                         //크랍 이미지가 존재하는 경우에만 디버그 시도
                         if (cropImage != null)
                         {
-                            var captureScreen = Utility.CaptureScreenToBitmap(); 
-                            var result = Pixel.Compare.Match(captureScreen, cropImage.Bitmap, 0.25f); 
+                            var captureScreen = Utility.CaptureScreenToBitmap();
+                            var result = Pixel.Compare.Match(captureScreen, cropImage.Bitmap);
                             if (result.IsMatch() == false)
                             { 
                                 outputResult = null;
