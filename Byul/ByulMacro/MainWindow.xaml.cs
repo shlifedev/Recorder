@@ -71,7 +71,7 @@ namespace ByulMacro
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CreateImage test = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(300, 410), new OpenCvSharp.Point(150, 40), "test");
-            test.Mat.SaveImage("test/test.png");
+            test.Mat.SaveImage("temp/test.png");
             Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
 
             Cv2.ImShow("result", result);

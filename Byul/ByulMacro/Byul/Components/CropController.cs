@@ -95,7 +95,7 @@ namespace ByulMacro.Byul.Components
                 Cropping = false;
                 System.Threading.Thread.Sleep(500);
                 CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(_sX, _sY), new OpenCvSharp.Point(_distX, _distY), null);
-                croppedScreeen.Bitmap.Save("test/test.png"); 
+                croppedScreeen.Bitmap.Save("temp/Cropped.png"); 
                 CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
                 cropImage = croppedScreeen;
                 outputCenter = oCenter;
