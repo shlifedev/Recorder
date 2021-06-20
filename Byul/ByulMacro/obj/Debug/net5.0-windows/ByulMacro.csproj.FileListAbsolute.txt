@@ -4,7 +4,6 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-window
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ByulMacro.runtimeconfig.dev.json
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ByulMacro.dll
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ref\ByulMacro.dll
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ByulMacro.pdb
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.AssemblyReference.cache
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\MainWindow.g.cs
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\App.g.cs
@@ -18,7 +17,6 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-window
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.CoreCompileInputs.cache
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.dll
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ref\ByulMacro.dll
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.pdb
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.genruntimeconfig.cache
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\runtimes\linux-x64\native\libcimgui.so
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\runtimes\osx-x64\native\libcimgui.dylib
@@ -37,4 +35,3 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-window
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.CopyComplete
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.Fody.CopyLocal.cache
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ClickableTransparentOverlay.dll
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ClickableTransparentOverlay.pdb

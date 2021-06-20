@@ -48,11 +48,12 @@ namespace ByulMacro.Byul.Components
                 {
                     if (_enableDebug)
                     {
+        
                         //크랍 이미지가 존재하는 경우에만 디버그 시도
                         if (cropImage != null)
                         {
                             var captureScreen = Utility.CaptureScreenToBitmap();
-                            var result = Pixel.Compare.Match(captureScreen, cropImage.Bitmap);
+                            var result = Pixel.Compare.Match(captureScreen, cropImage.Bitmap); 
                             if (result.IsMatch() == false)
                             { 
                                 outputResult = null;
@@ -94,9 +95,8 @@ namespace ByulMacro.Byul.Components
                 Cropping = false;
                 System.Threading.Thread.Sleep(500);
                 CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(_sX, _sY), new OpenCvSharp.Point(_distX, _distY), null);
-                croppedScreeen.Bitmap.Save("test/test.png");
-                //현재 스크린에 크랍 이미지 체크   
-                Pixel.Utility.CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
+                croppedScreeen.Bitmap.Save("test/test.png"); 
+                CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
                 cropImage = croppedScreeen;
                 outputCenter = oCenter;
                 outputResult = oResult;
@@ -116,8 +116,7 @@ namespace ByulMacro.Byul.Components
 
         public void Render(GraphicsFactory gf, Graphics gfx)
         {
-            gfx.ClearScene();
-
+            gfx.ClearScene(); 
             if (outputResult != null)
             {
               //  gfx.DrawBox2D(gfx.CreateSolidBrush(0, 0, 0, 100), gfx.CreateSolidBrush(0, 0, 0, 100), outputCenter.X - 20, outputCenter.Y - 20, outputCenter.X + 20, outputCenter.Y + 20, 3);
