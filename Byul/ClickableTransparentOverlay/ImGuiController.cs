@@ -66,7 +66,7 @@ namespace ClickableTransparentOverlay
             ImGui.SetCurrentContext(context);
 
 
-            ImGui.GetIO().Fonts.AddFontFromFileTTF("de.ttf",  14, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
+            ImGui.GetIO().Fonts.AddFontFromFileTTF("font.ttf",  14, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
             byte* data;
             int _width, _height;
             ImGui.GetIO().Fonts.GetTexDataAsAlpha8(out data, out _width, out _height); 
@@ -141,6 +141,8 @@ namespace ClickableTransparentOverlay
                 gd.PointSampler));
 
             _fontTextureResourceSet = factory.CreateResourceSet(new ResourceSetDescription(_textureLayout, _fontTextureView));
+
+ 
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using System.Threading;
 using Coroutine;
@@ -221,6 +222,35 @@ namespace ClickableTransparentOverlay
             height = texture.Height;
             handle = imController.GetOrCreateImGuiBinding(graphicsDevice.ResourceFactory, texture);
         }
+
+        /// <summary>
+        /// 스트림에 이미지를 태그로 추가함
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="tag"></param>
+        /// <param name="handle"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public static void AddOrGetImagePointerStream(
+           Stream stream,
+           string tag,
+           out IntPtr handle,
+           out uint width,
+           out uint height)
+        {
+            if (!loadedImages.TryGetValue(tag, out Texture texture))
+            {
+                stream.Position = 0;
+                ImageSharpTexture imgSharpTexture = new ImageSharpTexture(stream);
+                texture = imgSharpTexture.CreateDeviceTexture(graphicsDevice, graphicsDevice.ResourceFactory);
+                loadedImages.Add(tag, texture);
+            }
+
+            width = texture.Width;
+            height = texture.Height;
+            handle = imController.GetOrCreateImGuiBinding(graphicsDevice.ResourceFactory, texture);
+        }
+
 
         /// <summary>
         /// Free all resources acquired by the overlay.

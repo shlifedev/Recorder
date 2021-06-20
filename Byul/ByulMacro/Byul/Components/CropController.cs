@@ -46,7 +46,7 @@ namespace ByulMacro.Byul.Components
             {
                 while (true)
                 {
-                    if (_enableDebug)
+                    if (_enableDebug )
                     {
         
                         //크랍 이미지가 존재하는 경우에만 디버그 시도

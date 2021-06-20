@@ -14,8 +14,10 @@ namespace ByulMacro.GUI.Command
             //테스트 랜더링 소스
             ImGui.Text($"[{index}]");
             ImGui.SameLine();
-            if (ImGui.TreeNode($"[{index}] Find Image And Click Other"))
+            if (ImGui.TreeNode($"[{index}] Find Image And Click"))
             {
+                ImGui.Image(System.IntPtr.Zero, new System.Numerics.Vector2(100, 100));
+                ImGui.Button("Select Image");
                 ImGui.Button("crop");
                 ImGui.TreePop();
             }

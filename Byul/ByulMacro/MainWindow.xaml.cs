@@ -63,6 +63,8 @@ namespace ByulMacro
             cropController = new CropController();
         }  
 
+        
+
         /// <summary>
         /// 실험용 테스트코드 작성
         /// </summary>
@@ -74,6 +76,7 @@ namespace ByulMacro
             test.Mat.SaveImage("temp/test.png");
             Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
 
+ 
             Cv2.ImShow("result", result);
         }
     }
