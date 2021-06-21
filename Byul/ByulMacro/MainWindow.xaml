@@ -5,9 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ByulMacro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="155" Width="255">
+        Title="MainWindow" Height="800" Width="600"
+        Background="#181735"
+        ResizeMode="NoResize"
+        WindowStyle="None">
     <Grid>
-        <Button Content="Test&#xD;&#xA;" HorizontalAlignment="Center" Height="22" Margin="0,10,0,0" VerticalAlignment="Top" Width="235" Click="Button_Click"/>
-        <Image x:Name="resultImg" HorizontalAlignment="Left" Height="91" Margin="7,38,0,0" VerticalAlignment="Top" Width="234"/> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200">
+            </ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Background="#0F0F2D" Grid.ColumnSpan="3" Height="35">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125"/> 
+                <ColumnDefinition Width="125"/> 
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="로그인"
+                       Foreground="LightGray"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       FontWeight="Heavy"/>
+            <TextBlock Text="매크로"
+                       Foreground="LightGray"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       FontWeight="Heavy"/>
+            <TextBlock Text="설정"
+                       Foreground="LightGray"
+                       Grid.Column="2"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       FontWeight="Heavy"/>
+        </Grid>
     </Grid>
 </Window>

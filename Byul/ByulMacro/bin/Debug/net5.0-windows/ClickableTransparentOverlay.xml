@@ -200,6 +200,16 @@
             <param name="width">width of the loaded image.</param>
             <param name="height">height of the loaded image.</param>
         </member>
+        <member name="M:ClickableTransparentOverlay.Overlay.AddOrGetImagePointerStream(System.IO.Stream,System.String,System.IntPtr@,System.UInt32@,System.UInt32@)">
+            <summary>
+            스트림에 이미지를 태그로 추가함
+            </summary>
+            <param name="stream"></param>
+            <param name="tag"></param>
+            <param name="handle"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+        </member>
         <member name="M:ClickableTransparentOverlay.Overlay.Dispose">
             <summary>
             Free all resources acquired by the overlay.

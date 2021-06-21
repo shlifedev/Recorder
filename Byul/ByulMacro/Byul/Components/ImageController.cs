@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByulMacro.Byul.Core
+namespace ByulMacro.Byul.Components
 {
-    public interface ICommand
-    { 
-        public bool Execute();
+    public class ImageController
+    {
+        
     }
 }
- 

@@ -94,9 +94,14 @@ namespace ByulMacro.Byul.Components
                 _distY = (_lY - _sY);
                 Cropping = false;
                 System.Threading.Thread.Sleep(500);
+                
+                //이미지 실제 생성과정
                 CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(_sX, _sY), new OpenCvSharp.Point(_distX, _distY), null);
-                croppedScreeen.Bitmap.Save("temp/Cropped.png"); 
+                //크랍 완료후 Cropped.png로 저장함(임시)
+                croppedScreeen.Bitmap.Save("temp/Cropped.png");
+                //캡쳐한 스크린과 매칭 테스트 함. 불필요한 과정
                 CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
+
                 cropImage = croppedScreeen;
                 outputCenter = oCenter;
                 outputResult = oResult;

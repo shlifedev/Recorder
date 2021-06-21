@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Byul\Core\ImageFactory\" />
     <Folder Include="WPFGUI\ImageCrop\" />
   </ItemGroup>
 

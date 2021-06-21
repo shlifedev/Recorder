@@ -15,9 +15,10 @@ namespace Pixel
   
     public static class ImageFactory
     {
-        public static Dictionary<string, CreateImage> imageContainer = new Dictionary<string, CreateImage>();
-
-
+        /// <summary>
+        /// 이미지의 구분태그를 기준으로 컨테이너에 생성한다.
+        /// </summary>
+        public static Dictionary<string, CreateImage> imageContainer = new Dictionary<string, CreateImage>(); 
         public static CreateImage GetImageWithTag(string tag) {
             var result = imageContainer.TryGetValue(tag, out CreateImage value);
             if (result == false)
