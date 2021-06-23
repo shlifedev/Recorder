@@ -35,3 +35,4 @@ C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-window
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.CopyComplete
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\ByulMacro.csproj.Fody.CopyLocal.cache
 C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\bin\Debug\net5.0-windows\ClickableTransparentOverlay.dll
+C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\ByulMacro\obj\Debug\net5.0-windows\App.baml

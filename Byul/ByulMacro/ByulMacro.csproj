@@ -20,6 +20,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WPFGUI\ImageCrop\**" />
+    <EmbeddedResource Remove="WPFGUI\ImageCrop\**" />
+    <None Remove="WPFGUI\ImageCrop\**" />
+    <Page Remove="WPFGUI\ImageCrop\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Coroutine" Version="2.1.1" />
     <PackageReference Include="Costura.Fody" Version="5.3.0">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +38,7 @@
     </PackageReference>
     <PackageReference Include="GameOverlay.Net" Version="4.3.1" />
     <PackageReference Include="LowLevelInput.Net" Version="1.36.6" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
     <PackageReference Include="OpenCvSharp4" Version="4.5.2.20210404" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.5.2.20210404" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.5.2.20210404" />
@@ -43,7 +51,9 @@
 
   <ItemGroup>
     <Folder Include="Byul\Core\ImageFactory\" />
-    <Folder Include="WPFGUI\ImageCrop\" />
+    <Folder Include="WPFGUI\Controll\" />
+    <Folder Include="WPFGUI\Macro\" />
+    <Folder Include="WPFGUI\Login\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -87,6 +87,30 @@
           "lib/LowLevelInput.dll": {}
         }
       },
+      "MaterialDesignColors/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/MaterialDesignColors.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MaterialDesignColors.dll": {}
+        }
+      },
+      "MaterialDesignThemes/4.1.0": {
+        "type": "package",
+        "dependencies": {
+          "MaterialDesignColors": "2.0.1"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll": {}
+        },
+        "build": {
+          "build/MaterialDesignThemes.targets": {}
+        }
+      },
       "Microsoft.CSharp/4.0.1": {
         "type": "package",
         "dependencies": {
@@ -1964,6 +1988,61 @@
         "lib/LowLevelInput.xml",
         "lowlevelinput.net.1.36.6.nupkg.sha512",
         "lowlevelinput.net.nuspec"
+      ]
+    },
+    "MaterialDesignColors/2.0.1": {
+      "sha512": "Azl8nN23SD6QPE0PdsfpKiIqWTvH7rzXwgXPiFSEt91NFOrwB5cx3iq/sbINWMZunhXJ32+jVUHiV03B8eJbZw==",
+      "type": "package",
+      "path": "materialdesigncolors/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/MaterialDesignColors.Icon.png",
+        "lib/net452/MaterialDesignColors.dll",
+        "lib/net452/MaterialDesignColors.pdb",
+        "lib/netcoreapp3.1/MaterialDesignColors.dll",
+        "lib/netcoreapp3.1/MaterialDesignColors.pdb",
+        "materialdesigncolors.2.0.1.nupkg.sha512",
+        "materialdesigncolors.nuspec"
+      ]
+    },
+    "MaterialDesignThemes/4.1.0": {
+      "sha512": "WqrO9AbtdE4pLPtDk/C5BZRnkgWFwVGyUHWj7tRJrgnKl089DEobVXBCLeqp2mkgBeFHj4Xe3AfWyhmlnO6AZA==",
+      "type": "package",
+      "path": "materialdesignthemes/4.1.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/MaterialDesignThemes.targets",
+        "build/Resources/Roboto/Roboto-Black.ttf",
+        "build/Resources/Roboto/Roboto-BlackItalic.ttf",
+        "build/Resources/Roboto/Roboto-Bold.ttf",
+        "build/Resources/Roboto/Roboto-BoldItalic.ttf",
+        "build/Resources/Roboto/Roboto-Italic.ttf",
+        "build/Resources/Roboto/Roboto-Light.ttf",
+        "build/Resources/Roboto/Roboto-LightItalic.ttf",
+        "build/Resources/Roboto/Roboto-Medium.ttf",
+        "build/Resources/Roboto/Roboto-MediumItalic.ttf",
+        "build/Resources/Roboto/Roboto-Regular.ttf",
+        "build/Resources/Roboto/Roboto-Thin.ttf",
+        "build/Resources/Roboto/Roboto-ThinItalic.ttf",
+        "build/Resources/Roboto/RobotoCondensed-Bold.ttf",
+        "build/Resources/Roboto/RobotoCondensed-BoldItalic.ttf",
+        "build/Resources/Roboto/RobotoCondensed-Italic.ttf",
+        "build/Resources/Roboto/RobotoCondensed-Light.ttf",
+        "build/Resources/Roboto/RobotoCondensed-LightItalic.ttf",
+        "build/Resources/Roboto/RobotoCondensed-Regular.ttf",
+        "images/MaterialDesignThemes.Icon.png",
+        "lib/net452/MaterialDesignThemes.Wpf.dll",
+        "lib/net452/MaterialDesignThemes.Wpf.pdb",
+        "lib/net452/MaterialDesignThemes.Wpf.xml",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.pdb",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.xml",
+        "materialdesignthemes.4.1.0.nupkg.sha512",
+        "materialdesignthemes.nuspec",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
     "Microsoft.CSharp/4.0.1": {
@@ -6111,6 +6190,7 @@
       "Fody >= 6.5.1",
       "GameOverlay.Net >= 4.3.1",
       "LowLevelInput.Net >= 1.36.6",
+      "MaterialDesignThemes >= 4.1.0",
       "OpenCvSharp4 >= 4.5.2.20210404",
       "OpenCvSharp4.Windows >= 4.5.2.20210404",
       "OpenCvSharp4.runtime.win >= 4.5.2.20210404",
@@ -6188,6 +6268,10 @@
           "LowLevelInput.Net": {
             "target": "Package",
             "version": "[1.36.6, )"
+          },
+          "MaterialDesignThemes": {
+            "target": "Package",
+            "version": "[4.1.0, )"
           },
           "OpenCvSharp4": {
             "target": "Package",

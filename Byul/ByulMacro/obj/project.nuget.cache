@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "R41LSAqYV0TSPOo2VKrHQWba5VdxJRSShZgwPY+PA/FYPXeXxU1eLV3BT5ZbrL3kChO1iHQZATH/CRIl+oyZPg==",
+  "dgSpecHash": "lgtG7qQNeSvbrRRTyqi3jymemGBCWjEqy7Fp0ts2gkFITsAWjJXmhElucIaL0R6/FMPOigj4X8p8j4vEjYbRYg==",
   "success": true,
   "projectFilePath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ByulMacro\\ByulMacro.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\shlif\\.nuget\\packages\\gameoverlay.net\\4.3.1\\gameoverlay.net.4.3.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\imgui.net\\1.78.0\\imgui.net.1.78.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\lowlevelinput.net\\1.36.6\\lowlevelinput.net.1.36.6.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\materialdesigncolors\\2.0.1\\materialdesigncolors.2.0.1.nupkg.sha512",
+    "C:\\Users\\shlif\\.nuget\\packages\\materialdesignthemes\\4.1.0\\materialdesignthemes.4.1.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.0.3\\microsoft.dotnet.platformabstractions.2.0.3.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\microsoft.extensions.dependencymodel\\2.0.3\\microsoft.extensions.dependencymodel.2.0.3.nupkg.sha512",

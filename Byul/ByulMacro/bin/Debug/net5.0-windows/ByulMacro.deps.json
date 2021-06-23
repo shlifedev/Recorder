@@ -14,6 +14,7 @@
           "Fody": "6.5.1",
           "GameOverlay.Net": "4.3.1",
           "LowLevelInput.Net": "1.36.6",
+          "MaterialDesignThemes": "4.1.0",
           "OpenCvSharp4": "4.5.2.20210404",
           "OpenCvSharp4.Windows": "4.5.2.20210404",
           "OpenCvSharp4.runtime.win": "4.5.2.20210404",
@@ -95,6 +96,25 @@
           "lib/LowLevelInput.dll": {
             "assemblyVersion": "1.36.6.0",
             "fileVersion": "1.36.6.0"
+          }
+        }
+      },
+      "MaterialDesignColors/2.0.1": {
+        "runtime": {
+          "lib/netcoreapp3.1/MaterialDesignColors.dll": {
+            "assemblyVersion": "2.0.1.2556",
+            "fileVersion": "2.0.1.2556"
+          }
+        }
+      },
+      "MaterialDesignThemes/4.1.0": {
+        "dependencies": {
+          "MaterialDesignColors": "2.0.1"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll": {
+            "assemblyVersion": "4.1.0.2556",
+            "fileVersion": "4.1.0.2556"
           }
         }
       },
@@ -1271,6 +1291,20 @@
       "sha512": "sha512-CTQFfpAh8V8jKppL0k34Xbr95Q3hfEKvl+bYYBvE0cTh+hiSQj6PhE0qd8jkbOBfA0O7KhDJgYC6qWa7LqBQtw==",
       "path": "lowlevelinput.net/1.36.6",
       "hashPath": "lowlevelinput.net.1.36.6.nupkg.sha512"
+    },
+    "MaterialDesignColors/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Azl8nN23SD6QPE0PdsfpKiIqWTvH7rzXwgXPiFSEt91NFOrwB5cx3iq/sbINWMZunhXJ32+jVUHiV03B8eJbZw==",
+      "path": "materialdesigncolors/2.0.1",
+      "hashPath": "materialdesigncolors.2.0.1.nupkg.sha512"
+    },
+    "MaterialDesignThemes/4.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WqrO9AbtdE4pLPtDk/C5BZRnkgWFwVGyUHWj7tRJrgnKl089DEobVXBCLeqp2mkgBeFHj4Xe3AfWyhmlnO6AZA==",
+      "path": "materialdesignthemes/4.1.0",
+      "hashPath": "materialdesignthemes.4.1.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.0.1": {
       "type": "package",
