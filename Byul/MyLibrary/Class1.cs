@@ -9,11 +9,26 @@ namespace MyLibrary
 {
     public static class Caller
     {
+        /// <summary>
+        /// Driver Load From My Custom C++ Library
+        /// 0 = Loaded
+        /// -1 = Not Installed
+        /// -2 = Unknown, Please Reboot or Window Update Latest
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="tick"></param>
         [DllImport("shlifedev.dll", CallingConvention = CallingConvention.FastCall)]
-        public extern static void Initialize(IntPtr hWnd, float tick);
+        public extern static int Initialize(IntPtr hWnd, float tick);
 
+        /// <summary>
+        /// Require PC Reboot
+        /// -3 Unknown, Please Update Window Latest
+        /// -2 = Already Installed
+        /// -1 = Install Failed
+        /// 0 = Install Succesfully 
+        /// </summary>
         [DllImport("shlifedev.dll")]
-        public extern static void InstallHIDDriver();
+        public extern static int InstallHIDDriver();
 
 
     }
