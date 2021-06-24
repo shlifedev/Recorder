@@ -20,7 +20,7 @@ namespace ByulMacro.GUI
                 if(inst == null)
                 {
                     inst = new OverlayProcessSelector();
-                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.Insert, LowLevelInput.Hooks.KeyState.Down, () => {
+                    Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lcontrol, LowLevelInput.Hooks.VirtualKeyCode.Two, () => {
                         OverlayProcessSelector.inst.show = !OverlayProcessSelector.inst.show;
                     });
                     return inst;

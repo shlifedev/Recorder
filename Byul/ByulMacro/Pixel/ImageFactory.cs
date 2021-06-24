@@ -36,6 +36,7 @@ namespace Pixel
 
         public static bool IsExistTag(string tag)
         {
+            if (tag == null) return false;
             if (imageContainer.ContainsKey(tag)) 
                 return true; 
             else

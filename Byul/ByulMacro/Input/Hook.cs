@@ -16,7 +16,7 @@ namespace ByulMacro.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
-
+        private static bool Logging = false;
         
         public static LowLevelInput.Hooks.InputManager inputManager;
 
@@ -43,22 +43,25 @@ namespace ByulMacro.Input
         {
             if (KeyComboHook.ContainsKey((k1, k2)))
             {
+                Logger.Log("Add Keyboard Combo", $"{k1}+{k2}");
                 KeyComboHook[(k1, k2)] += callback;
             }
             else
             {
+                Logger.Log("Add New Keyboard Combo", $"{k1}+{k2}");
                 KeyComboHook.Add((k1, k2), callback);
-            }
-   
+            } 
         }
         public static void AddMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback)
         {
             if (MouseHook.ContainsKey((key,state)))
             {
+                Logger.Log("Add Mouse Hook", $"{key} {state}");
                 MouseHook[(key,state)] += callback;
             }
             else
             {
+                Logger.Log("Add New Mouse Hook", $"{key} {state}");
                 MouseHook.Add((key, state), callback);
             } 
         }
@@ -66,10 +69,12 @@ namespace ByulMacro.Input
         {
             if (KeyboardHook.ContainsKey((key, state)))
             {
+                Logger.Log("Add Mouse Hook", $"{key} {state}");
                 KeyboardHook[(key, state)] += callback;
             }
             else
             {
+                Logger.Log("Add New Kb Hook", $"{key} {state}");
                 KeyboardHook.Add((key, state), callback);
             } 
         }
@@ -85,8 +90,10 @@ namespace ByulMacro.Input
 
         private static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
         {
-            System.Action callback; 
+            System.Action callback;
             //Console.WriteLine($"{key}, {state}");
+
+            Console.WriteLine($"{key} {state}");
             KeyboardHook.TryGetValue((key, state), out callback);
            
             if (callback != null) 
@@ -102,6 +109,7 @@ namespace ByulMacro.Input
             {
                 if (_ComboStartKey != key)
                 {
+                    if(Logging)
                     Logger.Log("KeyCombo", $"Complate Combo {_ComboStartKey} + {key}");
                     //Console.WriteLine("Combo hitted " + $"{_ComboStartKey} + {key}");
                     var result = KeyComboHook.TryGetValue((_ComboStartKey, key), out var comboCallback);

@@ -37,7 +37,18 @@ namespace ByulMacro.Temporary
 
         public override void MouseDown(VirtualKeyCode key)
         {
-            throw new NotImplementedException();
+            if(key == VirtualKeyCode.Lbutton)
+            {
+                InputSimulator.Mouse.MouseDown(InputSimulator.Mouse.Buttons.Left);
+            }
+            else if(key == VirtualKeyCode.Rbutton)
+            {
+                InputSimulator.Mouse.MouseDown(InputSimulator.Mouse.Buttons.Right);
+            }
+            else
+            {
+                Logger.Error("IO Error", $"{key} is not support");
+            }
         }
 
         public override void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end)

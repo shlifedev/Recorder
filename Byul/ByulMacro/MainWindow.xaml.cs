@@ -5,6 +5,7 @@ using ByulMacro.GUI;
 using ByulMacro.Input;
 using HOSAuto.Overlay;
 using LowLevelInput.Hooks;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -31,11 +32,10 @@ namespace ByulMacro
         }
          
         [Run]
-        public static void HookByulExit()
+        public static void HookForDebug()
         {
-             
-            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.One, () => {
-                //Console.WriteLine("Test Exit" + Thread.CurrentThread.ManagedThreadId); 
+       
+            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.One, () => { 
                 Dispatcher.CurrentDispatcher.Invoke(() => {
                     Process.GetCurrentProcess().Kill();
                 }); 
@@ -61,9 +61,7 @@ namespace ByulMacro
             Hook.HookInit(); // 입력 이벤트 추가 
             Overlay.Instance.Run();   
             cropController = new CropController(); 
-            RunAttributeInitializer.Init();
-
-
+            RunAttributeInitializer.Init(); 
             var students = new List<Command>() {
                 new CommandImageFindAndClick()
             }; 
