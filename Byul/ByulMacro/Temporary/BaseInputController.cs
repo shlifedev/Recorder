@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.Temporary
 {
- 
+
     public abstract class BaseInputController : IInputController
     {
         private const uint MK_LBUTTON = 0x0001;
@@ -24,37 +24,62 @@ namespace ByulMacro.Temporary
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        protected IntPtr MakeParam(int p, int p2) 
+        protected IntPtr MakeParam(int p, int p2)
         {
             return (IntPtr)((p2 << 16) | (p & 0xffff));
         }
+        protected IntPtr MakeParam(Vector2 vec)
+        {
+            return (IntPtr)(((int)vec.Y << 16) | ((int)vec.X & 0xffff));
+        }
         public void WMMouseLeftClick(Process process, Vector2 position)
         {
-            var t = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONDOWN, (IntPtr)1, MakeParam((int)position.X, (int)position.Y));
-            PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONUP, (IntPtr)0, MakeParam((int)position.X, (int)position.Y));
-            Console.WriteLine("send result:" + t);
-
+            var r1 = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONDOWN, (IntPtr)1, MakeParam((int)position.X, (int)position.Y));
+            var r2 = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONUP, (IntPtr)0, MakeParam((int)position.X, (int)position.Y));
+            if (r1 && r2) { } // Success 
+            else { } // Failed
         }
+
+
+        public void WMMouseLeftDrag(Process process, Vector2 downPosition, Vector2 upPosition, int whenDownThreadSleepTime)
+        {
+            var r1 = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONDOWN, (IntPtr)1, MakeParam(downPosition));
+            System.Threading.Thread.Sleep(whenDownThreadSleepTime);
+            var r2 = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONUP, (IntPtr)0, MakeParam(upPosition));
+            if (r1 && r2) { } // Success 
+            else { } // Failed
+        }
+
 
         public void WMMouseRightClick(Process process, Vector2 position)
         {
-            throw new NotImplementedException();
+            var r1 = PostMessage(process.MainWindowHandle, (uint)WM.WM_RBUTTONDOWN, (IntPtr)1, MakeParam((int)position.X, (int)position.Y));
+            var r2 = PostMessage(process.MainWindowHandle, (uint)WM.WM_RBUTTONUP, (IntPtr)0, MakeParam((int)position.X, (int)position.Y));
+            if (r1 && r2) { } // Success 
+            else { } // Failed
+        }
+
+        public void WMMouseLeftDoubleClick(Process process, Vector2 position)
+        {
+            var r1 = PostMessage(process.MainWindowHandle, (uint)WM.WM_LBUTTONDBLCLK, (IntPtr)1, MakeParam((int)position.X, (int)position.Y));
+            if (r1) { } // Success 
+            else { } // Failed
         }
 
         public void WMKeyboard(Process process, WM wm, VK vkMsg)
         {
             var result = PostMessage(process.MainWindowHandle, (uint)wm, (IntPtr)vkMsg, IntPtr.Zero);
-            Console.WriteLine(result); 
-        } 
+            Console.WriteLine(result);
+        }
         /// <summary>
         /// 윈도우 메세지로 보내기
         /// </summary>
         public void WMMouseClick()
         {
-            
+
         }
 
-    
+
         public void HookKeyboardEvent(VirtualKeyCode key, KeyState state, Action callback)
         {
             ByulMacro.Input.Hook.AddKeyboardEvent(key, state, callback);
@@ -75,6 +100,6 @@ namespace ByulMacro.Temporary
         public abstract void MouseUp(VirtualKeyCode key);
         public abstract void MoveMouse(int x, int y);
 
- 
+
     }
 }

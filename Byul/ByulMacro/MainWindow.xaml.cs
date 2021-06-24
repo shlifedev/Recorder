@@ -48,7 +48,6 @@ namespace ByulMacro
             externalOverlay  = new Renderer(1920, 1080, (gf, gfx)=> {
                 gfx.ClearScene(); 
                 gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
-                 
             });
             externalOverlay.Run();
         }
