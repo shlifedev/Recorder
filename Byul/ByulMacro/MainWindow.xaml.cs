@@ -25,6 +25,7 @@ using ByulMacro.Input;
 using HOSAuto.Overlay;
 using ByulMacro.Byul.Components;
 using ByulMacro.GUI;
+using ByulMacro.Byul.Core;
 
 namespace ByulMacro
 {
@@ -39,8 +40,7 @@ namespace ByulMacro
 
 
         private Renderer externalOverlay = null;
-        private CropController cropController;
-        private GUI.Overlay overlay = new GUI.Overlay();
+        private CropController cropController; 
         private DateTime lastTime;
 
 
@@ -52,7 +52,13 @@ namespace ByulMacro
                 gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
             });
             externalOverlay.Run();
-        }  
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+   
+        }
+
         public MainWindow()
         {
             AllocConsole(); // 콘솔 할당 
@@ -61,7 +67,19 @@ namespace ByulMacro
             Hook.HookInit(); // 입력 이벤트 추가
             Overlay.Run();
             cropController = new CropController();
-        }  
+
+            var students = new List<Byul.Core.Command>() {
+                new CommandImageFindAndClick()
+            };
+            
+            V_ContentList.ItemsSource = students;
+             
+
+
+
+        }
+ 
+
 
         
 
@@ -78,6 +96,11 @@ namespace ByulMacro
 
  
             Cv2.ImShow("result", result);
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

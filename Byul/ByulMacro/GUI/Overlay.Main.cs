@@ -21,32 +21,17 @@ namespace ByulMacro.GUI
     {
         
         private static bool showMainMenu = true;
-        public static List<ICommandRenderer> test = new List<ICommandRenderer>(); 
+        public static List<ICommandRenderer> test = new List<ICommandRenderer>();
+        public static List<Process> processList = new List<Process>();
+
         public static void Run()
-        {
-
-
-            var t = Pixel.Utility.CaptureScreenToBitmap();
-            t.Save("test.png");
-            var ms = new MemoryStream();
-            t.Save(ms, ImageFormat.Bmp); 
-             
-            ClickableTransparentOverlay.Overlay.AddOrGetImagePointerStream(ms, "test2.png", out var testptr2, out var width2, out var height2);
-
-
-            test.Add(new CommandRenderer());
-            test.Add(new CommandRenderer() { index = 1});
-            test.Add(new CommandRenderer() { index = 2});
-
-
-
+        { 
             Task.Run(() =>
             {
                 CoroutineHandler.Start(MainLogic());
-                MainLogicInputHook();
-
+                MainLogicInputHook(); 
                 ClickableTransparentOverlay.Overlay.RunInfiniteLoop();
-            });
+            }); 
         }
 
         public static void MainLogicInputHook()
@@ -64,12 +49,34 @@ namespace ByulMacro.GUI
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
                 if (showMainMenu)
                 {
-                    foreach(var commandRenderer in test)
+                    //foreach (var commandRenderer in test)
+                    //{
+                    //    commandRenderer.Render();
+                    //}
+                    //ClickableTransparentOverlay.Overlay.AddOrGetImagePointer("test2.png", out var testptr, out var width, out var height);
+                    //ImGui.Image(testptr, new Vector2(100, 100));
+
+                    ImGui.Begin("debug : process list");
+
+           
+
+                    if (ImGui.BeginMenu("Select Process"))
                     {
-                        commandRenderer.Render();
+                        Console.WriteLine("open");
+                        
+                        foreach (var value in processList)
+                        {
+                            if (!string.IsNullOrEmpty(value.MainWindowTitle))
+                            {
+                                if (ImGui.MenuItem(value.MainWindowTitle))
+                                {
+                                    Console.WriteLine(value.MainWindowTitle);
+                                }
+                            }
+                        }
+                        ImGui.EndMenu();
                     }
-                    ClickableTransparentOverlay.Overlay.AddOrGetImagePointer("test2.png", out var testptr, out var width, out var height);
-                    ImGui.Image(testptr, new Vector2(100, 100));
+                    ImGui.End();
                 }
             }
         }

@@ -54,13 +54,13 @@ namespace HOSAuto.Overlay
         public virtual void OnSetup(object sender, SetupGraphicsEventArgs e)
         {
             var gfx = e.Graphics;
-            Console.WriteLine("Overlay - OnSetup");
+            //Console.WriteLine("Overlay - OnSetup");
             GF.Init(gfx);  
         }
 
         public virtual void OnDestroy(object sender, DestroyGraphicsEventArgs e)
         {
-            Console.WriteLine("Overlay - OnDestroy");
+           // Console.WriteLine("Overlay - OnDestroy");
         }
         public virtual void OnDraw(object sender, DrawGraphicsEventArgs e)
         {

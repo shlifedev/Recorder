@@ -66,7 +66,7 @@ namespace ClickableTransparentOverlay
             ImGui.SetCurrentContext(context);
 
 
-            ImGui.GetIO().Fonts.AddFontFromFileTTF("font.ttf",  14, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
+            ImGui.GetIO().Fonts.AddFontFromFileTTF("font.ttf",  19, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
             byte* data;
             int _width, _height;
             ImGui.GetIO().Fonts.GetTexDataAsAlpha8(out data, out _width, out _height); 

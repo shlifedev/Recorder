@@ -1,6 +1,7 @@
 ﻿using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -38,6 +39,9 @@ namespace ByulMacro.Temporary
         void MouseClick(VirtualKeyCode key);
         void MouseDoubleClick(VirtualKeyCode key);
         void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end);
+
+        void WMMouseLeftClick(Process process, Vector2 position);
+        void WMMouseRightClick(Process process, Vector2 position); 
 
 
 

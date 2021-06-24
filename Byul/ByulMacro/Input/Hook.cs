@@ -1,4 +1,5 @@
-﻿using LowLevelInput.Converters;
+﻿using ByulMacro.Temporary;
+using LowLevelInput.Converters;
 using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace ByulMacro.Input
 {
     public static class Hook
     {
+        public static IInputController IO;
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static void HookInit()
@@ -18,12 +20,12 @@ namespace ByulMacro.Input
             var inputManager = new LowLevelInput.Hooks.InputManager(); 
             // you may not need those when you use InputManager
             var keyboardHook = new LowLevelKeyboardHook();
-            var mouseHook = new LowLevelMouseHook();
-
+            var mouseHook = new LowLevelMouseHook(); 
             // subscribe to the events offered by InputManager
             inputManager.OnKeyboardEvent += InputManager_OnKeyboardEvent;
             inputManager.OnMouseEvent += InputManager_OnMouseEvent; 
-            inputManager.Initialize(); 
+            inputManager.Initialize();
+            IO = new TestInputController();
         }
 
 

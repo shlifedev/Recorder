@@ -6,21 +6,19 @@
         xmlns:local="clr-namespace:ByulMacro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="600"
+        Title="MainWindow" Height="600" Width="1000"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         TextElement.FontWeight="Medium"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         ResizeMode="NoResize"
         WindowStyle="None">
     <Grid>
-      
+
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200">
@@ -29,19 +27,17 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <materialDesign:Card Padding="32" Margin="16" Grid.Column="1" Grid.Row="1">
-            <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}">My First Material Design App</TextBlock>
-        </materialDesign:Card>
+
 
         <Grid Background="#0F0F2D" Grid.ColumnSpan="3" Height="35">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="125"/> 
-                <ColumnDefinition Width="125"/> 
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition Width="125"/>
                 <ColumnDefinition Width="125"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-    
+
             <TextBlock Text="로그인"
                        Foreground="LightGray"
                        Grid.Column="0"
@@ -64,5 +60,19 @@
                        HorizontalAlignment="Center"
                        FontWeight="Heavy"/>
         </Grid>
+        <ListView Grid.Row="1" 
+                  Grid.Column="1"
+                  Name="V_ContentList"
+                  FontSize="15" 
+                  HorizontalContentAlignment="Center" 
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="CommandTitle" DisplayMemberBinding="{Binding CommandTitle}" Width="100"/>
+                    <GridViewColumn Header="age" DisplayMemberBinding="{Binding age}" Width="80"/>
+                    <GridViewColumn Header="gender" DisplayMemberBinding="{Binding gender}" Width="80"/>
+                </GridView>
+            </ListView.View>
+        </ListView> 
     </Grid>
 </Window>

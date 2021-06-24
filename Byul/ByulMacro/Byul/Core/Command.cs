@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.Byul.Core
 {
-    public abstract class Command
+
+    public interface ICommand
+    {   
+        string CommandTitle { get; }
+        void Execute(); 
+    }
+
+    public abstract class Command : ICommand
     {
         /// <summary>
         /// 해당 커맨드에 대한 랜더러를 초기화 해야한다.
@@ -17,6 +24,17 @@ namespace ByulMacro.Byul.Core
         /// </summary>
         public int index = 0;
 
- 
+        public abstract string CommandTitle { get;} 
+        public abstract void Execute();
     }
+
+    public class CommandImageFindAndClick : Command
+    {
+        public override string CommandTitle => "해당 이미지를 찾은 후 클릭"; 
+        public override void Execute()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
