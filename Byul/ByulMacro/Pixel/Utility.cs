@@ -19,7 +19,7 @@ using static Pixel.Utility.User32;
 namespace Pixel
 {
 
-  
+
     public static class Utility
     {
         public class AppCaptrue
@@ -30,7 +30,7 @@ namespace Pixel
             public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
 
             public static Bitmap CaptrueHwnd(IntPtr hWnd)
-            { 
+            {
                 AppCaptureRect rc;
                 GetWindowRect(hWnd, out rc);
 
@@ -49,7 +49,7 @@ namespace Pixel
             public static Bitmap Captrue(string procName)
             {
                 var proc = Process.GetProcessesByName(procName)[0];
-                Console.WriteLine(proc.HandleCount);
+                //Console.WriteLine(proc.HandleCount);
                 return CaptrueHwnd(proc.MainWindowHandle);
             }
             [StructLayout(LayoutKind.Sequential)]
@@ -190,7 +190,7 @@ namespace Pixel
             var h = b.GetHbitmap();
             var bs = Imaging.CreateBitmapSourceFromHBitmap(h, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             return bs;
-        } 
+        }
 
         public static InputArray CreateInputArray(Bitmap bitmap)
         {
@@ -234,11 +234,11 @@ namespace Pixel
             return ms.ToArray();
 
         }
-   
-         
+
+
 
         public static Image CaptureWindow(IntPtr handle)
-        { 
+        {
             IntPtr hdcSrc = User32.GetWindowDC(handle);
             User32.RECT windowRect = new();
             _ = User32.GetWindowRect(handle, ref windowRect);
@@ -265,7 +265,7 @@ namespace Pixel
             Image img = CaptureScreen();
             img.Save(filename, format);
         }
-         
+
         /// <summary>
         /// 데스크톱 윈도우의 핸들을 캡쳐함
         /// </summary>

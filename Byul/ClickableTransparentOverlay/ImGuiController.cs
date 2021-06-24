@@ -7,9 +7,15 @@ using Veldrid;
 using System.Runtime.CompilerServices;
 using ImGuiNET;
 using static ClickableTransparentOverlay.NativeMethods;
-
+using System.Diagnostics;
+public static class FontPointer
+{
+    public static Dictionary<string, ImFontPtr> FontFactory = new Dictionary<string, ImFontPtr>();
+}
 namespace ClickableTransparentOverlay
 { 
+
+ 
     /// <summary>
     /// A modified version of Veldrid.ImGui's ImGuiRenderer.
     /// Manages input for ImGui and handles rendering ImGui's DrawLists with Veldrid.
@@ -63,20 +69,25 @@ namespace ClickableTransparentOverlay
             _windowHeight = height;
 
             IntPtr context = ImGui.CreateContext();
-            ImGui.SetCurrentContext(context);
+            ImGui.SetCurrentContext(context);  
+            DirectoryInfo di = new DirectoryInfo("fonts/");
+            Console.WriteLine(di.FullName) ;
+            var files = di.GetFiles("*.ttf"); 
+            foreach (var font in files) {
+                var ptr = ImGui.GetIO().Fonts.AddFontFromFileTTF($"fonts/{font.Name}", 12, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean());
+                FontPointer.FontFactory.Add(font.Name, ptr);
+            }
 
-
-            ImGui.GetIO().Fonts.AddFontFromFileTTF("font.ttf",  19, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
+            var defaultFont = ImGui.GetIO().Fonts.AddFontDefault();
+            FontPointer.FontFactory.Add("default", defaultFont);
             byte* data;
             int _width, _height;
             ImGui.GetIO().Fonts.GetTexDataAsAlpha8(out data, out _width, out _height);
-            Console.WriteLine("GUI 폰트 초기화 => " + _width + "," + _height);
+            Console.WriteLine($"GUI 폰트 초기화 => font.ttf " + _width + "," + _height);
             ImGui.GetIO().DisplaySize = new Vector2(_width, _height);
             CreateDeviceResources(gd, outputDescription);
-            SetKeyMappings();
-
-            SetPerFrameImGuiData(1f / 60f);
-
+            SetKeyMappings(); 
+            SetPerFrameImGuiData(1f / 60f); 
             ImGui.NewFrame();
             _frameBegun = true;
         }

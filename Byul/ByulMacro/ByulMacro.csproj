@@ -20,10 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="WPFGUI\ImageCrop\**" />
-    <EmbeddedResource Remove="WPFGUI\ImageCrop\**" />
-    <None Remove="WPFGUI\ImageCrop\**" />
-    <Page Remove="WPFGUI\ImageCrop\**" />
+    <Compile Remove="Core\UserInterface\WPFGUI\ImageCrop\**" />
+    <EmbeddedResource Remove="Core\UserInterface\WPFGUI\ImageCrop\**" />
+    <None Remove="Core\UserInterface\WPFGUI\ImageCrop\**" />
+    <Page Remove="Core\UserInterface\WPFGUI\ImageCrop\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,10 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Byul\Core\ImageFactory\" />
-    <Folder Include="WPFGUI\Controll\" />
-    <Folder Include="WPFGUI\Macro\" />
-    <Folder Include="WPFGUI\Login\" />
+    <Folder Include="Core\UserInterface\WPFGUI\Controll\" />
+    <Folder Include="Core\UserInterface\WPFGUI\Macro\" />
+    <Folder Include="Core\UserInterface\WPFGUI\Login\" />
   </ItemGroup>
 
   <ItemGroup>

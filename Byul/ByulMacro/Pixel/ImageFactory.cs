@@ -33,8 +33,19 @@ namespace Pixel
             if(imageContainer.ContainsKey(tag) == false) 
                 imageContainer.Add(tag, img); 
         }
+
+        public static bool IsExistTag(string tag)
+        {
+            if (imageContainer.ContainsKey(tag)) 
+                return true; 
+            else
+                return false;
+        }
         public static CreateImage CreateScreenCropImage(OpenCvSharp.Point start, OpenCvSharp.Point end, string tag)
         {
+            if (IsExistTag(tag)) 
+                throw new Exception($"tag {tag} already exist. cannot create image"); 
+            
             CreateImage ci = new CreateImage(CreateImage.Type.Cropped);
             var screen = Utility.CaptureScreenToCvMat();
             var sliceMat = screen.SubMat(new Rect(start.X, start.Y, end.X, end.Y));
@@ -49,8 +60,11 @@ namespace Pixel
                     var val =  r.Next(int.MinValue, int.MaxValue);
                     rsTemp += val.ToString();
                 }
+                ci.IsTemporaryImage = true;
                 ci.tag = rsTemp;
+                Console.WriteLine("create image temporary " + rsTemp);
             }
+            
 
             ci.filename = null;
             RegImage(ci, tag);
@@ -59,6 +73,9 @@ namespace Pixel
 
         public static CreateImage CreateFromFile(string filename, string tag)
         {
+            if (IsExistTag(tag))
+                throw new Exception($"tag {tag} already exist. cannot create image");
+
             CreateImage ci = new CreateImage(CreateImage.Type.File);
             ci.Bitmap = (Bitmap)Bitmap.FromFile(filename);
             ci.tag = tag;

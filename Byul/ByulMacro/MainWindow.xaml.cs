@@ -1,36 +1,15 @@
-﻿using Coroutine;
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
-using System;
-using Pixel;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls; 
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using ByulMacro.Core;
+using ByulMacro.Core.Attributes;
+using ByulMacro.Core.Components;
+using ByulMacro.GUI;
 using ByulMacro.Input;
 using HOSAuto.Overlay;
-using ByulMacro.Byul.Components;
-using ByulMacro.GUI;
-using ByulMacro.Byul.Core;
-using ByulMacro.Byul.Attributes;
-using System.Diagnostics;
-using System.Windows.Threading;
 using LowLevelInput.Hooks;
-
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Threading;
 namespace ByulMacro
 {
     public partial class MainWindow : System.Windows.Window
@@ -39,9 +18,8 @@ namespace ByulMacro
         [DllImport("kernel32.dll", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern int AllocConsole(); 
         private Renderer externalOverlay = null;
-        private CropController cropController;  
-      
-       
+        private CropController cropController; 
+
         public void InitializeExOverlayGUI()
         {
            
@@ -52,12 +30,12 @@ namespace ByulMacro
             externalOverlay.Run();
         }
          
-        [Byul.Attributes.Run]
+        [Run]
         public static void HookByulExit()
         {
              
             Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.One, () => {
-                Console.WriteLine("Test Exit" + Thread.CurrentThread.ManagedThreadId); 
+                //Console.WriteLine("Test Exit" + Thread.CurrentThread.ManagedThreadId); 
                 Dispatcher.CurrentDispatcher.Invoke(() => {
                     Process.GetCurrentProcess().Kill();
                 }); 
@@ -65,7 +43,7 @@ namespace ByulMacro
 
         }
 
-        [Byul.Attributes.Run]
+        [Run]
         public static void InitGUIEventHandler() => GUIEventHandler.OnSelectProcess += (process) =>
         { 
             var mw = (ByulMacro.MainWindow)Application.Current.MainWindow;
@@ -81,12 +59,12 @@ namespace ByulMacro
             InitializeComponent(); //component 초기화
             InitializeExOverlayGUI(); // gui 초기화   
             Hook.HookInit(); // 입력 이벤트 추가 
-            Overlay.Run();   
+            Overlay.Instance.Run();   
             cropController = new CropController(); 
             RunAttributeInitializer.Init();
 
 
-            var students = new List<Byul.Core.Command>() {
+            var students = new List<Command>() {
                 new CommandImageFindAndClick()
             }; 
             V_ContentList.ItemsSource = students; 

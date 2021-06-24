@@ -40,32 +40,47 @@ namespace ByulMacro.Input
  
 
         public static void AddKeyboardCombo(VirtualKeyCode k1, VirtualKeyCode k2, System.Action callback)
-        { 
-            KeyComboHook.Add((k1,k2), callback);
+        {
+            if (KeyComboHook.ContainsKey((k1, k2)))
+            {
+                KeyComboHook[(k1, k2)] += callback;
+            }
+            else
+            {
+                KeyComboHook.Add((k1, k2), callback);
+            }
+   
         }
         public static void AddMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback)
-        { 
-            MouseHook.Add((key, state), callback); 
+        {
+            if (MouseHook.ContainsKey((key,state)))
+            {
+                MouseHook[(key,state)] += callback;
+            }
+            else
+            {
+                MouseHook.Add((key, state), callback);
+            } 
         }
         public static void AddKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback)
         {
-            KeyboardHook.Add((key, state), callback); 
+            if (KeyboardHook.ContainsKey((key, state)))
+            {
+                KeyboardHook[(key, state)] += callback;
+            }
+            else
+            {
+                KeyboardHook.Add((key, state), callback);
+            } 
         }
         private static void InputManager_OnMouseEvent(VirtualKeyCode key, KeyState state, int x, int y)
         { 
             System.Action<int, int> callback;
             MouseHook.TryGetValue((key, state), out callback);
-            if(callback == null)
-            {
-                return;
-            }
-            else
-            {
-                callback?.Invoke(x,y);
-            }
-            //if(key != VirtualKeyCode.Invalid)
-            //Console.WriteLine($"{key}, {state}");
-
+            if(callback == null) 
+                return; 
+            else 
+                callback?.Invoke(x,y); 
         }
 
         private static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
@@ -73,36 +88,30 @@ namespace ByulMacro.Input
             System.Action callback; 
             //Console.WriteLine($"{key}, {state}");
             KeyboardHook.TryGetValue((key, state), out callback);
-            if (callback == null)
-            {
-             
-            }
-            else
-            {
-                callback?.Invoke();
-            } 
+           
+            if (callback != null) 
+                callback?.Invoke(); 
 
             if(state == KeyState.Down && _ComboStartKey == VirtualKeyCode.Invalid)
             {
-                Console.WriteLine("Start combo " + key);
+                //Logger.Log("KeyCombo", $"Start Combo {key}");
+                //Console.WriteLine("Start combo " + key);
                 _ComboStartKey = key;
             }
             if(state == KeyState.Down && _ComboStartKey != VirtualKeyCode.Invalid)
             {
                 if (_ComboStartKey != key)
                 {
-                    Console.WriteLine("Combo hitted " + $"{_ComboStartKey} + {key}");
+                    Logger.Log("KeyCombo", $"Complate Combo {_ComboStartKey} + {key}");
+                    //Console.WriteLine("Combo hitted " + $"{_ComboStartKey} + {key}");
                     var result = KeyComboHook.TryGetValue((_ComboStartKey, key), out var comboCallback);
-                    if (result)
-                    {
-                        comboCallback?.Invoke();
-                    }
-                    _ComboStartKey = VirtualKeyCode.Invalid;
+                    if (result) 
+                        comboCallback?.Invoke();  
                 }
             }
-            if (state == KeyState.Up && _ComboStartKey != VirtualKeyCode.Invalid)
+            if (state == KeyState.Up && _ComboStartKey != VirtualKeyCode.Invalid && key == _ComboStartKey)
             {
-                Console.WriteLine("End combo");
+                //Console.WriteLine("End combo");
                 _ComboStartKey = VirtualKeyCode.Invalid;
             }
              

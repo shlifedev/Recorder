@@ -20,6 +20,7 @@ namespace Pixel
         private Mat mat;
         private Bitmap bitmap;
         private ImageSource imageSource;
+        public bool IsTemporaryImage = false;
         public Type CreatedType;
         public CreateImage(Type createdType)
         {
