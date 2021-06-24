@@ -11,17 +11,20 @@ namespace ByulMacro.Core.Components
 {
     public static class AutoMouseController
     {
-        public static int Delay = 2;
+        public static int Delay = 10;
         public static bool IsRun = false;
 
-        [Run]
+[RunInTask]
         public static void AddHook()
-        {
+        {        
+            System.Threading.Thread.Sleep(1000);
             Console.WriteLine("add Hook");
-            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.Three, () => {
-                Console.WriteLine("Hello");
-                IsRun = !IsRun;
-            }); 
+            Hook.AddKeyboardEvent(VirtualKeyCode.Y, KeyState.Down, () => { 
+                IsRun = true;
+            });
+            Hook.AddKeyboardEvent(VirtualKeyCode.Y, KeyState.Up, () => {
+                IsRun = false;
+            });
         }
 
         [RunInTask]
@@ -32,7 +35,8 @@ namespace ByulMacro.Core.Components
                 if (IsRun)
                 {
                     System.Threading.Thread.Sleep(Delay);
-                    Hook.IO.MouseDown(LowLevelInput.Hooks.VirtualKeyCode.Lbutton);
+                    Hook.IO.MouseDown(LowLevelInput.Hooks.VirtualKeyCode.Lbutton); 
+                    Hook.IO.MouseUp(LowLevelInput.Hooks.VirtualKeyCode.Lbutton);
 
                 }
                 else

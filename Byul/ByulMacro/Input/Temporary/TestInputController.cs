@@ -58,7 +58,18 @@ namespace ByulMacro.Temporary
 
         public override void MouseUp(VirtualKeyCode key)
         {
-            throw new NotImplementedException();
+            if (key == VirtualKeyCode.Lbutton)
+            {
+                InputSimulator.Mouse.MouseUp(InputSimulator.Mouse.Buttons.Left);
+            }
+            else if (key == VirtualKeyCode.Rbutton)
+            {
+                InputSimulator.Mouse.MouseUp(InputSimulator.Mouse.Buttons.Right);
+            }
+            else
+            {
+                Logger.Error("IO Error", $"{key} is not support");
+            }
         }
 
         public override void MoveMouse(int x, int y)

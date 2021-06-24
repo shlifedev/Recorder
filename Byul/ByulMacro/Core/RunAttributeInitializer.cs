@@ -15,8 +15,8 @@ namespace ByulMacro.Core
                 {
                     foreach(var type in asm.GetTypes())
                     {
-                        foreach(var method in type.GetMethods())
-                        {
+foreach(var method in type.GetMethods())
+                        {                        
                             var runAtt = method.GetCustomAttribute<Run>(); 
                             var runInTaskAtt = method.GetCustomAttribute<RunInTask>(); 
                             if(runInTaskAtt != null)

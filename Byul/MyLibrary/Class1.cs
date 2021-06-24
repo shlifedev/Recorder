@@ -29,6 +29,15 @@ namespace MyLibrary
         /// </summary>
         [DllImport("shlifedev.dll")]
         public extern static int InstallHIDDriver();
+        [DllImport("shlifedev.dll")]
+        /// <summary>
+        /// Require PC Reboot
+        /// -3 Unknown, Please Update Window Latest
+        /// -2 = Already Installed
+        /// -1 = Install Failed
+        /// 0 = Install Succesfully 
+        /// </summary>
+        public extern static int InstallFilterDriver();
 
 
     }
