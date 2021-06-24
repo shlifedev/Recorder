@@ -34,20 +34,12 @@ using LowLevelInput.Hooks;
 namespace ByulMacro
 {
     public partial class MainWindow : System.Windows.Window
-    {
-
-        public Process targetProcess = null;
-        /// <summary>
-        /// 콘솔 할당용
-        /// </summary>
-        /// <returns></returns>
+    { 
+        public Process targetProcess = null; 
         [DllImport("kernel32.dll", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
-
-
+        private static extern int AllocConsole(); 
         private Renderer externalOverlay = null;
-        private CropController cropController; 
-        private DateTime lastTime;
+        private CropController cropController;  
       
        
         public void InitializeExOverlayGUI()
@@ -82,19 +74,17 @@ namespace ByulMacro
         };
 
 
+
+   
         public MainWindow()
         {
             AllocConsole(); // 콘솔 할당 
             InitializeComponent(); //component 초기화
             InitializeExOverlayGUI(); // gui 초기화   
-            Hook.HookInit(); // 입력 이벤트 추가
-
-          
-            Overlay.Run();  
-           
-            cropController = new CropController();
-          
-            RuninTaskInitializer.Init();
+            Hook.HookInit(); // 입력 이벤트 추가 
+            Overlay.Run();   
+            cropController = new CropController(); 
+            RunAttributeInitializer.Init();
 
 
             var students = new List<Byul.Core.Command>() {
