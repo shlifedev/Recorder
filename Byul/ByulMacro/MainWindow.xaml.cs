@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 namespace ByulMacro
@@ -80,7 +81,11 @@ namespace ByulMacro
 
             var students = new List<Command>() {
                 new CommandImageFindAndClick()
-            }; 
+            };
+
+            Task.Run(() => { 
+                System.Threading.Thread.Sleep(1000); 
+            });
             V_ContentList.ItemsSource = students; 
         } 
     }

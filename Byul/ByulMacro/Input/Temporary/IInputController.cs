@@ -23,8 +23,9 @@ namespace ByulMacro.Temporary
         //Hardware & Win API Message
         void KeyDown(VirtualKeyCode keycode);
         void KeyUp(VirtualKeyCode keycode);
-        void KeyPress(VirtualKeyCode keycode); 
-        void MoveMouse(int x, int y); 
+        void KeyPress(VirtualKeyCode keycode);
+        void MoveMouse(int x, int y);
+        void MoveMouseDirect(int x, int y);
         void MouseDown(VirtualKeyCode key);
         void MouseUp(VirtualKeyCode key);
         void MouseClick(VirtualKeyCode key);

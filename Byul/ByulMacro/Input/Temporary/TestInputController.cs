@@ -74,7 +74,12 @@ namespace ByulMacro.Temporary
 
         public override void MoveMouse(int x, int y)
         {
-            throw new NotImplementedException();
+            InputSimulator.Mouse.MoveDirect(x, y);
+        }
+
+        public override void MoveMouseDirect(int x, int y)
+        {
+            InputSimulator.Mouse.MoveDirect(x, y);
         }
     }
 }

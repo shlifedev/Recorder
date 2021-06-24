@@ -153,23 +153,30 @@ using System.Runtime.InteropServices;
             }
         }
 
-        public static class Mouse
+    public static class Mouse
+    {
+        [DllImport("user32.dll")]
+        static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+
+        [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
+        private static extern int SetCursorPos(int x, int y);
+
+        /// <summary>
+        /// 현재 위치로부터 xDelta, yDelta만큼 마우스 커서를 이동
+        /// </summary>
+        /// <param name="xDelta"></param>
+        /// <param name="yDelta"></param>
+        public static void Move(int xDelta, int yDelta)
         {
-            [DllImport("user32.dll")]
-            static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+            mouse_event(0x0001, xDelta, yDelta, 0, 0);
+        }
 
+        public static void MoveDirect(int xDelta, int yDelta)
+        {
+            SetCursorPos(xDelta, yDelta);
+        }
 
-            /// <summary>
-            /// 현재 위치로부터 xDelta, yDelta만큼 마우스 커서를 이동
-            /// </summary>
-            /// <param name="xDelta"></param>
-            /// <param name="yDelta"></param>
-            public static void Move(int xDelta, int yDelta)
-            {
-                mouse_event(0x0001, xDelta, yDelta, 0, 0);
-            }
-
-            public enum Buttons
+        public enum Buttons
             {
                 Left,
                 Right,
