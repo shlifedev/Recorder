@@ -15,8 +15,8 @@ namespace MyLibrary
         /// -1 = Not Installed
         /// -2 = Unknown, Please Reboot or Window Update Latest
         /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="tick"></param>
+        /// <param name="hWnd">Your Program Handle</param>
+        /// <param name="tick">Caller Update Thread Tick, Recommand 0.05f ~ 0.1f</param>
         [DllImport("shlifedev.dll", CallingConvention = CallingConvention.FastCall)]
         public extern static int Initialize(IntPtr hWnd, float tick);
 
