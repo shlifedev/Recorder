@@ -17,18 +17,18 @@ using System.Threading.Tasks;
 
 namespace ByulMacro.GUI
 {
-    public partial class Overlay
+    public static partial class Overlay
     {
         
         private static bool showMainMenu = true;
         public static List<ICommandRenderer> test = new List<ICommandRenderer>();
-        public static List<Process> processList = new List<Process>();
-
+  
         public static void Run()
         { 
             Task.Run(() =>
-            {
-                CoroutineHandler.Start(MainLogic());
+            { 
+                CoroutineHandler.Start(RenderMainOverlay());
+                CoroutineHandler.Start(RenderProcessSelector());
                 MainLogicInputHook(); 
                 ClickableTransparentOverlay.Overlay.RunInfiniteLoop();
             }); 
@@ -42,42 +42,11 @@ namespace ByulMacro.GUI
             });
         }
 
-        private static IEnumerator<Wait> MainLogic()
+        private static IEnumerator<Wait> RenderMainOverlay()
         {
             while (true)
             {
-                yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
-                if (showMainMenu)
-                {
-                    //foreach (var commandRenderer in test)
-                    //{
-                    //    commandRenderer.Render();
-                    //}
-                    //ClickableTransparentOverlay.Overlay.AddOrGetImagePointer("test2.png", out var testptr, out var width, out var height);
-                    //ImGui.Image(testptr, new Vector2(100, 100));
-
-                    ImGui.Begin("debug : process list");
-
-           
-
-                    if (ImGui.BeginMenu("Select Process"))
-                    {
-                        Console.WriteLine("open");
-                        
-                        foreach (var value in processList)
-                        {
-                            if (!string.IsNullOrEmpty(value.MainWindowTitle))
-                            {
-                                if (ImGui.MenuItem(value.MainWindowTitle))
-                                {
-                                    Console.WriteLine(value.MainWindowTitle);
-                                }
-                            }
-                        }
-                        ImGui.EndMenu();
-                    }
-                    ImGui.End();
-                }
+                yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender); 
             }
         }
     }

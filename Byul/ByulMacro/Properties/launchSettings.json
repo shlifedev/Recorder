@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ByulMacro": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

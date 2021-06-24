@@ -68,7 +68,7 @@
                   >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="CommandTitle" DisplayMemberBinding="{Binding CommandTitle}" Width="100"/>
+                    <GridViewColumn Header="name" DisplayMemberBinding="{Binding name}" Width="100"/>
                     <GridViewColumn Header="age" DisplayMemberBinding="{Binding age}" Width="80"/>
                     <GridViewColumn Header="gender" DisplayMemberBinding="{Binding gender}" Width="80"/>
                 </GridView>

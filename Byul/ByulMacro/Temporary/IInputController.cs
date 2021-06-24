@@ -41,7 +41,8 @@ namespace ByulMacro.Temporary
         void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end);
 
         void WMMouseLeftClick(Process process, Vector2 position);
-        void WMMouseRightClick(Process process, Vector2 position); 
+        void WMMouseRightClick(Process process, Vector2 position);
+        void WMKeyboard(Process process, WM wm, VK vkMsg);
 
 
 

@@ -26,11 +26,17 @@ using HOSAuto.Overlay;
 using ByulMacro.Byul.Components;
 using ByulMacro.GUI;
 using ByulMacro.Byul.Core;
+using ByulMacro.Byul.Attributes;
+using System.Diagnostics;
+using System.Windows.Threading;
+using LowLevelInput.Hooks;
 
 namespace ByulMacro
 {
     public partial class MainWindow : System.Windows.Window
     {
+
+        public Process targetProcess = null;
         /// <summary>
         /// 콘솔 할당용
         /// </summary>
@@ -42,22 +48,39 @@ namespace ByulMacro
         private Renderer externalOverlay = null;
         private CropController cropController; 
         private DateTime lastTime;
-
-
-
+      
+       
         public void InitializeExOverlayGUI()
         {
+           
             externalOverlay  = new Renderer(1920, 1080, (gf, gfx)=> {
                 gfx.ClearScene(); 
                 gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
+                 
             });
             externalOverlay.Run();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+         
+        [Byul.Attributes.Run]
+        public static void HookByulExit()
         {
-   
+             
+            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.One, () => {
+                Console.WriteLine("Test Exit" + Thread.CurrentThread.ManagedThreadId); 
+                Dispatcher.CurrentDispatcher.Invoke(() => {
+                    Process.GetCurrentProcess().Kill();
+                }); 
+            }); 
+
         }
+
+        [Byul.Attributes.Run]
+        public static void InitGUIEventHandler() => GUIEventHandler.OnSelectProcess += (process) =>
+        { 
+            var mw = (ByulMacro.MainWindow)Application.Current.MainWindow;
+            mw.targetProcess = process; 
+        };
+
 
         public MainWindow()
         {
@@ -65,42 +88,19 @@ namespace ByulMacro
             InitializeComponent(); //component 초기화
             InitializeExOverlayGUI(); // gui 초기화   
             Hook.HookInit(); // 입력 이벤트 추가
-            Overlay.Run();
+
+          
+            Overlay.Run();  
+           
             cropController = new CropController();
+          
+            RuninTaskInitializer.Init();
+
 
             var students = new List<Byul.Core.Command>() {
                 new CommandImageFindAndClick()
-            };
-            
-            V_ContentList.ItemsSource = students;
-             
-
-
-
-        }
- 
-
-
-        
-
-        /// <summary>
-        /// 실험용 테스트코드 작성
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            CreateImage test = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(300, 410), new OpenCvSharp.Point(150, 40), "test");
-            test.Mat.SaveImage("temp/test.png");
-            Pixel.Utility.CaptureScreenToBitmap().Match(out var result, out var center, out var maxLoc, test.Bitmap);
-
- 
-            Cv2.ImShow("result", result);
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+            }; 
+            V_ContentList.ItemsSource = students; 
+        } 
     }
 }

@@ -36,8 +36,8 @@ namespace ClickableTransparentOverlay
                 "Overlay",
                 0,
                 0,
-                2560,
-                1440,
+                (2560*3), // 2560
+                1440, // 1440
                 SDL_WindowFlags.Borderless |
                     SDL_WindowFlags.AlwaysOnTop |
                     SDL_WindowFlags.SkipTaskbar,

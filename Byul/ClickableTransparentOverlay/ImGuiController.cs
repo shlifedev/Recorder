@@ -69,7 +69,8 @@ namespace ClickableTransparentOverlay
             ImGui.GetIO().Fonts.AddFontFromFileTTF("font.ttf",  19, null, ImGui.GetIO().Fonts.GetGlyphRangesKorean()); 
             byte* data;
             int _width, _height;
-            ImGui.GetIO().Fonts.GetTexDataAsAlpha8(out data, out _width, out _height); 
+            ImGui.GetIO().Fonts.GetTexDataAsAlpha8(out data, out _width, out _height);
+            Console.WriteLine("GUI 폰트 초기화 => " + _width + "," + _height);
             ImGui.GetIO().DisplaySize = new Vector2(_width, _height);
             CreateDeviceResources(gd, outputDescription);
             SetKeyMappings();
@@ -350,7 +351,7 @@ namespace ClickableTransparentOverlay
             ImGuiIOPtr io = ImGui.GetIO();
             io.DisplaySize = new Vector2(
                 _windowWidth / _scaleFactor.X,
-                _windowHeight / _scaleFactor.Y);
+                _windowHeight / _scaleFactor.Y); 
             io.DisplayFramebufferScale = _scaleFactor;
             io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
         }
