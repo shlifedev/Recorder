@@ -29,6 +29,8 @@ namespace ByulMacro
                 gfx.DrawText(gf.GetFont("arial_big"), gf.GetBrush("white"), new GameOverlay.Drawing.Point(5, 2), $"FPS : {gfx.FPS}");
             });
             externalOverlay.Run();
+
+            Logger.Log(this, ".net overlay initialized");
         }
          
         [Run]
@@ -57,11 +59,25 @@ namespace ByulMacro
         {
             AllocConsole(); // 콘솔 할당 
             InitializeComponent(); //component 초기화
-            InitializeExOverlayGUI(); // gui 초기화   
-            Hook.HookInit(); // 입력 이벤트 추가 
-            Overlay.Instance.Run();   
-            cropController = new CropController(); 
-            RunAttributeInitializer.Init(); 
+
+
+            OverlayDebugLogger.Init();
+            Overlay.Instance.Run(()=> {
+                Logger.Log(this, "imgui overlay initialized");
+            });
+            
+            System.Threading.Thread.Sleep(250); // wait for coroutine
+
+            Hook.HookInit(() => {
+
+                Logger.Log(this, "io hooker initialized");
+                InitializeExOverlayGUI();
+                cropController = new CropController();
+                Logger.Log(this, "crop controller initialized"); 
+
+                RunAttributeInitializer.Init(); 
+            });  
+
             var students = new List<Command>() {
                 new CommandImageFindAndClick()
             }; 

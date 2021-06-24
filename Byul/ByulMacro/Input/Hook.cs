@@ -23,7 +23,7 @@ namespace ByulMacro.Input
 
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
 
-        public static void HookInit()
+        public static void HookInit(System.Action onInited = null)
         {
             inputManager = new LowLevelInput.Hooks.InputManager(); 
             // you may not need those when you use InputManager
@@ -34,8 +34,9 @@ namespace ByulMacro.Input
             inputManager.OnMouseEvent += InputManager_OnMouseEvent; 
             inputManager.Initialize();
             IO = new TestInputController();
+            onInited?.Invoke();
 
- 
+
         }
  
 

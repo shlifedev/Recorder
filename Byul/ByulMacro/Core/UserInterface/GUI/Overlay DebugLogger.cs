@@ -50,7 +50,7 @@ public struct Log
         } 
     }
 }
-public class Logger
+public static class Logger
 {
  
     public static Action<Log> onLogged;
@@ -132,6 +132,11 @@ namespace ByulMacro.GUI
         public static List<Log> logs = new List<Log>();
         public bool newLine = false;
         public bool show = false;
+
+        public static void Init()
+        {
+            var x = OverlayDebugLogger.Instance; // run single ton
+        }
         public static OverlayDebugLogger Instance
         {
             get

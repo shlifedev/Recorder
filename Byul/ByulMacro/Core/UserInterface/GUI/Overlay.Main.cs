@@ -35,15 +35,16 @@ namespace ByulMacro.GUI
         private bool showMainMenu = true;
         public List<ICommandRenderer> test = new List<ICommandRenderer>();
   
-        public void Run()
+        public void Run(System.Action callback = null)
         { 
             Task.Run(() =>
             { 
-                CoroutineHandler.Start(RenderMainOverlay());
-                CoroutineHandler.Start(OverlayProcessSelector.Instance.RenderProcessSelector());
+                CoroutineHandler.Start(RenderMainOverlay()); 
                 CoroutineHandler.Start(OverlayDebugLogger.Instance.RenderDebugger());
+                CoroutineHandler.Start(OverlayProcessSelector.Instance.RenderProcessSelector()); 
                 MainLogicInputHook(); 
-                ClickableTransparentOverlay.Overlay.RunInfiniteLoop();
+                ClickableTransparentOverlay.Overlay.RunInfiniteLoop(); 
+                callback?.Invoke();
             }); 
         }
 
