@@ -18,11 +18,14 @@ namespace ByulMacro.Temporary
 
 
         void IfNeedInitialize();
-        //Hook Message
-        void HookMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback); 
-        void HookKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback); 
 
-        //Hardware & Win API Message
+
+        #region Hook
+        void HookMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback); 
+        void HookKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback);
+        #endregion
+
+        #region Hardware & Win API Message
         void KeyDown(VirtualKeyCode keycode);
         void KeyUp(VirtualKeyCode keycode);
         void KeyPress(VirtualKeyCode keycode);
@@ -33,9 +36,9 @@ namespace ByulMacro.Temporary
         void MouseClick(VirtualKeyCode key);
         void MouseDoubleClick(VirtualKeyCode key);
         void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end);
+        #endregion
 
-
-        //Windows Message Hook
+        #region Hardware & Win API Message
         IntPtr MakeParam(int p, int p2);
         IntPtr MakeParam(Vector2 vec);
         void WMMouseLeftClick(Process process, Vector2 position); 
@@ -43,7 +46,7 @@ namespace ByulMacro.Temporary
         void WMMouseRightClick(Process process, Vector2 position); 
         void WMMouseLeftDoubleClick(Process process, Vector2 position); 
         void WMKeyboard(Process process, WM wm, VK vkMsg);
-
+        #endregion
 
     }
 }
