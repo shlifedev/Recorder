@@ -1,5 +1,4 @@
-# DS AUtomation
-Very Simple Customizingable Macro
+# DS Automation
 (외주 프로젝트)
 
 
