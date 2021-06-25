@@ -13,6 +13,7 @@ namespace ByulMacro.Temporary
 
     public abstract class BaseInputController : IInputController
     {
+        public virtual bool IsInitialized { get; set; }
         private const uint MK_LBUTTON = 0x0001;
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -94,5 +95,10 @@ namespace ByulMacro.Temporary
         public abstract void MoveMouse(int x, int y);
 
         public abstract void MoveMouseDirect(int x, int y);
+
+        public virtual void IfNeedInitialize()
+        {
+            
+        }
     }
 }

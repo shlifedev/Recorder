@@ -1,4 +1,5 @@
-﻿using LowLevelInput.Hooks;
+﻿using AutoHotInterception;
+using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ByulMacro.Temporary
 {
     public class TestInputController : BaseInputController
     {
+   
         public override void KeyDown(VirtualKeyCode keycode)
         {
             throw new NotImplementedException();
@@ -77,6 +79,10 @@ namespace ByulMacro.Temporary
             InputSimulator.Mouse.MoveDirect(x, y);
         }
 
+        public override void IfNeedInitialize()
+        {
+
+        }
         public override void MoveMouseDirect(int x, int y)
         {
             InputSimulator.Mouse.MoveDirect(x, y);

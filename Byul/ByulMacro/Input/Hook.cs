@@ -1,4 +1,5 @@
-﻿using ByulMacro.Temporary;
+﻿using AutoHotInterception;
+using ByulMacro.Temporary;
 using LowLevelInput.Converters;
 using LowLevelInput.Hooks;
 using System;
@@ -16,15 +17,15 @@ namespace ByulMacro.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
-        private static bool Logging = false;
-        
+        private static bool Logging = false; 
+
         public static LowLevelInput.Hooks.InputManager inputManager;
 
 
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
 
         public static void HookInit(System.Action onInited = null)
-        {
+        { 
             inputManager = new LowLevelInput.Hooks.InputManager(); 
             // you may not need those when you use InputManager
             var keyboardHook = new LowLevelKeyboardHook();
@@ -33,7 +34,8 @@ namespace ByulMacro.Input
             inputManager.OnKeyboardEvent += InputManager_OnKeyboardEvent;
             inputManager.OnMouseEvent += InputManager_OnMouseEvent; 
             inputManager.Initialize();
-            IO = new TestInputController();
+            IO = new AHIInputController();
+            IO.IfNeedInitialize();
             onInited?.Invoke();
 
 

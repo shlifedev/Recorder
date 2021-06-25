@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoHotInterception\C#\AutoHotInterception\AutoHotInterception.csproj" />
     <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
   </ItemGroup>
 

@@ -15,7 +15,9 @@ namespace ByulMacro.Temporary
     /// </summary>
     public interface IInputController
     {
-         
+
+
+        void IfNeedInitialize();
         //Hook Message
         void HookMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback); 
         void HookKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback); 

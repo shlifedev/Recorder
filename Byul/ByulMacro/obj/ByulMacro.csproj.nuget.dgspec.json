@@ -4,6 +4,16 @@
     "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ByulMacro\\ByulMacro.csproj": {}
   },
   "projects": {
+    "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\AutoHotInterception\\C#\\AutoHotInterception\\AutoHotInterception.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\AutoHotInterception\\C#\\AutoHotInterception\\AutoHotInterception.csproj",
+        "projectName": "AutoHotInterception",
+        "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\AutoHotInterception\\C#\\AutoHotInterception\\AutoHotInterception.csproj"
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
     "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ByulMacro\\ByulMacro.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -32,6 +42,9 @@
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
             "projectReferences": {
+              "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\AutoHotInterception\\C#\\AutoHotInterception\\AutoHotInterception.csproj": {
+                "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\AutoHotInterception\\C#\\AutoHotInterception\\AutoHotInterception.csproj"
+              },
               "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj": {
                 "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\Byul\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj"
               }

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "ByulMacro/1.0.0": {
         "dependencies": {
+          "AutoHotInterception": "1.0.0",
           "ClickableTransparentOverlay": "2.0.4",
           "Coroutine": "2.1.1",
           "Costura.Fody": "5.3.0",
@@ -1228,6 +1229,11 @@
           }
         }
       },
+      "AutoHotInterception/1.0.0": {
+        "runtime": {
+          "AutoHotInterception.dll": {}
+        }
+      },
       "ClickableTransparentOverlay/2.0.4": {
         "dependencies": {
           "Coroutine": "2.1.1",
@@ -2061,6 +2067,11 @@
       "sha512": "sha512-S6SxDqVgpLzR+l8ZbYHpDgOsEwhQKpafnKfCskjEU5tgT+GtdI2gwabqTVCcyyN9C40DaXEAyI9fkUtQtE+cIw==",
       "path": "vortice.runtime.com/1.8.10",
       "hashPath": "vortice.runtime.com.1.8.10.nupkg.sha512"
+    },
+    "AutoHotInterception/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "ClickableTransparentOverlay/2.0.4": {
       "type": "project",
