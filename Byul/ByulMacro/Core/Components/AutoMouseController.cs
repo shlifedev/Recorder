@@ -14,7 +14,7 @@ namespace ByulMacro.Core.Components
         public static int Delay = 10;
         public static bool IsRun = false;
 
-[RunInTask]
+        [RunInTask]
         public static void AddHook()
         {        
             System.Threading.Thread.Sleep(1000);

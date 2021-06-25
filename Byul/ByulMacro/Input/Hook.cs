@@ -13,16 +13,32 @@ namespace ByulMacro.Input
 {
     public static class Hook
     {
-        public static IInputController IO;
+        static IInputController io;
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
         private static bool Logging = false;
         public static int mouseX, mouseY;
         public static LowLevelInput.Hooks.InputManager inputManager;
-
-
+         
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
+
+         
+
+        public static IInputController IO { get => io; }
+
+        public static void IOInitialize<T>() where T : IInputController
+        { 
+            var type = typeof(T);
+            if (type == typeof(User32InputController)) 
+                io = new User32InputController(); 
+            else if (type == typeof(AHIInputController)) 
+                io = new AHIInputController();
+            else
+            {
+                throw new Exception("Not Support " + type.Name);
+            }
+        }
 
         public static void HookInit(System.Action onInited = null)
         { 
@@ -34,7 +50,7 @@ namespace ByulMacro.Input
             inputManager.OnKeyboardEvent += InputManager_OnKeyboardEvent;
             inputManager.OnMouseEvent += InputManager_OnMouseEvent; 
             inputManager.Initialize();
-            IO = new AHIInputController();
+            IOInitialize<AHIInputController>();
             IO.IfNeedInitialize();
             onInited?.Invoke();
 

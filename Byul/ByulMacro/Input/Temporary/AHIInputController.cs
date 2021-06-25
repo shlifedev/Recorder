@@ -93,8 +93,8 @@ namespace ByulMacro.Temporary
 
         public override void KeyPress(VirtualKeyCode keycode)
         {
-            Im.SendKeyEvent(KeyboardID, GetScanCode(keycode), 1);
-            System.Threading.Thread.Sleep(1);
+            KeyDown(keycode); 
+            KeyUp(keycode);
         }
 
         public override void KeyUp(VirtualKeyCode keycode)

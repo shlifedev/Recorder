@@ -1,4 +1,5 @@
 ﻿using ByulMacro.Input;
+using ByulMacro.Temporary;
 using Coroutine;
 using ImGuiNET;
 using System;
@@ -42,9 +43,8 @@ namespace ByulMacro.GUI
                 return inst;
             }
         }
-        private static OverlayDebugLogger inst;
-
-        private int x, y;
+        private static OverlayDebugLogger inst; 
+        private int inputX, inputY;
         public IEnumerator<Wait> RenderDebugger()
         {
             while (true)
@@ -63,29 +63,44 @@ namespace ByulMacro.GUI
 
 
                     ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Controller");
-                    if (ImGui.Button("Use Ahi")) { Hook.IO = new Temporary.AHIInputController(); Hook.IO.IfNeedInitialize(); }
+                    if (ImGui.Button("Use Ahi")) 
+                    {
+                        Hook.IOInitialize<AHIInputController>();
+                    }
                     ImGui.SameLine();
-                    if (ImGui.Button("Use Test")) { Hook.IO = new Temporary.User32InputController(); }
+                    if (ImGui.Button("Use Test")) 
+                    {
+                        Hook.IOInitialize<User32InputController>();
+                    }
 
                     ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Test");
-                    ImGui.InputInt2("X", ref x); 
-                    if (ImGui.Button($"Absolute Move {x},{y}"))
+                    ImGui.InputInt2("X", ref inputX); 
+                    if (ImGui.Button($"Absolute Move {inputX},{inputY}"))
                     {
-                        Hook.IO = new Temporary.AHIInputController(); 
+                        Hook.IOInitialize<AHIInputController>();
                         Hook.IO.IfNeedInitialize(); 
-                        Hook.IO.MoveMouseDirect(x, y);
-
+                        Hook.IO.MoveMouseDirect(inputX, inputY); 
                         System.Threading.Thread.Sleep(500);
-                        Hook.IO = new Temporary.User32InputController();
-
-                        Hook.IO.MoveMouseDirect(x, y);
-
-
+                        Hook.IOInitialize<User32InputController>();
+                        Hook.IO.MoveMouseDirect(inputX, inputY); 
                     }
-                    if (ImGui.Button($"Releative Move {x},{y}"))
+                    if (ImGui.Button($"Releative Move {inputX},{inputY}"))
                     {
-                        Hook.IO.MoveMouse(x, y);
-                    }
+                        Hook.IO.MoveMouse(inputX, inputY);
+                    } 
+                    if (ImGui.Button($"Keyboard Test"))
+                    {
+                        Hook.IOInitialize<AHIInputController>();
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.A);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.B);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.C);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.D);
+                        Hook.IOInitialize<User32InputController>();
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.A);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.B);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.C);
+                        Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.D);
+                    } 
                     ImGui.EndMenu();
                 }
                 
