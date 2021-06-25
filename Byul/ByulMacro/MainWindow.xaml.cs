@@ -55,13 +55,13 @@ namespace ByulMacro
 
         [RunInTask]
         public static void T()
-        {
-
+        { 
             Console.WriteLine("ZZ");
             System.Threading.Thread.Sleep(2000); 
             Hook.IO.KeyDown(VirtualKeyCode.Lcontrol);  
-            Hook.IO.KeyDown(VirtualKeyCode.Two); 
-            Hook.IO.KeyUp(VirtualKeyCode.Two); 
+            Hook.IO.KeyDown(VirtualKeyCode.Two);
+            Hook.IO.KeyUp(VirtualKeyCode.Two);
+            Hook.IO.KeyUp(VirtualKeyCode.Lcontrol);
         }
 
 

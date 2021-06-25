@@ -61,6 +61,9 @@ namespace ByulMacro.GUI
                 if (!show) continue;
 
                 ImGui.Begin("프로세스 리스트 관리자", ImGuiWindowFlags.AlwaysAutoResize);
+
+                 
+                
                 if (targetProcess != null)
                 {
                     ImGui.TextColored(new System.Numerics.Vector4(0, 1, 0, 1), targetProcess.MainWindowTitle);

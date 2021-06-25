@@ -17,8 +17,8 @@ namespace ByulMacro.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>> MouseHook = new Dictionary<(VirtualKeyCode key, KeyState state), System.Action<int, int>>();
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
-        private static bool Logging = false; 
-
+        private static bool Logging = false;
+        public static int mouseX, mouseY;
         public static LowLevelInput.Hooks.InputManager inputManager;
 
 
@@ -38,6 +38,10 @@ namespace ByulMacro.Input
             IO.IfNeedInitialize();
             onInited?.Invoke();
 
+            Hook.AddMouseEvent(VirtualKeyCode.Invalid, KeyState.None, (x, y) => {
+                mouseX = x;
+                mouseY = y; 
+            });
 
         }
  

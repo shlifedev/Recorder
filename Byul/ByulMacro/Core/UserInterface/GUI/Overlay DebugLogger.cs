@@ -1,132 +1,17 @@
 ﻿using ByulMacro.Input;
 using Coroutine;
-using ImGuiNET; 
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics; 
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-public enum LogType
-{
-    Debug, Error, Warning
-}
-public struct Log
-{
-    public DateTime TimeStamp;
-    public LogType Type;
-    public string Tag;
-    public string Msg;
-
-    public Log(LogType type, string tag, string msg)
-    {
-        TimeStamp = DateTime.Now;
-        Type = type;
-        Tag = tag;
-        Msg = msg;
-    }
-    public string GetMsgWithoutTag(bool datetime = true)
-    {
-        if (datetime)
-        {
-            return $"[{TimeStamp.ToString("hh:mm:ss")}] {Msg}";
-        }
-        else
-        {
-            return $"{Msg}";
-        }
-    }
-    public string GetMsgWithTag(bool datetime = true)
-    {
-        if (datetime)
-        {
-            return $"[{TimeStamp.ToString("hh:mm:ss")}] [{Tag}] {Msg}";
-        }
-        else
-        {
-            return $"[{Tag}] {Msg}";
-        } 
-    }
-}
-public static class Logger
-{
- 
-    public static Action<Log> onLogged;
-    public static List<Log> logs = new List<Log>();
-    public static void Log(string tag, string msg)
-    {
-        Log log = new Log(LogType.Debug, tag, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Warning(string tag, string msg)
-    {
-        Log log = new Log(LogType.Warning, tag, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Error(string tag, string msg)
-    {
-        Log log = new Log(LogType.Error, tag, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-
-
-    public static void Log(string msg)
-    {
-        Log log = new Log(LogType.Debug, "Log", msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Warning(string msg)
-    {
-        Log log = new Log(LogType.Warning, "Warning", msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Error(string msg)
-    {
-        Log log = new Log(LogType.Error, "Error", msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-
-
-
-    public static void Log(this object tag, string msg)
-    {
-        Log log = new Log(LogType.Debug, tag.GetType().Name, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Warning(this object tag, string msg)
-    {
-        Log log = new Log(LogType.Warning, tag.GetType().Name, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-    public static void Error(this object tag, string msg)
-    {
-        Log log = new Log(LogType.Error, tag.GetType().Name, msg);
-        logs.Add(log);
-        Console.WriteLine(log.GetMsgWithTag());
-        onLogged?.Invoke(log);
-    }
-}
 namespace ByulMacro.GUI
 {
- 
+
     public class OverlayDebugLogger
     {
         public static List<Log> logs = new List<Log>();
@@ -157,7 +42,9 @@ namespace ByulMacro.GUI
                 return inst;
             }
         }
-        private static OverlayDebugLogger inst;  
+        private static OverlayDebugLogger inst;
+
+        private int x, y;
         public IEnumerator<Wait> RenderDebugger()
         {
             while (true)
@@ -165,12 +52,46 @@ namespace ByulMacro.GUI
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
                 if (!show) continue;
 
-                ImGui.PushFont(FontPointer.FontFactory["default"]);
+                ImGui.PushFont(FontPointer.FontFactory["default"]); 
                 ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize);
-                if (ImGui.Button("Clear Log")) {
-                    logs.Clear();
-                } 
-                if (ImGui.BeginChild("##scrolling", new Vector2(400, 200), false, 0))
+ 
+                if(ImGui.BeginMenu("Input Debugger"))
+                {
+                    ImGui.TextColored(new Vector4(0, 1, 0, 1), "- IO Info");
+                    ImGui.Text($"MPos : {Hook.mouseX} {Hook.mouseY}");
+                    ImGui.Text($"Current IO : {Hook.IO.GetType().Name}");
+
+
+                    ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Controller");
+                    if (ImGui.Button("Use Ahi")) { Hook.IO = new Temporary.AHIInputController(); Hook.IO.IfNeedInitialize(); }
+                    ImGui.SameLine();
+                    if (ImGui.Button("Use Test")) { Hook.IO = new Temporary.User32InputController(); }
+
+                    ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Test");
+                    ImGui.InputInt2("X", ref x); 
+                    if (ImGui.Button($"Absolute Move {x},{y}"))
+                    {
+                        Hook.IO = new Temporary.AHIInputController(); 
+                        Hook.IO.IfNeedInitialize(); 
+                        Hook.IO.MoveMouseDirect(x, y);
+
+                        System.Threading.Thread.Sleep(500);
+                        Hook.IO = new Temporary.User32InputController();
+
+                        Hook.IO.MoveMouseDirect(x, y);
+
+
+                    }
+                    if (ImGui.Button($"Releative Move {x},{y}"))
+                    {
+                        Hook.IO.MoveMouse(x, y);
+                    }
+                    ImGui.EndMenu();
+                }
+                
+
+                 
+                if (ImGui.BeginChild("##scrolling", new Vector2(600, 200), false, 0))
                 {
                     foreach(var log in logs)
                     {
@@ -204,10 +125,17 @@ namespace ByulMacro.GUI
                     {
                         OverlayDebugLogger.inst.newLine = false;
                         Console.WriteLine("newline");
-                        ImGui.SetScrollHereY(1.0f);
-                    }
+                        ImGui.SetScrollHereY(1);
+                        ImGui.SetScrollFromPosY(100000);
+                    } 
                     ImGui.EndChild();
-                } 
+                }
+
+
+                if (ImGui.Button("Clear Log"))
+                {
+                    logs.Clear();
+                }
                 ImGui.End();
                 ImGui.PopFont();
             }

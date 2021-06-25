@@ -1,5 +1,6 @@
 ﻿using AutoHotInterception;
 using AutoHotInterception.Helpers;
+using ByulMacro.Input;
 using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ByulMacro.Temporary
@@ -17,6 +19,7 @@ namespace ByulMacro.Temporary
         public static extern uint MapVirtualKey(int wCode, int wMapType);
         public int MouseID = 11;
         public int KeyboardID = 1;
+      
         private Manager im;
         public Manager Im
         {
@@ -60,9 +63,21 @@ namespace ByulMacro.Temporary
         }
 
         public override bool IsInitialized { get;  set; }
+
+        private int _x, _y;
+
+        public AHIInputController()
+        {
+            Logger.Log(this, "Instantiate AHI Controller");
+        }
+
         public override void IfNeedInitialize()
         {
             var im = Im;
+            im.SubscribeMouseMove(MouseID, false, new Action<int, int>((x, y) => {
+                _x = x;
+                _y = y; 
+            }), false);
         }
 
         public ushort GetScanCode(VirtualKeyCode vk)
@@ -73,19 +88,19 @@ namespace ByulMacro.Temporary
         public override void KeyDown(VirtualKeyCode keycode)
         { 
             Im.SendKeyEvent(KeyboardID, GetScanCode(keycode), 1);
-            System.Threading.Thread.Sleep(5);
+            System.Threading.Thread.Sleep(1);
         }
 
         public override void KeyPress(VirtualKeyCode keycode)
         {
             Im.SendKeyEvent(KeyboardID, GetScanCode(keycode), 1);
-            System.Threading.Thread.Sleep(5);
+            System.Threading.Thread.Sleep(1);
         }
 
         public override void KeyUp(VirtualKeyCode keycode)
         {
             Im.SendKeyEvent(KeyboardID, GetScanCode(keycode), 0);
-            System.Threading.Thread.Sleep(5);
+            System.Threading.Thread.Sleep(1);
         }
 
         public override void MouseClick(VirtualKeyCode key)
@@ -127,19 +142,21 @@ namespace ByulMacro.Temporary
             if (key == VirtualKeyCode.Lbutton)
             {
                 Im.SendMouseButtonEvent(MouseID, 0, 0);
-            }
-
+            } 
             System.Threading.Thread.Sleep(5);
         }
 
         public override void MoveMouse(int x, int y)
         {
-            throw new NotImplementedException();
+            Im.SendMouseMoveRelative(MouseID, x, y);
         }
 
         public override void MoveMouseDirect(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
+        { 
+            int aX = (int)ushort.MaxValue / (1920) * x;
+            int aY = (int)ushort.MaxValue / (1080) * y;
+            im.SendMouseMoveAbsolute(MouseID, aX, aY); 
+        } 
     }
 }
+ 
