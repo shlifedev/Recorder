@@ -1,4 +1,4 @@
-# DS Automation
+# DS Automation Core
 (외주 프로젝트)
 
 
