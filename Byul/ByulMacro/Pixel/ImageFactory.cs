@@ -55,11 +55,11 @@ namespace Pixel
             if (tag == null)
             {
                 System.Random r = new Random();
-                string rsTemp = null;
-                for(int i = 0; i < 8; i++)
+                string rsTemp = "r-";
+                for(int i = 0; i < 12; i++)
                 {
-                    var val =  r.Next(int.MinValue, int.MaxValue);
-                    rsTemp += val.ToString();
+                    var val =  r.Next(97, 123);
+                    rsTemp += (char)val;
                 }
                 ci.IsTemporaryImage = true;
                 ci.tag = rsTemp;
@@ -68,7 +68,7 @@ namespace Pixel
             
 
             ci.filename = null;
-            RegImage(ci, tag);
+            RegImage(ci, ci.tag);
             return ci;
         }
 
@@ -85,7 +85,7 @@ namespace Pixel
                 ci.tag = filename;
             }
             ci.filename = filename; 
-            RegImage(ci, tag);
+            RegImage(ci, ci.tag);
             return ci;
         }
     }

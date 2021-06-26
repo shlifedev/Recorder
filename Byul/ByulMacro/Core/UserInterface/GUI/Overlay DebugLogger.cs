@@ -2,6 +2,7 @@
 using ByulMacro.Temporary;
 using Coroutine;
 using ImGuiNET;
+using Pixel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,7 +104,14 @@ namespace ByulMacro.GUI
                     } 
                     ImGui.EndMenu();
                 }
-                
+                if(ImGui.BeginMenu("Image Factory Debug"))
+                {
+                    foreach(var value in ImageFactory.imageContainer)
+                    {
+                        ImGui.Text(value.Value.tag);
+                    }
+                    ImGui.EndMenu();
+                }
 
                  
                 if (ImGui.BeginChild("##scrolling", new Vector2(600, 200), false, 0))

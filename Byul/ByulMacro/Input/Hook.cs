@@ -103,12 +103,15 @@ namespace ByulMacro.Input
         }
         private static void InputManager_OnMouseEvent(VirtualKeyCode key, KeyState state, int x, int y)
         { 
+
             System.Action<int, int> callback;
             MouseHook.TryGetValue((key, state), out callback);
             if(callback == null) 
                 return; 
             else 
                 callback?.Invoke(x,y); 
+
+        
         }
 
         private static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)

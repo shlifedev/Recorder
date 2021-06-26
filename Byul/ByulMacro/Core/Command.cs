@@ -13,6 +13,16 @@ namespace ByulMacro.Core
         void Execute(); 
     }
 
+
+    public enum CommandType
+    {
+        FindImageAndClick = 0, //왼,우 지정가능
+        FindImageAndDoubleClick ,
+        FindImageAndKeyEvent ,
+        WaitForSecond , // ~초동안 기다리기  
+        FindImageAndBackgroundClick,
+        Goto, // 특정 순서로 가기 
+    } 
     public abstract class Command : ICommand
     {
         /// <summary>
