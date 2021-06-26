@@ -43,6 +43,12 @@ namespace ByulMacro.Input
                 this.mouseButton = mouseButton;
                 this.x = x;
                 this.y = y;
+
+            }
+
+            public override string ToString()
+            {
+                return $"{state} {mouseButton} {x} {y}";
             }
         }
 
@@ -54,6 +60,10 @@ namespace ByulMacro.Input
             {
                 this.state = state;
                 this.vkCode = vkCode;
+            }
+            public override string ToString()
+            {
+                return $"{vkCode} {state}";   
             }
         }
 
@@ -71,8 +81,7 @@ namespace ByulMacro.Input
 
          
 
-        public static IInputController IO { get => io; }
-
+        public static IInputController IO { get => io; } 
         public static void IOInitialize<T>() where T : IInputController
         { 
             var type = typeof(T);

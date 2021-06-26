@@ -1,4 +1,5 @@
-﻿using ByulMacro.Input;
+﻿using ByulMacro.Core.Components;
+using ByulMacro.Input;
 using ByulMacro.Temporary;
 using Coroutine;
 using ImGuiNET;
@@ -104,16 +105,62 @@ namespace ByulMacro.GUI
                     } 
                     ImGui.EndMenu();
                 }
-                if(ImGui.BeginMenu("Image Factory Debug"))
+                if (ImGui.BeginMenu("Image Factory Debug"))
                 {
-                    foreach(var value in ImageFactory.imageContainer)
+                    foreach (var value in ImageFactory.imageContainer)
                     {
                         ImGui.Text(value.Value.tag);
                     }
                     ImGui.EndMenu();
                 }
 
-                 
+                if (ImGui.BeginMenu("IO Record Debug"))
+                {
+                    if (ImGui.Button("[R]Start"))
+                    {
+                        IORecordController.StartRecord();
+                    }
+                    ImGui.SameLine();
+                    if (ImGui.Button("[R]Stop"))
+                    {
+                        IORecordController.StopRecord();
+                    }
+                    ImGui.SameLine();
+                    if (ImGui.Button("[P]Play"))
+                    {
+                        IORecordController.Play(()=> {
+                            Logger.Log("End!");
+                        });
+                    }
+                    ImGui.SameLine();
+                    if (ImGui.Button("[P]Stop"))
+                    {
+                        IORecordController.Stop();
+                    }
+                    if (IORecordController.GetRecordDatas() != null && IORecordController.GetRecordDatas().Count != 0)
+                    {
+                        var records = IORecordController.GetRecordDatas();  
+                        foreach (var value in records)
+                        { 
+                            if (value.isMouseEvent)
+                            { 
+                                //ImGui.Text(value.mouseEvent.ToString()); 
+                            }
+                            else
+                            { 
+                                ImGui.Text($"{value.keyEvent.ToString()}  {value.eventTime}"); 
+                            } 
+                        } 
+                    }
+                    ImGui.LabelText("hello", "hello");
+                    foreach (var value in ImageFactory.imageContainer)
+                    {
+                        ImGui.Text(value.Value.tag);
+                    }
+                    ImGui.EndMenu();
+                }
+
+
                 if (ImGui.BeginChild("##scrolling", new Vector2(600, 200), false, 0))
                 {
                     foreach(var log in logs)

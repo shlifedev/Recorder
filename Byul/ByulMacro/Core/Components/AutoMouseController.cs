@@ -18,13 +18,7 @@ namespace ByulMacro.Core.Components
         public static void AddHook()
         {
             System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("add Hook");
-            Hook.AddKeyboardEvent(VirtualKeyCode.Y, KeyState.Down, () => {
-                IsRun = true;
-            });
-            Hook.AddKeyboardEvent(VirtualKeyCode.Y, KeyState.Up, () => {
-                IsRun = false;
-            });
+
 
             Hook.AddMouseEvent(VirtualKeyCode.Xbutton2, KeyState.Down, (x, y) => { IsRun = true; });
 
