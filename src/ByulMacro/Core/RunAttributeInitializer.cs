@@ -9,9 +9,10 @@ namespace AutoHamster.Core
     {
         public static void Init()
         {
+             
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             { 
-                if (asm.FullName.Split(' ')[0].Contains("AutoHamster"))
+                if (asm.FullName.Split(' ')[0].Contains(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name))
                 {
                     foreach(var type in asm.GetTypes())
                     {
