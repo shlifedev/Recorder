@@ -17,8 +17,14 @@ namespace AutoHamster.Input
     {
         static IInputController io;
 
+        public enum ControllerType
+        {
+            AHI = 0, User32 = 1
+        }
         public struct HookMouseEvent
         {
+            public ControllerType controllerType;
+            public bool isMoveEventDelta;
             public bool isMoveEvent;
             /// <summary>
             /// 0 = down
@@ -38,14 +44,15 @@ namespace AutoHamster.Input
             /// </summary>
             public int x, y;
 
-            public HookMouseEvent(bool isMoveEvent, int state, int mouseButton, int x, int y)
+            public HookMouseEvent(ControllerType ctrl, bool isMoveEvent, int state, int mouseButton, int x, int y, int deltaX, int deltaY)
             {
                 this.isMoveEvent = isMoveEvent;
                 this.state = state;
                 this.mouseButton = mouseButton;
                 this.x = x;
                 this.y = y;
-
+                this.isMoveEventDelta = false;
+                this.controllerType = ctrl;
             }
 
             public override string ToString()
@@ -55,13 +62,15 @@ namespace AutoHamster.Input
         }
 
         public struct HookKeyEvent
-        {  
+        {
+            public ControllerType controllerType;
             public KeyState state;
             public VirtualKeyCode vkCode; 
             public HookKeyEvent(KeyState state, VirtualKeyCode vkCode)
             {
                 this.state = state;
                 this.vkCode = vkCode;
+                this.controllerType = ControllerType.User32;
             }
             public override string ToString()
             {
@@ -76,7 +85,7 @@ namespace AutoHamster.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
         private static bool Logging = false;
-        public static int mouseX, mouseY;
+        public static int mouseX = int.MinValue , mouseY = int.MinValue;
         public static LowLevelInput.Hooks.InputManager inputManager;
          
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
@@ -113,16 +122,14 @@ namespace AutoHamster.Input
 
             Hook.AddMouseEvent(VirtualKeyCode.Invalid, KeyState.None, (x, y) => {
                 mouseX = x;
-                mouseY = y; 
+                mouseY = y;  
             });
 
 
             if(Hook.IO.GetType() == typeof(AHIInputController))
             {
                 var io = Hook.IO as AHIInputController;
-                var im = io.Im;
-
-               
+                var im = io.Im; 
             }
              
         }
@@ -180,6 +187,7 @@ namespace AutoHamster.Input
             {
                 onMouseEvent?.Invoke(new HookMouseEvent()
                 {
+                    controllerType = ControllerType.User32,
                     isMoveEvent = true,
                     mouseButton = -1,
                     state = -1,
@@ -214,6 +222,7 @@ namespace AutoHamster.Input
                 }
                 onMouseEvent?.Invoke(new HookMouseEvent()
                 {
+                    controllerType = ControllerType.User32,
                     isMoveEvent = false,
                     mouseButton = mouseBtn,
                     state = (state == KeyState.Down) ? 0 : (state == KeyState.Up) ? 1 : -1,

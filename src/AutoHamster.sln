@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoHotInterception", "Auto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deploy", "Deploy\Deploy.csproj", "{746FEB33-01C8-4AFE-8DDD-8E4A8F09F31A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EF20B75B-0967-4389-92D1-FF2630B95413} = {A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}
+		{68FA4BC3-C277-44D0-8333-18D51DC3CA19} = {A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A65F4A7-2B54-416C-87EB-189014DEAC18}

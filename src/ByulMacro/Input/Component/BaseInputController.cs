@@ -88,12 +88,12 @@ namespace AutoHamster.Component
         public abstract void KeyPress(VirtualKeyCode keycode);
         public abstract void KeyUp(VirtualKeyCode keycode);
         public abstract void MouseClick(VirtualKeyCode key);
-        public abstract void MouseDoubleClick(VirtualKeyCode key);
-        public abstract void MouseDown(VirtualKeyCode key);
+        public abstract void MouseClick(VirtualKeyCode key, Vector2 position);
+        public abstract void MouseDoubleClick(VirtualKeyCode key); 
+        public abstract void MouseDown(VirtualKeyCode key);  
         public abstract void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end);
-        public abstract void MouseUp(VirtualKeyCode key);
-        public abstract void MoveMouse(int x, int y);
-
+        public abstract void MouseUp(VirtualKeyCode key);  
+        public abstract void MoveMouse(int x, int y); 
         public abstract void MoveMouseDirect(int x, int y);
 
         public virtual void IfNeedInitialize()

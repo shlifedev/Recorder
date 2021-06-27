@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace AutoHamster.Component
 {
     public class User32InputController : BaseInputController
-    {  
+    {
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(int wCode, int wMapType);
         public User32InputController()
@@ -33,14 +33,19 @@ namespace AutoHamster.Component
 
         public override void KeyUp(VirtualKeyCode keycode)
         {
-            InputSimulator.Keyboard.KeyUp((ushort)MapVirtualKey((int)keycode, 0)); 
+            InputSimulator.Keyboard.KeyUp((ushort)MapVirtualKey((int)keycode, 0));
             System.Threading.Thread.Sleep(1);
         }
 
         public override void MouseClick(VirtualKeyCode key)
-        { 
-                MouseDown(key);
-                MouseUp(key); 
+        {
+            MouseDown(key);
+            MouseUp(key);
+        }
+        public override void MouseClick(VirtualKeyCode key, Vector2 position)
+        {
+            MoveMouseDirect((int)position.X, (int)position.Y);
+            MouseClick(key);
         }
 
         public override void MouseDoubleClick(VirtualKeyCode key)
@@ -61,11 +66,11 @@ namespace AutoHamster.Component
 
         public override void MouseDown(VirtualKeyCode key)
         {
-            if(key == VirtualKeyCode.Lbutton)
+            if (key == VirtualKeyCode.Lbutton)
             {
                 InputSimulator.Mouse.MouseDown(InputSimulator.Mouse.Buttons.Left);
             }
-            else if(key == VirtualKeyCode.Rbutton)
+            else if (key == VirtualKeyCode.Rbutton)
             {
                 InputSimulator.Mouse.MouseDown(InputSimulator.Mouse.Buttons.Right);
             }
@@ -109,5 +114,7 @@ namespace AutoHamster.Component
         {
             InputSimulator.Mouse.MoveDirect(x, y);
         }
+
+
     }
 }

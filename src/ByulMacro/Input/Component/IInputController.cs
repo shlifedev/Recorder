@@ -34,6 +34,8 @@ namespace AutoHamster.Component
         void MouseDown(VirtualKeyCode key);
         void MouseUp(VirtualKeyCode key);
         void MouseClick(VirtualKeyCode key);
+        void MouseClick(VirtualKeyCode key, Vector2 position);
+
         void MouseDoubleClick(VirtualKeyCode key);
         void MouseDrag(VirtualKeyCode key, Vector2 start, Vector2 end);
         #endregion

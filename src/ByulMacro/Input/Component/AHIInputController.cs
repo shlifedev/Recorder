@@ -19,7 +19,8 @@ namespace AutoHamster.Component
         public static extern uint MapVirtualKey(int wCode, int wMapType);
         public int MouseID = 11;
         public int KeyboardID = 1;
-      
+
+
         private Manager im;
         public Manager Im
         {
@@ -44,12 +45,13 @@ namespace AutoHamster.Component
                             if (value.IsMouse)
                             {
                                 MouseID = im.GetMouseIdFromHandle(value.Handle);
-                                isMouseInitialized = true; 
+                                isMouseInitialized = true;
                                 Logger.Log(this, "isMouseInitialized");
                                 break;
                             }
                         }
                     }
+
 
                     if (isMouseInitialized)
                     {
@@ -57,27 +59,63 @@ namespace AutoHamster.Component
                         IsInitialized = true;
                     }
                 }
-          
+
                 return im;
-            } 
+            }
         }
 
-        public override bool IsInitialized { get;  set; }
+
+        private int GetBtn(VirtualKeyCode vk)
+        {
+            if (vk == VirtualKeyCode.Lbutton)
+            {
+                return 0;
+            }
+            if (vk == VirtualKeyCode.Rbutton)
+            {
+                return 1;
+            }
+            if (vk == VirtualKeyCode.Mbutton)
+            {
+                return 2;
+            }
+            if (vk == VirtualKeyCode.Xbutton1)
+            {
+                return 3;
+            }
+            if (vk == VirtualKeyCode.Xbutton2)
+            {
+                return 4;
+            }
+            return -1;
+        }
+        public override bool IsInitialized { get; set; }
 
         private int _x, _y;
 
         public AHIInputController()
         {
             Logger.Log(this, "Instantiate AHI Controller");
+
         }
 
         public override void IfNeedInitialize()
         {
             var im = Im;
-            im.SubscribeMouseMove(MouseID, false, new Action<int, int>((x, y) => {
+            im.SubscribeMouseMove(MouseID, false, new Action<int, int>((x, y) =>
+            {
                 _x = x;
-                _y = y; 
-            }), false);
+                _y = y;
+
+                Hook.onMouseEvent?.Invoke(new Hook.HookMouseEvent()
+                {
+                    controllerType = Hook.ControllerType.AHI,
+                    isMoveEvent = true,
+                    isMoveEventDelta = true,
+                    x = x,
+                    y = y
+                });
+            }));
         }
 
         public ushort GetScanCode(VirtualKeyCode vk)
@@ -86,14 +124,14 @@ namespace AutoHamster.Component
             return (ushort)scancode;
         }
         public override void KeyDown(VirtualKeyCode keycode)
-        { 
+        {
             Im.SendKeyEvent(KeyboardID, GetScanCode(keycode), 1);
             System.Threading.Thread.Sleep(1);
         }
 
         public override void KeyPress(VirtualKeyCode keycode)
         {
-            KeyDown(keycode); 
+            KeyDown(keycode);
             KeyUp(keycode);
         }
 
@@ -105,30 +143,27 @@ namespace AutoHamster.Component
 
         public override void MouseClick(VirtualKeyCode key)
         { 
-            if(key == VirtualKeyCode.Lbutton)
-            {
-                Im.SendMouseButtonEvent(MouseID, 0, 1);
-                Im.SendMouseButtonEvent(MouseID, 0, 0);
-            } 
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 1);
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 0);
             System.Threading.Thread.Sleep(5);
         }
-
-        public override void MouseDoubleClick(VirtualKeyCode key)
+        public override void MouseClick(VirtualKeyCode key, Vector2 position)
         {
-            if (key == VirtualKeyCode.Lbutton)
-            {
-                Im.SendMouseButtonEvent(MouseID, 0, 1);
-                Im.SendMouseButtonEvent(MouseID, 0, 0);
-            }
+            im.SendMouseMoveAbsolute(MouseID, (int)position.X, (int)position.Y);
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 1);
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 0);
+            System.Threading.Thread.Sleep(5);
+        }
+        public override void MouseDoubleClick(VirtualKeyCode key)
+        { 
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 1);
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 0); 
             System.Threading.Thread.Sleep(5);
         }
 
         public override void MouseDown(VirtualKeyCode key)
         {
-            if (key == VirtualKeyCode.Lbutton)
-            {
-                Im.SendMouseButtonEvent(MouseID, 0, 1);
-            }
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 1);
             System.Threading.Thread.Sleep(5);
         }
 
@@ -139,10 +174,9 @@ namespace AutoHamster.Component
 
         public override void MouseUp(VirtualKeyCode key)
         {
-            if (key == VirtualKeyCode.Lbutton)
-            {
-                Im.SendMouseButtonEvent(MouseID, 0, 0);
-            } 
+
+            Im.SendMouseButtonEvent(MouseID, GetBtn(key), 0);
+
             System.Threading.Thread.Sleep(5);
         }
 
@@ -152,11 +186,12 @@ namespace AutoHamster.Component
         }
 
         public override void MoveMouseDirect(int x, int y)
-        { 
+        {
             int aX = (int)ushort.MaxValue / (1920) * x;
             int aY = (int)ushort.MaxValue / (1080) * y;
-            im.SendMouseMoveAbsolute(MouseID, aX, aY); 
-        } 
+            im.SendMouseMoveAbsolute(MouseID, aX, aY);
+        }
+
+
     }
 }
- 

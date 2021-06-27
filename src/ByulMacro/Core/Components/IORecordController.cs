@@ -77,18 +77,15 @@ namespace AutoHamster.Core.Components
             }
         }
         static void SendMouseEventRecord(Hook.HookMouseEvent e)
-        { 
-            if (e.isMoveEvent)
+        {  
+            if (e.isMoveEvent && e.isMoveEventDelta)
             {
                 if(Hook.IO.GetType() == typeof(Component.AHIInputController))
                 {
-                    int x = 0;
-                    int y = 0;
-                    if (e.x >= 1) x = 1;
-                    if (e.x <= -1) x = -1;
-                    if (e.y >= 1) y = 1;
-                    if (e.y <= -1) y = -1;
-                    Hook.IO.MoveMouse(x, y);
+                    if(e.controllerType == Hook.ControllerType.AHI)
+                    {
+                        Hook.IO.MoveMouse(e.x, e.y);
+                    } 
                     return;
                 }
                 else

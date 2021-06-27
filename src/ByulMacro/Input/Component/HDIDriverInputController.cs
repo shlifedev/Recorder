@@ -30,6 +30,11 @@ namespace AutoHamster.Component
             throw new NotImplementedException();
         }
 
+        public override void MouseClick(VirtualKeyCode key, Vector2 position)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void MouseDoubleClick(VirtualKeyCode key)
         {
             throw new NotImplementedException();

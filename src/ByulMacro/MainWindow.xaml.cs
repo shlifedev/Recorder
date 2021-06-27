@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using System.Numerics;
+
 namespace AutoHamster
 {
     public partial class MainWindow : System.Windows.Window
@@ -49,6 +51,16 @@ namespace AutoHamster
             mw.targetProcess = process; 
         };
 
+
+        [RunInTask]
+        public static void T()
+        {
+            System.Threading.Thread.Sleep(5000);
+            Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new Vector2(100, 100));
+            System.Threading.Thread.Sleep(1000);
+            Hook.IOInitialize<Component.User32InputController>();
+            Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new Vector2(100, 100));
+        }
 
  
 
