@@ -35,7 +35,7 @@ namespace ByulMacro.Core.Components
         private static System.DateTime EndTIme; 
         private static CancellationTokenSource token;
 
-        public static bool IsMouseMoveRecordable = false;
+        public static bool IsMouseMoveRecordable = true;
 
 
         public static bool IsStartRecording()
@@ -47,6 +47,7 @@ namespace ByulMacro.Core.Components
             if (IsStartRecord == true)
                 return;
 
+            recordDatas.Clear();
             IsStartRecord = true;
             StartTime = System.DateTime.Now;
         }
@@ -79,13 +80,22 @@ namespace ByulMacro.Core.Components
         { 
             if (e.isMoveEvent)
             {
-                int x = 0;
-                int y = 0;
-                if (e.x >= 1) x = 1;
-                if (e.x <= -1) x = -1;
-                if (e.y >= 1) y = 1;
-                if (e.y <= -1) y = -1; 
-                Hook.IO.MoveMouse(e.x, e.y);
+                if(Hook.IO.GetType() == typeof(Temporary.AHIInputController))
+                {
+                    int x = 0;
+                    int y = 0;
+                    if (e.x >= 1) x = 1;
+                    if (e.x <= -1) x = -1;
+                    if (e.y >= 1) y = 1;
+                    if (e.y <= -1) y = -1;
+                    Hook.IO.MoveMouse(x, y);
+                    return;
+                }
+                else
+                {
+                    Hook.IO.MoveMouseDirect(e.x, e.y);
+                    return;
+                } 
             }
             else
             {
@@ -119,28 +129,27 @@ namespace ByulMacro.Core.Components
             EndTIme = DateTime.MinValue; 
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             token = tokenSource;
+
+            List<RecordData> recordArrayList = new List<RecordData>();
+            recordArrayList.AddRange(GetRecordDatas());
             _ = Task.Run(() =>
-            {
-
-
+            { 
                 if (StartTime == DateTime.MinValue)
-                    StartTime = System.DateTime.Now;
-
-
-                while (recordDatas.Count != 0)
+                    StartTime = System.DateTime.Now; 
+                while (recordArrayList.Count != 0)
                 {
                     double cur = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                    if (cur >= recordDatas[0].eventTime)
+                    if (cur >= recordArrayList[0].eventTime)
                     {
-                        if (recordDatas[0].isMouseEvent)
+                        if (recordArrayList[0].isMouseEvent)
                         {
-                            SendMouseEventRecord(recordDatas[0].mouseEvent);
+                            SendMouseEventRecord(recordArrayList[0].mouseEvent);
                         }
                         else
                         {
-                            SendKeyboardEventRecord(recordDatas[0].keyEvent);
+                            SendKeyboardEventRecord(recordArrayList[0].keyEvent);
                         }
-                        recordDatas.RemoveAt(0);
+                        recordArrayList.RemoveAt(0);
                     } 
                 }
                 finishCallback?.Invoke();
@@ -202,9 +211,10 @@ namespace ByulMacro.Core.Components
                 }
                 RecordData rd = new RecordData();
                 rd.order = recordDatas.Count;
-                rd.isMouseEvent = true;
+                rd.isMouseEvent = e.isMoveEvent;
                 rd.mouseEvent = e;
                 rd.eventTime = (System.DateTime.Now - StartTime).TotalMilliseconds;
+                
                 recordDatas.Add(rd);
             }
         }

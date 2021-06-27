@@ -62,7 +62,7 @@ namespace ByulMacro {
             
             #line default
             #line hidden
-            System.Uri resourceLocater = new System.Uri("/ByulMacro;component/app.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ByulMacro_3vniep2u_wpftmp;component/app.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\App.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

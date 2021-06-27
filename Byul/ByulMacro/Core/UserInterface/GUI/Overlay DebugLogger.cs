@@ -54,10 +54,36 @@ namespace ByulMacro.GUI
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
                 if (!show) continue;
 
+
+
+
+                ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1f, 0, 0, 1));
                 ImGui.PushFont(FontPointer.FontFactory["default"]); 
-                ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize);
+                ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoMove);
+                ImGui.SetWindowPos(new Vector2(0, 0));
  
-                if(ImGui.BeginMenu("Input Debugger"))
+                if (ImGui.BeginMenuBar())
+                {
+                    if (ImGui.BeginMenu("Debug"))
+                    {
+                        if (ImGui.MenuItem("New"))
+                        { 
+                        }
+                        if (ImGui.MenuItem("New"))
+                        {
+
+                        }
+                        if (ImGui.MenuItem("New"))
+                        {
+
+                        } 
+                        ImGui.EndMenu();
+                    }
+                    ImGui.EndMenuBar();
+                }
+
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowTitleAlign, new Vector2(0.5f,0.5f));
+                if (ImGui.BeginMenu("Input Debugger"))
                 {
                     ImGui.TextColored(new Vector4(0, 1, 0, 1), "- IO Info");
                     ImGui.Text($"MPos : {Hook.mouseX} {Hook.mouseY}");
@@ -137,21 +163,19 @@ namespace ByulMacro.GUI
                     {
                         IORecordController.Stop();
                     }
-                    if (IORecordController.GetRecordDatas() != null && IORecordController.GetRecordDatas().Count != 0)
-                    {
-                        var records = IORecordController.GetRecordDatas();  
-                        foreach (var value in records)
-                        { 
-                            if (value.isMouseEvent)
-                            { 
-                                //ImGui.Text(value.mouseEvent.ToString()); 
-                            }
-                            else
-                            { 
-                                ImGui.Text($"{value.keyEvent.ToString()}  {value.eventTime}"); 
-                            } 
-                        } 
-                    }
+
+
+                
+
+                    //if (IORecordController.GetRecordDatas() != null && IORecordController.GetRecordDatas().Count != 0)
+                    //{
+                    //    var records = IORecordController.GetRecordDatas(); 
+                    //    foreach(var record in records)
+                    //    {
+                    //        var evt = record.isMouseEvent ? "MouseEvent" : "KbEvent";
+                    //        ImGui.Text($"{evt}");
+                    //    }
+                    //}
                     ImGui.LabelText("hello", "hello");
                     foreach (var value in ImageFactory.imageContainer)
                     {
@@ -160,6 +184,9 @@ namespace ByulMacro.GUI
                     ImGui.EndMenu();
                 }
 
+
+
+    
 
                 if (ImGui.BeginChild("##scrolling", new Vector2(600, 200), false, 0))
                 {
@@ -206,8 +233,9 @@ namespace ByulMacro.GUI
                 {
                     logs.Clear();
                 }
-                ImGui.End();
-                ImGui.PopFont();
+                ImGui.End();  
+                ImGui.PopFont(); 
+                ImGui.PopStyleColor();
             }
         }
     }

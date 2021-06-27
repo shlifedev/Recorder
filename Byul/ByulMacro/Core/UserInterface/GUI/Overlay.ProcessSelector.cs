@@ -60,10 +60,12 @@ namespace ByulMacro.GUI
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender); 
                 if (!show) continue;
 
-                ImGui.Begin("프로세스 리스트 관리자", ImGuiWindowFlags.AlwaysAutoResize);
+                ImGui.PushFont(FontPointer.FontFactory["default"]);
+                ImGui.Begin("ProcessManager", ImGuiWindowFlags.AlwaysAutoResize);
+                ImGui.PopFont();
+                ImGui.SetWindowPos(new System.Numerics.Vector2(0, 330));
 
-                 
-                
+             
                 if (targetProcess != null)
                 {
                     ImGui.TextColored(new System.Numerics.Vector4(0, 1, 0, 1), targetProcess.MainWindowTitle);
@@ -74,8 +76,7 @@ namespace ByulMacro.GUI
                 }
                 if (ImGui.BeginMenu("Select Process"))
                 { 
-                    AutoReloadProcess();
-                  
+                    AutoReloadProcess(); 
                     foreach (var value in processList)
                     {
                         if (!string.IsNullOrEmpty(value.MainWindowTitle))
