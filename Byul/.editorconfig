@@ -1,4 +1,0 @@
-﻿[*.cs]
-
-# CA2201: 예약된 예외 형식을 발생시키지 마세요.
-dotnet_diagnostic.CA2201.severity = none

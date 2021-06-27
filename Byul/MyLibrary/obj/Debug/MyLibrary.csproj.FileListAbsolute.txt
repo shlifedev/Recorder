@@ -1,6 +1,0 @@
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\bin\Debug\MyLibrary.dll
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\bin\Debug\MyLibrary.pdb
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\obj\Debug\MyLibrary.csproj.AssemblyReference.cache
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\obj\Debug\MyLibrary.csproj.CoreCompileInputs.cache
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\obj\Debug\MyLibrary.dll
-C:\Users\shlif\Documents\GitHub\ByulMacro\Byul\MyLibrary\obj\Debug\MyLibrary.pdb

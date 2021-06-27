@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ClickableTransparentOverlay": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}
