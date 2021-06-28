@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj": {}
+    "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj": {
+    "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj": {
       "version": "2.0.4",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
+        "projectUniqueName": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
         "projectName": "ClickableTransparentOverlay",
-        "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
+        "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
         "packagesPath": "C:\\Users\\shlif\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\obj\\",
+        "outputPath": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\Deploy\\Deploy.csproj": {}
+    "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\Deploy\\Deploy.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\Deploy\\Deploy.csproj": {
+    "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\Deploy\\Deploy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\Deploy\\Deploy.csproj",
+        "projectUniqueName": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\Deploy\\Deploy.csproj",
         "projectName": "Deploy",
-        "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\Deploy\\Deploy.csproj",
+        "projectPath": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\Deploy\\Deploy.csproj",
         "packagesPath": "C:\\Users\\shlif\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\Deploy\\obj\\",
+        "outputPath": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\Deploy\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

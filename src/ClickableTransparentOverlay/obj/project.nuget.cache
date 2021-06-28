@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "O34RpviaA3h8pbBaWb05VMTZI4DsoAzKk6W4Zml9Dr3fZqmy5YYJPXn+j1Pv/Ax5RKV1HIT8sDskKS+GhJK9Gw==",
+  "dgSpecHash": "5OUCA7rlwha2z2GHj/a6fCuM6kX3tM5pFIfRqU6g+wSYwPolk//h9uuoh49ttl7eFjbRm46PgnRQKh/X259Fvg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\shlif\\Documents\\GitHub\\ByulMacro\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
+  "projectFilePath": "C:\\Users\\shlif\\Documents\\GitHub\\DroneSystemAutomation\\src\\ClickableTransparentOverlay\\ClickableTransparentOverlay.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shlif\\.nuget\\packages\\coroutine\\2.0.0\\coroutine.2.0.0.nupkg.sha512",
     "C:\\Users\\shlif\\.nuget\\packages\\costura.fody\\5.3.0\\costura.fody.5.3.0.nupkg.sha512",
