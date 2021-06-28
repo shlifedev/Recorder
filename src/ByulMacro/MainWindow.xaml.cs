@@ -52,15 +52,7 @@ namespace AutoHamster
         };
 
 
-        [RunInTask]
-        public static void T()
-        {
-            System.Threading.Thread.Sleep(5000);
-            Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new Vector2(100, 100));
-            System.Threading.Thread.Sleep(1000);
-            Hook.IOInitialize<Component.User32InputController>();
-            Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new Vector2(100, 100));
-        }
+ 
 
  
 

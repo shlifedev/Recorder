@@ -262,14 +262,21 @@ namespace AutoHamster.GUI
                 DrawIORecordMenu(); 
                 DrawLogs();
 
+
+                System.Random r = new Random();
+
+                float[] arr = new float[] { 0.6f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, (float)r.NextDouble() };
+                ImGui.PlotLines("test", ref arr[0], arr.Length, 0, "ZZ", 0, 10, new Vector2(400, 100));
+
                 if (ImGui.Button("Clear Log"))
                 { 
                     logs.Clear();
                     Logger.Log(this, "Log Cleared");
                 }
-                ImGui.End();  
+                ImGui.End();
+                 
                 ImGui.PopFont(); 
-                ImGui.PopStyleColor();
+                ImGui.PopStyleColor(); 
             }
         }
          
