@@ -28,9 +28,11 @@ namespace AutoHamster.Core.Components
                 this.mouseEvent = mouseEvent;
                 this.keyEvent = keyEvent;
                 this.eventTime = eventTime;
-            } 
+            }
         }
         private static bool IsStartRecord = false;
+        private static bool IsPlayFlag = false;
+        private static bool IsRecordMouseStartPos = true;
         private static System.DateTime StartTime;
         private static System.DateTime EndTIme; 
         private static CancellationTokenSource token;
@@ -42,21 +44,45 @@ namespace AutoHamster.Core.Components
         {
             return IsStartRecord;
         }
+        public static bool IsPlaying()
+        {
+            return IsPlayFlag;
+        }
         public static void StartRecord()
         {
             if (IsStartRecord == true)
                 return;
 
+            
+            Logger.Log("Recoder", "Start Record..");
             recordDatas.Clear();
             IsStartRecord = true;
             StartTime = System.DateTime.Now;
+
+            if (IsRecordMouseStartPos)
+            {
+                recordDatas.Add(new RecordData()
+                {
+                    eventTime = 0,
+                    isMouseEvent = true,
+                    mouseEvent = new Hook.HookMouseEvent()
+                    {
+                        controllerType = Hook.ControllerType.AHI,
+                        isMoveEvent = true,
+                        isMoveEventDelta = false,
+                        x = Hook.mouseX,
+                        y = Hook.mouseY
+                    }
+                }); ;
+            }
+           
         }
 
         public static void StopRecord()
         { 
             if (IsStartRecord == false) 
                 return;
-
+            Logger.Log("Recoder", "End Record..");
             IsStartRecord = false;
             EndTIme = System.DateTime.Now;
         }
@@ -94,9 +120,9 @@ namespace AutoHamster.Core.Components
                     return;
                 } 
             }
-            else
+            else if(e.isMoveEvent && e.isMoveEventDelta ==false)
             {
-                VirtualKeyCode vk = VirtualKeyCode.Invalid;
+                Hook.IO.MoveMouseDirect(e.x, e.y);
             }
             if(e.mouseButton == 0)
             {
@@ -122,11 +148,12 @@ namespace AutoHamster.Core.Components
 
         public static void Play(System.Action finishCallback)
         {
+            Logger.Log("Recoder", "Play Record..");
             StartTime = DateTime.MinValue;
             EndTIme = DateTime.MinValue; 
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             token = tokenSource;
-
+            IsPlayFlag = true;
             List<RecordData> recordArrayList = new List<RecordData>();
             recordArrayList.AddRange(GetRecordDatas());
             _ = Task.Run(() =>
@@ -149,6 +176,8 @@ namespace AutoHamster.Core.Components
                         recordArrayList.RemoveAt(0);
                     } 
                 }
+                Logger.Log("Finish Callback..");
+                IsPlayFlag = false;
                 finishCallback?.Invoke();
             }, tokenSource.Token);
         }
@@ -156,13 +185,16 @@ namespace AutoHamster.Core.Components
 
         public static void Stop(System.Action callback = null)
         {
+            Logger.Log("Recoder", "Stop Record..");
             if (token.IsCancellationRequested)
-            {
+            { 
                 Logger.Log("IORecord", "Already Stopped");
             }
             else
             {
-                token.Cancel();  
+                token.Cancel();
+                IsPlayFlag = false;
+                callback?.Invoke();
             }
         }
         public static System.DateTime[] GetStartAndEndTime() 

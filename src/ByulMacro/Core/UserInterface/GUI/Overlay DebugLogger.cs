@@ -24,6 +24,8 @@ namespace AutoHamster.GUI
         public static void Init()
         {
             var x = OverlayDebugLogger.Instance; // run single ton
+
+  
         }
         public static OverlayDebugLogger Instance
         {
@@ -39,6 +41,27 @@ namespace AutoHamster.GUI
                     };
                     Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lcontrol, LowLevelInput.Hooks.VirtualKeyCode.Two, () => { 
                         OverlayDebugLogger.inst.show = !OverlayDebugLogger.inst.show;
+                    });
+
+                    Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lmenu, LowLevelInput.Hooks.VirtualKeyCode.One, () => {
+                        if (!IORecordController.IsStartRecording())
+                        {
+                            IORecordController.StartRecord();
+                        }
+                        else
+                        {
+                            IORecordController.StopRecord();
+                        }
+                    });
+                    Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lmenu, LowLevelInput.Hooks.VirtualKeyCode.Two, () => {
+                        if (!IORecordController.IsPlaying())
+                        {
+                            IORecordController.Play(null);
+                        }
+                        else
+                        {
+                            IORecordController.Stop();
+                        }
                     });
                     return inst;
                 }
@@ -167,27 +190,65 @@ namespace AutoHamster.GUI
         {
             if (ImGui.BeginMenu("IO Record Debug"))
             {
-                if (ImGui.Button("[R]Start"))
+                ImGui.TextColored(new Vector4(0, 1, 0, 1), "ALT+1 = Record/Stop Alt+2 = Play&Stop");
+                if (!IORecordController.IsStartRecording())
                 {
-                    IORecordController.StartRecord();
+                    ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 1, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0, 1, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0, 1, 0, 1));
+                    if (ImGui.Button("[R]Start"))
+                        IORecordController.StartRecord();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
                 }
-                ImGui.SameLine();
-                if (ImGui.Button("[R]Stop"))
+                else
                 {
-                    IORecordController.StopRecord();
-                }
-                ImGui.SameLine();
-                if (ImGui.Button("[P]Play"))
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(1, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(1, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(1, 0, 0, 1));
+                    if (ImGui.Button("[R]Stop"))
+                        IORecordController.StopRecord();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                } 
+                ImGui.SameLine(); 
+                if (!IORecordController.IsPlaying())
                 {
-                    IORecordController.Play(() => {
-                        Logger.Log("End!");
-                    });
+                    ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0, 0, 0, 1)); 
+                    if (ImGui.Button("[P]Play"))
+                    {
+                        IORecordController.Play(() => {
+                            Logger.Log("End!");
+                        });
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
                 }
-                ImGui.SameLine();
-                if (ImGui.Button("[P]Stop"))
+                else
                 {
-                    IORecordController.Stop();
-                }
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(1, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(1, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(1, 0, 0, 1));
+                    if (ImGui.Button("[P]Stop"))
+                    {
+                        IORecordController.Stop();
+                    }
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                } 
+          
                 ImGui.LabelText("hello", "hello");
                 foreach (var value in ImageFactory.imageContainer)
                 {
@@ -248,9 +309,7 @@ namespace AutoHamster.GUI
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
                 if (!show) continue;
 
-
-          
-
+                 
                 ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1f, 0, 0, 1));
                 ImGui.PushFont(FontPointer.FontFactory["default"]); 
                 ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoMove);
@@ -266,7 +325,7 @@ namespace AutoHamster.GUI
                 System.Random r = new Random();
 
                 float[] arr = new float[] { 0.6f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, (float)r.NextDouble() };
-                ImGui.PlotLines("test", ref arr[0], arr.Length, 0, "ZZ", 0, 10, new Vector2(400, 100));
+                ImGui.PlotLines("test", ref arr[0], arr.Length, 0, "Test PlotLine", 0, 10, new Vector2(400, 100));
 
                 if (ImGui.Button("Clear Log"))
                 { 
