@@ -20,6 +20,8 @@ namespace AutoHamster.GUI
         public static List<Log> logs = new List<Log>();
         public bool newLine = false;
         public bool show = false;
+        public bool imguiDemo = false;
+        public bool imPlotDemo = false;
 
         public static void Init()
         {
@@ -82,36 +84,21 @@ namespace AutoHamster.GUI
 
         void DrawMenuBar()
         {
+         
             if (ImGui.BeginMenuBar())
             {
-                if (ImGui.BeginMenu("Utility"))
+                if (ImGui.BeginMenu("Demo"))
                 {
-                    if (ImGui.MenuItem("KBoost"))
+                    if (ImGui.MenuItem("ImGUIDemo"))
                     {
 
-                        try
-                        {
-                            Process proc = Process.Start(@"H:\유틸리티\KBoost.exe");
-                        }
-                        catch
-                        {
-                            Logger.Error(this, "Cannot Found");
-                        }
+                        imguiDemo = !imguiDemo;
 
 
                     }
-                    if (ImGui.MenuItem("Goodbye DPI"))
+                    if (ImGui.MenuItem("ImPlotDemo"))
                     {
-                        try
-                        {
-                            Process proc = Process.Start(@"H:\유틸리티\goodbyedpi-0.1.6\x86_64\goodbyedpi.exe");
-                        }
-                        catch
-                        {
-                            Logger.Error(this, "Cannot Found");
-                        }
-
-
+                        imPlotDemo = !imPlotDemo;
                     }
                     if (ImGui.MenuItem("Animation Folder"))
                     {
@@ -134,8 +121,10 @@ namespace AutoHamster.GUI
         void DrawIODebuggerMenu()
         {
             ImGui.Separator();
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
             if (ImGui.TreeNode("IO Controller Config"))
             {
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1,1, 1));
                 ImGui.TextColored(new Vector4(0, 1, 0, 1), "- IO Info");
                 ImGui.Text($"MPos : {Hook.mouseX} {Hook.mouseY}");
                 ImGui.Text($"Current IO : {Hook.IO.GetType().Name}");
@@ -151,7 +140,9 @@ namespace AutoHamster.GUI
                 }
                 ImGui.TreePop();
                 ImGui.Separator();
+                ImGui.PopStyleColor();
             }
+            ImGui.PopStyleColor();
         }
 
         void DrawImageFactoryMenu()
@@ -170,24 +161,28 @@ namespace AutoHamster.GUI
         {
 
             ImGui.Text($"Recording : {IORecordController.IsStartRecording()} Playing : {IORecordController.IsPlaying()}");
-
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 0, 1));
             if (ImGui.TreeNode("IO Record Debug"))
             {
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
                 DrawIODebuggerMenu();
 
-        
 
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
                 if (ImGui.TreeNode("IO Record Controller Config"))
                 {
+                    ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
                     ImGui.TreePush(""); 
                     ImGui.Checkbox("IsMouseMoveRecordable", ref IORecordController.IsMouseMoveRecordable);
                     ImGui.Checkbox("IsRecordMouseStartPosFlag", ref IORecordController.IsRecordMouseStartPosFlag);
                     ImGui.Checkbox("NoDelay", ref IORecordController.NoDelay);
                     ImGui.TreePop();
+                    ImGui.PopStyleColor();
                 }
+                ImGui.PopStyleColor();
                 var rd = IORecordController.processing_debug_rd;
 
-                ImGui.Text($"time\tisMouseEvent\torder");
+                ImGui.Text($"time|\tisMouseEvent|\torder"); 
                 ImGui.Text($"{(rd.eventTime / 1000).ToString("0.00")}\t{rd.isMouseEvent}\t{rd.order}");
                 ImGui.Text($"key info : {rd.keyEvent.ToString()}");
 
@@ -307,10 +302,12 @@ namespace AutoHamster.GUI
                     }
                     ImGui.SetScrollFromPosY(99999);
                     ImGui.EndChild();
-                } 
+                }
+                ImGui.PopStyleColor();
             }
 
             ImGui.TreePop();
+            ImGui.PopStyleColor();
             ImGui.Separator();
         }
 
@@ -390,7 +387,16 @@ namespace AutoHamster.GUI
                  
                 ImGui.PopFont(); 
                 ImGui.PopStyleColor();
-                 
+
+
+                if (imguiDemo)
+                {
+                    ImGui.ShowDemoWindow();
+                }
+                if (imPlotDemo)
+                {
+                    ImPlotNET.ImPlot.ShowDemoWindow();
+                }
             }
         }
          
