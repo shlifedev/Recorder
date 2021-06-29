@@ -181,8 +181,7 @@ namespace AutoHamster.Input
             MouseHook.TryGetValue((key, state), out callback);
 
 
-
-            //callback hook
+        
             if(key == VirtualKeyCode.Invalid)
             {
                 onMouseEvent?.Invoke(new HookMouseEvent()
@@ -220,15 +219,23 @@ namespace AutoHamster.Input
                         mouseBtn = 4;
                         break;
                 }
-                onMouseEvent?.Invoke(new HookMouseEvent()
+
+                int _state = -1;
+                if (state == KeyState.Down) _state = 0;
+                if (state == KeyState.Up) _state = 1; 
+                if(key == VirtualKeyCode.Lbutton || key == VirtualKeyCode.Rbutton || key == VirtualKeyCode.Mbutton || key == VirtualKeyCode.Xbutton1|| key == VirtualKeyCode.Xbutton2)
                 {
-                    controllerType = ControllerType.User32,
-                    isMoveEvent = false,
-                    mouseButton = mouseBtn,
-                    state = (state == KeyState.Down) ? 0 : (state == KeyState.Up) ? 1 : -1,
-                    x = x,
-                    y = y
-                });
+                    onMouseEvent?.Invoke(new HookMouseEvent()
+                    {
+                        controllerType = ControllerType.User32,
+                        isMoveEvent = false,
+                        mouseButton = mouseBtn,
+                        state = _state,
+                        x = x,
+                        y = y
+                    });
+                }
+    
             }
       
 

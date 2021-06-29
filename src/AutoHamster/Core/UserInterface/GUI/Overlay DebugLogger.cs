@@ -43,24 +43,30 @@ namespace AutoHamster.GUI
                         OverlayDebugLogger.inst.show = !OverlayDebugLogger.inst.show;
                     });
 
-                    Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lmenu, LowLevelInput.Hooks.VirtualKeyCode.One, () => {
+                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F2, LowLevelInput.Hooks.KeyState.Down, () => {
+            
                         if (!IORecordController.IsStartRecording())
-                        {
-                            IORecordController.StartRecord();
+                        { 
+                            IORecordController.StartRecord(); 
+                            return;
                         }
                         else
-                        {
+                        { 
                             IORecordController.StopRecord();
+                            return;
                         }
                     });
-                    Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lmenu, LowLevelInput.Hooks.VirtualKeyCode.Two, () => {
+                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F3, LowLevelInput.Hooks.KeyState.Down, () => {
                         if (!IORecordController.IsPlaying())
                         {
+                         
                             IORecordController.Play(null);
+                            return;
                         }
                         else
                         {
                             IORecordController.Stop();
+                            return;
                         }
                     });
                     return inst;
@@ -188,6 +194,7 @@ namespace AutoHamster.GUI
 
         private void DrawIORecordMenu()
         {
+ 
             if (ImGui.BeginMenu("IO Record Debug"))
             {
                 ImGui.TextColored(new Vector4(0, 1, 0, 1), "ALT+1 = Record/Stop Alt+2 = Play&Stop");
@@ -198,7 +205,10 @@ namespace AutoHamster.GUI
                     ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0, 1, 0, 1));
                     ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0, 1, 0, 1));
                     if (ImGui.Button("[R]Start"))
+                    {
+                        Console.WriteLine("ZZ2");
                         IORecordController.StartRecord();
+                    }
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
@@ -228,7 +238,6 @@ namespace AutoHamster.GUI
                             Logger.Log("End!");
                         });
                     }
-
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
@@ -247,12 +256,63 @@ namespace AutoHamster.GUI
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
-                } 
-          
-                ImGui.LabelText("hello", "hello");
-                foreach (var value in ImageFactory.imageContainer)
+                }
+
+                 
+                ImGui.Separator();
+                ImGui.TextColored(new Vector4(0, 1, 0, 1), "Record Datas"); 
+                ImGui.Separator(); 
+
+                List<IORecordController.RecordData> list = IORecordController.GetRecordDatas();
+
+ 
+      
+                var mouseMoveEvents = (from x in list where (x.isMouseEvent == true) select x).ToList();
+                if (ImGui.BeginChild("mouseMoveEvents", new Vector2(155, 100)))
                 {
-                    ImGui.Text(value.Value.tag);
+                    ImGui.Text("mouse move event");
+                    for (int i = mouseMoveEvents.Count - 10; i < mouseMoveEvents.Count; i++)
+                    {
+                        if (i <= 0 || i <= 5)
+                        {
+                            ImGui.Text("Wait");
+                            ImGui.Text("Wait");
+                            ImGui.Text("Wait");
+                            ImGui.Text("Wait");
+                            ImGui.Text("Wait");
+                            break;
+                        }
+            
+                        IORecordController.RecordData value = mouseMoveEvents[i];
+                        ImGui.Text((value.eventTime/1000).ToString("0.0") +"| " +value.mouseEvent.ToString());
+                    }
+                    ImGui.EndChild();
+                }
+                ImGui.SameLine(); 
+                var mouseEvents = (from x in list where (x.isMouseEvent && x.mouseEvent.isMoveEvent == false && x.mouseEvent.isMoveEventDelta == false) select x).ToList();
+                if (ImGui.BeginChild($"mouseEvent", new Vector2(155, 100)))
+                {
+                    ImGui.Text("time|state|btn|x|y");
+                    for (int i = 0; i < mouseEvents.Count; i++)
+                    { 
+                        IORecordController.RecordData value = mouseEvents[i];
+                        ImGui.Text((value.eventTime / 1000).ToString("0.0") + "| " + value.mouseEvent.ToString());
+                    }
+                    ImGui.SetScrollFromPosY(99999);
+                    ImGui.EndChild();
+                }
+                var keyboardEvents = (from x in list where (x.isMouseEvent == false) select x).ToList();
+                ImGui.SameLine();
+                if (ImGui.BeginChild("keyboardEvents", new Vector2(155, 100)))
+                {
+                    ImGui.Text("time  key  state");
+                    for (int i = 0; i < keyboardEvents.Count; i++)
+                    { 
+                        IORecordController.RecordData value = keyboardEvents[i];
+                        ImGui.Text((value.eventTime / 1000).ToString("0.0") + "| " + value.keyEvent.ToString());
+                    }
+                    ImGui.SetScrollFromPosY(99999);
+                    ImGui.EndChild();
                 }
                 ImGui.EndMenu();
             }
@@ -307,9 +367,8 @@ namespace AutoHamster.GUI
             while (true)
             { 
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
-                if (!show) continue;
+                if (!show) continue; 
                  
-
                 ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1f, 0, 0, 1));
                 ImGui.PushFont(FontPointer.FontFactory["default"]); 
                 ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoMove);
@@ -335,7 +394,8 @@ namespace AutoHamster.GUI
                 ImGui.End();
                  
                 ImGui.PopFont(); 
-                ImGui.PopStyleColor(); 
+                ImGui.PopStyleColor();
+                 
             }
         }
          
