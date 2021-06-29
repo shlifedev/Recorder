@@ -170,9 +170,13 @@ namespace AutoHamster.GUI
         {
 
             ImGui.Text($"Recording : {IORecordController.IsStartRecording()} Playing : {IORecordController.IsPlaying()}");
+
             if (ImGui.TreeNode("IO Record Debug"))
             {
                 DrawIODebuggerMenu();
+
+        
+
                 if (ImGui.TreeNode("IO Record Controller Config"))
                 {
                     ImGui.TreePush(""); 
@@ -181,6 +185,11 @@ namespace AutoHamster.GUI
                     ImGui.Checkbox("NoDelay", ref IORecordController.NoDelay);
                     ImGui.TreePop();
                 }
+                var rd = IORecordController.processing_debug_rd;
+
+                ImGui.Text($"time\tisMouseEvent\torder");
+                ImGui.Text($"{(rd.eventTime / 1000).ToString("0.00")}\t{rd.isMouseEvent}\t{rd.order}");
+                ImGui.Text($"key info : {rd.keyEvent.ToString()}");
 
                 ImGui.TextColored(new Vector4(0, 1, 0, 1), "f2/f3 (recrod&play)");
                 if (!IORecordController.IsStartRecording())

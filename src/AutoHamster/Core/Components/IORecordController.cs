@@ -120,7 +120,7 @@ namespace AutoHamster.Core.Components
             }
             else
             {
-                throw new Exception("not support");
+                //Hook.IO.KeyDown(e.vkCode); 
             }
         }
         static void SendMouseEventRecord(Hook.HookMouseEvent e)
@@ -241,7 +241,7 @@ namespace AutoHamster.Core.Components
                 }
             }
         }
-
+        public static RecordData processing_debug_rd;
         public static void Play(System.Action finishCallback)
         { 
             if (IsStartRecord || IsPlayFlag) return;
@@ -267,21 +267,19 @@ namespace AutoHamster.Core.Components
                     }
                     if (cur >= copyRecords[0].eventTime )
                     {
+                        processing_debug_rd = copyRecords[0];
                         if (copyRecords[0].isMouseEvent)
                         {
                             SendMouseEventRecord(copyRecords[0].mouseEvent); 
                         }
                         else
                         {
-                            SendKeyboardEventRecord(copyRecords[0].keyEvent);
                             Logger.Log("copyRecords Count : " + copyRecords.Count);
                             Logger.Log("recordDatas Count : " + recordDatas.Count);
+                            SendKeyboardEventRecord(copyRecords[0].keyEvent);
+                        
                         }
                         copyRecords.RemoveAt(0); 
-                    }
-                    if (NoDelay)
-                    {
-                        System.Threading.Thread.Sleep(5);
                     }
                 }
 
