@@ -308,8 +308,8 @@ namespace AutoHamster.GUI
             { 
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
                 if (!show) continue;
-
                  
+
                 ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1f, 0, 0, 1));
                 ImGui.PushFont(FontPointer.FontFactory["default"]); 
                 ImGui.Begin("Logger", ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoMove);
@@ -320,7 +320,7 @@ namespace AutoHamster.GUI
                 DrawImageFactoryMenu();
                 DrawIORecordMenu(); 
                 DrawLogs();
-
+                 
 
                 System.Random r = new Random();
 

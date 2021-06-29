@@ -3,6 +3,10 @@
 		<ExcludeAssemblies>
 			ClickableTransparentOverlay
 			AutoHotInterception
+			ImPlot.NET
+			ImGuI.NET 
+			ImNodes.NET
+			ImGUizmo.net
 		</ExcludeAssemblies>
 	</Costura>
 </Weavers>

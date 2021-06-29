@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoHamster", "AutoHamster\AutoHamster.csproj", "{BED17D91-2C5D-407E-884F-A608D627F47A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickableTransparentOverlay", "ClickableTransparentOverlay\ClickableTransparentOverlay.csproj", "{EF20B75B-0967-4389-92D1-FF2630B95413}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoHotInterception", "AutoHotInterception\C#\AutoHotInterception\AutoHotInterception.csproj", "{68FA4BC3-C277-44D0-8333-18D51DC3CA19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deploy", "Deploy\Deploy.csproj", "{746FEB33-01C8-4AFE-8DDD-8E4A8F09F31A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickableTransparentOverlay", "..\..\ClickableImguiWithAllLibs\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj", "{A9DB4447-8741-4AC3-B322-2EF754602E95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{BED17D91-2C5D-407E-884F-A608D627F47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED17D91-2C5D-407E-884F-A608D627F47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED17D91-2C5D-407E-884F-A608D627F47A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF20B75B-0967-4389-92D1-FF2630B95413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF20B75B-0967-4389-92D1-FF2630B95413}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF20B75B-0967-4389-92D1-FF2630B95413}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF20B75B-0967-4389-92D1-FF2630B95413}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68FA4BC3-C277-44D0-8333-18D51DC3CA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{68FA4BC3-C277-44D0-8333-18D51DC3CA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68FA4BC3-C277-44D0-8333-18D51DC3CA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,13 +31,17 @@ Global
 		{746FEB33-01C8-4AFE-8DDD-8E4A8F09F31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{746FEB33-01C8-4AFE-8DDD-8E4A8F09F31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{746FEB33-01C8-4AFE-8DDD-8E4A8F09F31A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9DB4447-8741-4AC3-B322-2EF754602E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9DB4447-8741-4AC3-B322-2EF754602E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9DB4447-8741-4AC3-B322-2EF754602E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9DB4447-8741-4AC3-B322-2EF754602E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EF20B75B-0967-4389-92D1-FF2630B95413} = {A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}
 		{68FA4BC3-C277-44D0-8333-18D51DC3CA19} = {A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}
+		{A9DB4447-8741-4AC3-B322-2EF754602E95} = {A8513A00-4BA8-4B49-A1B0-4A0B5D216E86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A65F4A7-2B54-416C-87EB-189014DEAC18}

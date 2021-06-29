@@ -46,8 +46,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ClickableImguiWithAllLibs\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj">
+      <Private>true</Private>
+    </ProjectReference>
     <ProjectReference Include="..\AutoHotInterception\C#\AutoHotInterception\AutoHotInterception.csproj" />
-    <ProjectReference Include="..\ClickableTransparentOverlay\ClickableTransparentOverlay.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +60,27 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="cimgui.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="cimnodes.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\cimgui.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\cimguizmo.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\cimnodes.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\cimplot.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
