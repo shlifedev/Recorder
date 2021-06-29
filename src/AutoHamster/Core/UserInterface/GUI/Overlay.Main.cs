@@ -62,7 +62,8 @@ namespace AutoHamster.GUI
         {
             while (true)
             {
-                yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender); 
+                yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender);
+                 
             }
         }
     }
