@@ -25,7 +25,7 @@ namespace AutoHamster.Input
         {
             public ControllerType controllerType;
             public bool isMoveEventDelta;
-            public bool isMoveEvent;
+            public bool isMoveEvent; 
             /// <summary>
             /// 0 = down
             /// 1 = up 

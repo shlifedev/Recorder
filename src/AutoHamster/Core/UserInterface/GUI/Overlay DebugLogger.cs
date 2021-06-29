@@ -59,13 +59,14 @@ namespace AutoHamster.GUI
                     Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F3, LowLevelInput.Hooks.KeyState.Down, () => {
                         if (!IORecordController.IsPlaying())
                         {
-                         
                             IORecordController.Play(null);
                             return;
                         }
-                        else
+                    });
+                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F4, LowLevelInput.Hooks.KeyState.Down, () => {
+                        if (IORecordController.IsPlaying())
                         {
-                            IORecordController.Stop();
+                            IORecordController.Stop(null);
                             return;
                         }
                     });
@@ -132,7 +133,8 @@ namespace AutoHamster.GUI
         }
         void DrawIODebuggerMenu()
         {
-            if (ImGui.BeginMenu("Input Debugger"))
+            ImGui.Separator();
+            if (ImGui.TreeNode("IO Controller Config"))
             {
                 ImGui.TextColored(new Vector4(0, 1, 0, 1), "- IO Info");
                 ImGui.Text($"MPos : {Hook.mouseX} {Hook.mouseY}");
@@ -147,36 +149,8 @@ namespace AutoHamster.GUI
                 {
                     Hook.IOInitialize<User32InputController>();
                 }
-
-                ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Test");
-                ImGui.InputInt2("X", ref inputX);
-                if (ImGui.Button($"Absolute Move {inputX},{inputY}"))
-                {
-                    Hook.IOInitialize<AHIInputController>();
-                    Hook.IO.IfNeedInitialize();
-                    Hook.IO.MoveMouseDirect(inputX, inputY);
-                    System.Threading.Thread.Sleep(500);
-                    Hook.IOInitialize<User32InputController>();
-                    Hook.IO.MoveMouseDirect(inputX, inputY);
-                }
-                if (ImGui.Button($"Releative Move {inputX},{inputY}"))
-                {
-                    Hook.IO.MoveMouse(inputX, inputY);
-                }
-                if (ImGui.Button($"Keyboard Test"))
-                {
-                    Hook.IOInitialize<AHIInputController>();
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.A);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.B);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.C);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.D);
-                    Hook.IOInitialize<User32InputController>();
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.A);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.B);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.C);
-                    Hook.IO.KeyPress(LowLevelInput.Hooks.VirtualKeyCode.D);
-                }
-                ImGui.EndMenu();
+                ImGui.TreePop();
+                ImGui.Separator();
             }
         }
 
@@ -194,10 +168,21 @@ namespace AutoHamster.GUI
 
         private void DrawIORecordMenu()
         {
- 
-            if (ImGui.BeginMenu("IO Record Debug"))
+
+            ImGui.Text($"Recording : {IORecordController.IsStartRecording()} Playing : {IORecordController.IsPlaying()}");
+            if (ImGui.TreeNode("IO Record Debug"))
             {
-                ImGui.TextColored(new Vector4(0, 1, 0, 1), "ALT+1 = Record/Stop Alt+2 = Play&Stop");
+                DrawIODebuggerMenu();
+                if (ImGui.TreeNode("IO Record Controller Config"))
+                {
+                    ImGui.TreePush(""); 
+                    ImGui.Checkbox("IsMouseMoveRecordable", ref IORecordController.IsMouseMoveRecordable);
+                    ImGui.Checkbox("IsRecordMouseStartPosFlag", ref IORecordController.IsRecordMouseStartPosFlag);
+                    ImGui.Checkbox("NoDelay", ref IORecordController.NoDelay);
+                    ImGui.TreePop();
+                }
+
+                ImGui.TextColored(new Vector4(0, 1, 0, 1), "f2/f3 (recrod&play)");
                 if (!IORecordController.IsStartRecording())
                 {
                     ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 0, 0, 1));
@@ -313,10 +298,11 @@ namespace AutoHamster.GUI
                     }
                     ImGui.SetScrollFromPosY(99999);
                     ImGui.EndChild();
-                }
-                ImGui.EndMenu();
+                } 
             }
 
+            ImGui.TreePop();
+            ImGui.Separator();
         }
 
         void DrawLogs()
@@ -375,7 +361,7 @@ namespace AutoHamster.GUI
                 ImGui.SetWindowPos(new Vector2(0, 0)); 
                 DrawMenuBar();
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowTitleAlign, new Vector2(0.5f,0.5f)); 
-                DrawIODebuggerMenu();
+                
                 DrawImageFactoryMenu();
                 DrawIORecordMenu(); 
                 DrawLogs();
