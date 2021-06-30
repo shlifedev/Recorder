@@ -62,8 +62,7 @@ namespace Pixel
                     rsTemp += (char)val;
                 }
                 ci.IsTemporaryImage = true;
-                ci.tag = rsTemp;
-                Console.WriteLine("create image temporary " + rsTemp);
+                ci.tag = rsTemp; 
             }
             
 

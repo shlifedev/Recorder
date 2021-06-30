@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Numerics;
+using AutoHamster.Component;
 
 namespace AutoHamster
 {
@@ -73,17 +74,9 @@ namespace AutoHamster
                 InitializeExOverlayGUI();
                 cropController = new CropController();
                 Logger.Log(this, "crop controller initialized");  
-                RunAttributeInitializer.Init(); 
-                 
+                RunAttributeInitializer.Init();  
             });   
-            var students = new List<Command>() {
-                new CommandImageFindAndClick()
-            };
 
-            Task.Run(() => { 
-                System.Threading.Thread.Sleep(1000); 
-            });
-            V_ContentList.ItemsSource = students;  
         } 
     }
 }

@@ -11,75 +11,33 @@ using System.Threading.Tasks;
 
 namespace AutoHamster.Core.Components
 {
-    public static class IORecordController
+    public static partial class IORecordController
     {
-        static List<RecordData> recordDatas = new List<RecordData>();
-
-        public struct RecordData
-        {
-            public int order;
-            public bool isMouseEvent;
-            public Hook.HookMouseEvent mouseEvent;
-            public Hook.HookKeyEvent keyEvent;
-            public double eventTime;
-            public RecordData(int order, bool isMouseEvent, Hook.HookMouseEvent mouseEvent, Hook.HookKeyEvent keyEvent, double eventTime)
-            {
-                this.order = order; 
-                this.isMouseEvent = isMouseEvent;
-                this.mouseEvent = mouseEvent;
-                this.keyEvent = keyEvent;
-                this.eventTime = eventTime;
-            }
-
-            public override string ToString()
-            {
-                return $"isMouseEvent\tmouseEvent\tkeyEvent\teventTime\n{isMouseEvent}\t{mouseEvent.ToString()}\t{keyEvent.ToString()}\t{eventTime}";
-            }
-        }
-        public static bool IsStartRecord = false;
-        public static bool IsPlayFlag = false;
-        public static bool IsRecordMouseStartPosFlag = true;
-        public static bool NoDelay = true;
-
+        static List<RecordData> recordDatas = new List<RecordData>(); 
+        public static bool IsRecording = false;
+        public static bool IsPlaying = false; 
+        public static bool IsNodelay = true; 
         /// <summary>
         /// 마우스 움직임 자체를 녹화함
         /// true인경우 : Down, Up 이벤트로 동작하며 Move이벤트로 동작
         /// false인경우 : 마우스 클릭 위치만 기록되며, x,y위치로 마우스가 순간이동
         /// </summary>
         public static bool IsMouseMoveRecordable = true; 
+        public static bool IsRecordMouseStartPos = true;
         private static System.DateTime StartTime;
         private static System.DateTime EndTIme; 
-        private static CancellationTokenSource token;
-         
-
-        private static bool Block = false;
-        public static bool IsRecordMouseStartPos()
-        {
-            return IsRecordMouseStartPosFlag;
-        }
-        public static bool IsStartRecording()
-        {
-            return IsStartRecord;
-        }
-        public static bool IsPlaying()
-        {
-            return IsPlayFlag;
-        }
-         
+        private static CancellationTokenSource token; 
         public static void StartRecord()
         {
-            if (IsStartRecord == true && IsPlayFlag == true)
+            if (IsRecording == true && IsPlaying == true)
                 return;
-            StackTrace st = new StackTrace(true);
-
-            Console.WriteLine(st.ToString());
-            
+            StackTrace st = new StackTrace(true);  
             Logger.Log("Recoder", "Start Record..");
             recordDatas.Clear();
-            IsStartRecord = true;
+            IsRecording = true;
             StartTime = System.DateTime.Now;
 
-            if (IsRecordMouseStartPosFlag && IsMouseMoveRecordable)
+            if (IsRecordMouseStartPos && IsMouseMoveRecordable)
             {
                 recordDatas.Add(new RecordData()
                 {
@@ -100,11 +58,11 @@ namespace AutoHamster.Core.Components
 
         public static void StopRecord()
         { 
-            if (IsStartRecord == false && IsPlayFlag == true) 
+            if (IsRecording == false && IsPlaying == true) 
                 return;
 
             Logger.Log("Recoder", "End Record..");
-            IsStartRecord = false;
+            IsRecording = false;
             EndTIme = System.DateTime.Now;
         }
 
@@ -127,26 +85,18 @@ namespace AutoHamster.Core.Components
         {  
             if (e.isMoveEvent && e.isMoveEventDelta)
             {
-                if(Hook.IO.GetType() == typeof(Component.AHIInputController))
+                if (Hook.IO.GetType() == typeof(Component.AHIInputController))
                 {
-                    if(e.controllerType == Hook.ControllerType.AHI)
-                    {
-                        Hook.IO.MoveMouse(e.x, e.y);
-                    } 
+                    Hook.IO.MoveMouse(e.x, e.y);
                     return;
                 }
-                else
-                {
-                    Hook.IO.MoveMouseDirect(e.x, e.y);
-                    return;
-                } 
             }
             else if(e.isMoveEvent && e.isMoveEventDelta ==false)
             {
                 Hook.IO.MoveMouseDirect(e.x, e.y);
+                return;
             }
-
-            Console.WriteLine(e.isMoveEvent);
+             
             if(e.mouseButton == 0 && e.isMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
@@ -244,24 +194,22 @@ namespace AutoHamster.Core.Components
         public static RecordData processing_debug_rd;
         public static void Play(System.Action finishCallback)
         { 
-            if (IsStartRecord || IsPlayFlag) return;
-            IsPlayFlag = true;
+            if (IsRecording || IsPlaying) return;
+            IsPlaying = true;
             Logger.Log("Recoder", "Play Record..");
             StartTime = DateTime.MinValue;
             EndTIme = DateTime.MinValue; 
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             token = tokenSource; 
-            List<RecordData> copyRecords = new List<RecordData>(recordDatas); 
-
-            Console.WriteLine("record array list count : " + copyRecords.Count);
+            List<RecordData> copyRecords = new List<RecordData>(recordDatas);  
             _ = Task.Run(() =>
             { 
                 if (StartTime == DateTime.MinValue)
                     StartTime = System.DateTime.Now; 
                 while (copyRecords.Count != 0 && token.IsCancellationRequested == false)
                 {
-                    double cur = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                    if (NoDelay)
+                    double cur = (System.DateTime.Now - StartTime).TotalMilliseconds * 4;
+                    if (IsNodelay)
                     {
                         cur = 99999;
                     }
@@ -288,7 +236,7 @@ namespace AutoHamster.Core.Components
                 Logger.Log("copyRecords Count : " + copyRecords.Count);
                 Logger.Log("recordDatas Count : " + recordDatas.Count);
 
-                IsPlayFlag = false;
+                IsPlaying = false;
                 finishCallback?.Invoke();
                 tokenSource.Cancel();
             }, tokenSource.Token);
@@ -298,10 +246,10 @@ namespace AutoHamster.Core.Components
         public static void Stop(System.Action callback = null)
         {
             Logger.Log("Recoder", "Stop..");
-            if(token != null && IsPlaying())
+            if(token != null && IsPlaying)
             {
                 token.Cancel();
-                IsPlayFlag = false;
+                IsPlaying = false;
                 callback?.Invoke();
             }
           
@@ -330,12 +278,8 @@ namespace AutoHamster.Core.Components
         {
             if (e.vkCode == VirtualKeyCode.F2 || e.vkCode == VirtualKeyCode.F3) return;
 
-            if (Block)
-            {
-                Block = false;
-                return;
-            }
-            if (IsStartRecord)
+        
+            if (IsRecording)
             {
                 RecordData rd = new RecordData();
                 rd.order = recordDatas.Count;
@@ -349,7 +293,7 @@ namespace AutoHamster.Core.Components
         public static void OnMouseEvent(Hook.HookMouseEvent e)
         {
       
-            if (IsStartRecord)
+            if (IsRecording)
             { 
                 if(IsMouseMoveRecordable == false)
                 {
@@ -374,9 +318,7 @@ namespace AutoHamster.Core.Components
                     rd.isMouseEvent = true;
                     rd.mouseEvent = e;
                     rd.eventTime = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                    recordDatas.Add(rd);
-
-                    Console.WriteLine(rd.ToString());
+                    recordDatas.Add(rd); 
                 }
              
             }

@@ -21,7 +21,7 @@ namespace AutoHamster.GUI
                 {
                     inst = new OverlayProcessSelector();
                     Hook.AddKeyboardCombo(LowLevelInput.Hooks.VirtualKeyCode.Lcontrol, LowLevelInput.Hooks.VirtualKeyCode.Two, () => {
-                        OverlayProcessSelector.inst.show = !OverlayProcessSelector.inst.show;
+                        OverlayProcessSelector.inst.Show = !OverlayProcessSelector.inst.Show;
                     });
                     return inst;
                 }
@@ -31,7 +31,7 @@ namespace AutoHamster.GUI
         private static OverlayProcessSelector inst;
         public Process targetProcess;
         public List<Process> processList = new List<Process>();
-        public bool show = false;
+        public bool Show = false;
         private int inputX = 0, inputY = 0;
         public void ReloadProcess()
         {
@@ -58,7 +58,7 @@ namespace AutoHamster.GUI
             {
             
                 yield return new Wait(ClickableTransparentOverlay.Overlay.OnRender); 
-                if (!show) continue;
+                if (!Show) continue;
 
                 ImGui.PushFont(FontPointer.FontFactory["default"]);
                 ImGui.Begin("ProcessManager", ImGuiWindowFlags.AlwaysAutoResize);

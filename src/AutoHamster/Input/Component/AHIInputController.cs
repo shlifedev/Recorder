@@ -15,10 +15,24 @@ namespace AutoHamster.Component
 {
     public class AHIInputController : BaseInputController
     {
+
+        public static AHIInputController Instance
+        {
+            get {
+                if (instance == null)
+                {
+                    instance = new AHIInputController();
+                }
+                return instance;
+            } 
+        }
+        private static AHIInputController instance;
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(int wCode, int wMapType);
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKeyEx(int wCode, int wMapType, int dwhkl);
         public int MouseID = 11;
-        public int KeyboardID = 1;
+        public int KeyboardID = 2;
 
 
         private Manager im;
@@ -37,11 +51,13 @@ namespace AutoHamster.Component
                         Logger.Error(this, "cannot found device list");
                         im = null;
                         return im;
+
                     }
                     else
                     {
                         foreach (var value in deviceList)
-                        {
+                        { 
+                            Logger.Log(im.GetMouseIdFromHandle(value.Handle).ToString());
                             if (value.IsMouse)
                             {
                                 MouseID = im.GetMouseIdFromHandle(value.Handle);
@@ -65,6 +81,10 @@ namespace AutoHamster.Component
         }
 
 
+
+        public static void HookInitialize()
+        {
+        }
         private int GetBtn(VirtualKeyCode vk)
         {
             if (vk == VirtualKeyCode.Lbutton)
@@ -99,22 +119,57 @@ namespace AutoHamster.Component
 
         }
 
+
+        private VirtualKeyCode NormalVKToExVk(VirtualKeyCode vk)
+        {
+            if (vk == VirtualKeyCode.Control) return VirtualKeyCode.Lcontrol;
+            if (vk == VirtualKeyCode.Menu) return VirtualKeyCode.Lmenu;
+            if (vk == VirtualKeyCode.Shift) return VirtualKeyCode.Lshift;
+            return vk;
+        }
         public override void IfNeedInitialize()
         {
-            var im = Im;
-            im.SubscribeMouseMove(MouseID, false, new Action<int, int>((x, y) =>
+            var keyboardId = AHIInputController.Instance.KeyboardID;
+            Im.SubscribeKeyboard(keyboardId, false, new System.Action<ushort, int>((keyId, state) =>
             {
-                _x = x;
-                _y = y;
-
-                Hook.onMouseEvent?.Invoke(new Hook.HookMouseEvent()
+                if (Hook.IO.GetType() == typeof(AHIInputController))
                 {
-                    controllerType = Hook.ControllerType.AHI,
-                    isMoveEvent = true,
-                    isMoveEventDelta = true,
-                    x = x,
-                    y = y
-                });
+                    var vkUint = AHIInputController.MapVirtualKey(keyId, 3); 
+                    VirtualKeyCode vk = NormalVKToExVk((VirtualKeyCode)vkUint);
+                    if(vk == VirtualKeyCode.Hotkey) 
+                        Logger.Error(this, $"EX Key Read Failed keyId : ({keyId})"); 
+                    KeyState ks = (state == 1) ? KeyState.Down : KeyState.Up;
+                    Hook.InputManager_OnKeyboardEvent(vk, ks);
+                } 
+            }));
+
+            Im.SubscribeMouseMoveAbsolute(MouseID, false, new Action<int, int>((x, y) => {
+                Console.WriteLine(x);
+            }));
+
+            Im.SubscribeMouseButtons(MouseID, false, new Action<int, int>((key,state)=> {
+                if (Hook.IO.GetType() == typeof(AHIInputController))
+                {
+                    VirtualKeyCode vk = VirtualKeyCode.Hotkey;
+                    KeyState ks = KeyState.None;
+                    vk = (key == 0) ? VirtualKeyCode.Lbutton :
+                         (key == 1) ? VirtualKeyCode.Rbutton :
+                         (key == 2) ? VirtualKeyCode.Mbutton :
+                         (key == 3) ? VirtualKeyCode.Xbutton1 : VirtualKeyCode.Xbutton2;
+
+                    ks = (state == 1) ? KeyState.Down : KeyState.Up;
+                    Hook.InputManager_OnMouseEvent(vk, ks, 0, 0);
+                }
+            }), false);
+             
+            Im.SubscribeMouseMove(MouseID, false, new Action<int, int>((x, y) =>
+            {
+                if(Hook.IO.GetType() == typeof(AHIInputController))
+                {
+                    _x = x;
+                    _y = y; 
+                    Hook.InputManager_OnMouseEvent(VirtualKeyCode.Invalid, KeyState.None, x, y, true); 
+                }  
             }));
         }
 
@@ -149,7 +204,7 @@ namespace AutoHamster.Component
         }
         public override void MouseClick(VirtualKeyCode key, Vector2 position)
         {
-            im.SendMouseMoveAbsolute(MouseID, (int)position.X, (int)position.Y);
+            MoveMouseDirect((int)position.X, (int)position.Y); 
             Im.SendMouseButtonEvent(MouseID, GetBtn(key), 1);
             Im.SendMouseButtonEvent(MouseID, GetBtn(key), 0);
             System.Threading.Thread.Sleep(5);
@@ -187,8 +242,8 @@ namespace AutoHamster.Component
 
         public override void MoveMouseDirect(int x, int y)
         {
-            int aX = (int)ushort.MaxValue / (1920) * x;
-            int aY = (int)ushort.MaxValue / (1080) * y;
+            int aX = (int)((ushort.MaxValue / (1920)) * x);
+            int aY = (int)((ushort.MaxValue / (1080)) * y);
             im.SendMouseMoveAbsolute(MouseID, aX, aY);
         }
 

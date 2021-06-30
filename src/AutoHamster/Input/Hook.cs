@@ -25,7 +25,7 @@ namespace AutoHamster.Input
         {
             public ControllerType controllerType;
             public bool isMoveEventDelta;
-            public bool isMoveEvent; 
+            public bool isMoveEvent;
             /// <summary>
             /// 0 = down
             /// 1 = up 
@@ -65,7 +65,7 @@ namespace AutoHamster.Input
         {
             public ControllerType controllerType;
             public KeyState state;
-            public VirtualKeyCode vkCode; 
+            public VirtualKeyCode vkCode;
             public HookKeyEvent(KeyState state, VirtualKeyCode vkCode)
             {
                 this.state = state;
@@ -74,7 +74,7 @@ namespace AutoHamster.Input
             }
             public override string ToString()
             {
-                return $"{vkCode} {state}";   
+                return $"{vkCode} {state}";
             }
         }
 
@@ -85,21 +85,18 @@ namespace AutoHamster.Input
         public static Dictionary<(VirtualKeyCode key, KeyState state), System.Action> KeyboardHook = new Dictionary<(VirtualKeyCode key, KeyState state), Action>();
         public static Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), System.Action> KeyComboHook = new Dictionary<(VirtualKeyCode k1, VirtualKeyCode k2), Action>();
         private static bool Logging = false;
-        public static int mouseX = int.MinValue , mouseY = int.MinValue;
+        public static int mouseX = int.MinValue, mouseY = int.MinValue;
         public static LowLevelInput.Hooks.InputManager inputManager;
-         
+
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
-
-         
-
-        public static IInputController IO { get => io; } 
+        public static IInputController IO { get => io; }
         public static void IOInitialize<T>() where T : IInputController
-        { 
+        {
             var type = typeof(T);
-            if (type == typeof(User32InputController)) 
-                io = new User32InputController(); 
-            else if (type == typeof(AHIInputController)) 
-                io = new AHIInputController();
+            if (type == typeof(User32InputController))
+                io = new User32InputController();
+            else if (type == typeof(AHIInputController))
+                io = AHIInputController.Instance;
             else
             {
                 throw new Exception("Not Support " + type.Name);
@@ -107,33 +104,37 @@ namespace AutoHamster.Input
         }
 
         public static void HookInit(System.Action onInited = null)
-        { 
-            inputManager = new LowLevelInput.Hooks.InputManager(); 
+        {
+            inputManager = new LowLevelInput.Hooks.InputManager();
             // you may not need those when you use InputManager
             var keyboardHook = new LowLevelKeyboardHook();
             var mouseHook = new LowLevelMouseHook();
             // subscribe to the events offered by InputManager
-            inputManager.OnKeyboardEvent += InputManager_OnKeyboardEvent;
-            inputManager.OnMouseEvent += InputManager_OnMouseEvent; 
+            inputManager.OnKeyboardEvent += InputManager_OnKeyboardEvent_LowLevelInput;
+            inputManager.OnMouseEvent += InputManager_OnMouseEvent_LowLevelInput;
             inputManager.Initialize();
             IOInitialize<AHIInputController>();
             IO.IfNeedInitialize();
             onInited?.Invoke();
 
-            Hook.AddMouseEvent(VirtualKeyCode.Invalid, KeyState.None, (x, y) => {
+            Hook.AddMouseEvent(VirtualKeyCode.Invalid, KeyState.None, (x, y) =>
+            {
                 mouseX = x;
-                mouseY = y;  
+                mouseY = y;
             });
 
-
-            if(Hook.IO.GetType() == typeof(AHIInputController))
-            {
-                var io = Hook.IO as AHIInputController;
-                var im = io.Im; 
-            }
-             
         }
-  
+
+
+        public static void InputManager_OnKeyboardEvent_LowLevelInput(VirtualKeyCode key, KeyState state)
+        {
+            if (IO.GetType() == typeof(User32InputController))
+            {
+                InputManager_OnKeyboardEvent(key, state);
+            }
+        }
+
+
 
         public static void AddKeyboardCombo(VirtualKeyCode k1, VirtualKeyCode k2, System.Action callback)
         {
@@ -146,20 +147,20 @@ namespace AutoHamster.Input
             {
                 Logger.Log("Add New Keyboard Combo", $"{k1}+{k2}");
                 KeyComboHook.Add((k1, k2), callback);
-            } 
+            }
         }
         public static void AddMouseEvent(VirtualKeyCode key, KeyState state, System.Action<int, int> callback)
         {
-            if (MouseHook.ContainsKey((key,state)))
+            if (MouseHook.ContainsKey((key, state)))
             {
                 Logger.Log("Add Mouse Hook", $"{key} {state}");
-                MouseHook[(key,state)] += callback;
+                MouseHook[(key, state)] += callback;
             }
             else
             {
                 Logger.Log("Add New Mouse Hook", $"{key} {state}");
                 MouseHook.Add((key, state), callback);
-            } 
+            }
         }
         public static void AddKeyboardEvent(VirtualKeyCode key, KeyState state, System.Action callback)
         {
@@ -172,22 +173,31 @@ namespace AutoHamster.Input
             {
                 Logger.Log("Add New Kb Hook", $"{key} {state}");
                 KeyboardHook.Add((key, state), callback);
-            } 
+            }
         }
-        private static void InputManager_OnMouseEvent(VirtualKeyCode key, KeyState state, int x, int y)
-        { 
+
+        public static void InputManager_OnMouseEvent_LowLevelInput(VirtualKeyCode key, KeyState state, int x, int y)
+        {
+            if (IO.GetType() == typeof(User32InputController))
+            {
+                InputManager_OnMouseEvent(key, state, x, y);
+            }
+        }
+        public static void InputManager_OnMouseEvent(VirtualKeyCode key, KeyState state, int x, int y, bool delta = false)
+        {
 
             System.Action<int, int> callback;
             MouseHook.TryGetValue((key, state), out callback);
 
 
-        
-            if(key == VirtualKeyCode.Invalid)
+            Console.WriteLine($"{key}, {state}");
+            if (key == VirtualKeyCode.Invalid)
             {
                 onMouseEvent?.Invoke(new HookMouseEvent()
                 {
                     controllerType = ControllerType.User32,
                     isMoveEvent = true,
+                    isMoveEventDelta = delta,
                     mouseButton = -1,
                     state = -1,
                     x = x,
@@ -222,8 +232,8 @@ namespace AutoHamster.Input
 
                 int _state = -1;
                 if (state == KeyState.Down) _state = 0;
-                if (state == KeyState.Up) _state = 1; 
-                if(key == VirtualKeyCode.Lbutton || key == VirtualKeyCode.Rbutton || key == VirtualKeyCode.Mbutton || key == VirtualKeyCode.Xbutton1|| key == VirtualKeyCode.Xbutton2)
+                if (state == KeyState.Up) _state = 1;
+                if (key == VirtualKeyCode.Lbutton || key == VirtualKeyCode.Rbutton || key == VirtualKeyCode.Mbutton || key == VirtualKeyCode.Xbutton1 || key == VirtualKeyCode.Xbutton2)
                 {
                     onMouseEvent?.Invoke(new HookMouseEvent()
                     {
@@ -235,25 +245,24 @@ namespace AutoHamster.Input
                         y = y
                     });
                 }
-    
+
             }
-      
 
 
-            if (callback == null) 
-                return; 
-            else 
-                callback?.Invoke(x,y); 
 
-        
+            if (callback == null)
+                return;
+            else
+                callback?.Invoke(x, y);
+
+
         }
 
-        private static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
+
+        public static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
         {
             System.Action callback;
-            //Console.WriteLine($"{key}, {state}");
-
-            Console.WriteLine($"{key} {state}");
+            Console.WriteLine($"{key}, {state}");
 
             onKeyboardEvent?.Invoke(new HookKeyEvent()
             {
@@ -262,26 +271,26 @@ namespace AutoHamster.Input
             });
 
             KeyboardHook.TryGetValue((key, state), out callback);
-           
-            if (callback != null) 
-                callback?.Invoke(); 
 
-            if(state == KeyState.Down && _ComboStartKey == VirtualKeyCode.Invalid)
+            if (callback != null)
+                callback?.Invoke();
+
+            if (state == KeyState.Down && _ComboStartKey == VirtualKeyCode.Invalid)
             {
                 //Logger.Log("KeyCombo", $"Start Combo {key}");
                 //Console.WriteLine("Start combo " + key);
                 _ComboStartKey = key;
             }
-            if(state == KeyState.Down && _ComboStartKey != VirtualKeyCode.Invalid)
+            if (state == KeyState.Down && _ComboStartKey != VirtualKeyCode.Invalid)
             {
                 if (_ComboStartKey != key)
                 {
-                    if(Logging)
-                    Logger.Log("KeyCombo", $"Complate Combo {_ComboStartKey} + {key}");
+                    if (Logging)
+                        Logger.Log("KeyCombo", $"Complate Combo {_ComboStartKey} + {key}");
                     //Console.WriteLine("Combo hitted " + $"{_ComboStartKey} + {key}");
                     var result = KeyComboHook.TryGetValue((_ComboStartKey, key), out var comboCallback);
-                    if (result) 
-                        comboCallback?.Invoke();  
+                    if (result)
+                        comboCallback?.Invoke();
                 }
             }
             if (state == KeyState.Up && _ComboStartKey != VirtualKeyCode.Invalid && key == _ComboStartKey)
@@ -289,7 +298,7 @@ namespace AutoHamster.Input
                 //Console.WriteLine("End combo");
                 _ComboStartKey = VirtualKeyCode.Invalid;
             }
-             
+
         }
     }
 }
