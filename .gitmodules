@@ -1,3 +1,6 @@
 [submodule "src/Lib.IMGUI"]
 	path = src/Lib.IMGUI
 	url = https://github.com/shlifedev/ClickableImguiWithAllLibs
+[submodule "src/Lib.AHInterception"]
+	path = src/Lib.AHInterception
+	url = https://github.com/evilC/AutoHotInterception
