@@ -1,29 +1,16 @@
 # DS Automation Core
-(외주 프로젝트)
 
-
-
-# Features
-- GUI
-- Command Group Manager
-- Keyboard & Mouse Event Hook and Record
-- OpenCV Image Matcher
-- Support Multiple Monitor 
-- Windows Message Sender For IO
-- Windows Message Hooker
-
-
-# 완료리스트
- - Interception HID Driver Based IO
- - User32 Based IO
- - OpenCV Image Matcher
+ 외주작업에 쓰는 유틸리티 작성하다가 생각나서 취미로 만들고 있는 만능 매크로 (현재 개발중)
+ 
+# 기능 완료리스트 
+ - Interception HID Driver Base Mouse Keyboard Input & Hook
+ - User32 Based Mouse Keyboard Input & Hook
+ - OpenCV Image Match
  - Image Cropping
  - Support Multiple Monitor
  - Logger
- - Auto Mouse
-# TODO 리스트
- - WPF GUI
- - Drag & Drop
- - Key & Mouse Recorder
+ - Auto Mouse 
+ - Keyboard/Mouse Record & Play
+ 
 # 주의사항
  - HID 인풋의 안정성을 위해 키보드, 마우스를 하나씩만 사용해야 합니다 
