@@ -166,8 +166,10 @@ namespace AutoHamster.GUI
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
                 if (ImGui.TreeNode("IO Record Controller Config"))
                 {
+              
                     ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
-                    ImGui.TreePush(""); 
+                    ImGui.TreePush("");
+                    ImGui.InputFloat("Speed Multiply", ref IORecordController.MultiplySpeed);
                     ImGui.Checkbox("IsMouseMoveRecordable", ref IORecordController.IsMouseMoveRecordable);
                     ImGui.Checkbox("IsRecordMouseStartPosFlag", ref IORecordController.IsRecordMouseStartPos);
                     ImGui.Checkbox("NoDelay", ref IORecordController.IsNodelay);

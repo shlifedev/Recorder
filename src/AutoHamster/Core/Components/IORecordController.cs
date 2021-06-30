@@ -27,6 +27,7 @@ namespace AutoHamster.Core.Components
         private static System.DateTime _startTime;
         private static System.DateTime _endTIme;
         private static CancellationTokenSource _token;
+        public static float MultiplySpeed = 1.0f;
         public static void StartRecord()
         {
             if (IsRecording == true && IsPlaying == true)
@@ -137,7 +138,7 @@ namespace AutoHamster.Core.Components
                     _startTime = System.DateTime.Now;
                 while (copyRecords.Count != 0 && _token.IsCancellationRequested == false)
                 {
-                    double cur = (System.DateTime.Now - _startTime).TotalMilliseconds * 4;
+                    double cur = (System.DateTime.Now - _startTime).TotalMilliseconds * MultiplySpeed;
                     if (IsNodelay)
                     {
                         cur = 99999;
