@@ -1,0 +1,3 @@
+[submodule "src/Lib.IMGUI"]
+	path = src/Lib.IMGUI
+	url = https://github.com/shlifedev/ClickableImguiWithAllLibs

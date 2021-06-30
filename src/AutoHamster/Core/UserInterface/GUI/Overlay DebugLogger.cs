@@ -370,7 +370,6 @@ namespace AutoHamster.GUI
                 DrawIORecordMenu(); 
                 DrawLogs();
                  
-
                 System.Random r = new Random();
 
                 float[] arr = new float[] { 0.6f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, (float)r.NextDouble() };
