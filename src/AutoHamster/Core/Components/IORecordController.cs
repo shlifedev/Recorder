@@ -12,7 +12,8 @@ namespace AutoHamster.Core.Components
 {
     public static partial class IORecordController
     {
-        static List<RecordData> recordDatas = new List<RecordData>(); 
+        public static RecordData ProcessingDebugRd;
+        static readonly List<RecordData> RecordDatas = new List<RecordData>(); 
         public static bool IsRecording = false;
         public static bool IsPlaying = false; 
         public static bool IsNodelay = true; 
@@ -23,32 +24,32 @@ namespace AutoHamster.Core.Components
         /// </summary>
         public static bool IsMouseMoveRecordable = true; 
         public static bool IsRecordMouseStartPos = true;
-        private static System.DateTime StartTime;
-        private static System.DateTime EndTIme; 
-        private static CancellationTokenSource token; 
+        private static System.DateTime _startTime;
+        private static System.DateTime _endTIme; 
+        private static CancellationTokenSource _token; 
         public static void StartRecord()
         {
             if (IsRecording == true && IsPlaying == true)
                 return;
             StackTrace st = new StackTrace(true);  
             Logger.Log("Recoder", "Start Record..");
-            recordDatas.Clear();
+            RecordDatas.Clear();
             IsRecording = true;
-            StartTime = System.DateTime.Now;
+            _startTime = System.DateTime.Now;
 
             if (IsRecordMouseStartPos && IsMouseMoveRecordable)
             {
-                recordDatas.Add(new RecordData()
+                RecordDatas.Add(new RecordData()
                 {
                     eventTime = 0,
                     isMouseEvent = true,
                     mouseEvent = new Hook.HookMouseEvent()
                     {
-                        controllerType = Hook.ControllerType.AHI,
-                        isMoveEvent = true,
-                        isMoveEventDelta = false,
-                        x = Hook.mouseX,
-                        y = Hook.mouseY
+                        ControllerType = Hook.ControllerType.AHI,
+                        IsMoveEvent = true,
+                        IsMoveEventDelta = false,
+                        X = Hook.mouseX,
+                        Y = Hook.mouseY
                     }
                 }); ;
             }
@@ -62,16 +63,16 @@ namespace AutoHamster.Core.Components
 
             Logger.Log("Recoder", "End Record..");
             IsRecording = false;
-            EndTIme = System.DateTime.Now;
+            _endTIme = DateTime.Now;
         }
 
         static void SendKeyboardEventRecord(Hook.HookKeyEvent e)
         {
-             if (e.state == LowLevelInput.Hooks.KeyState.Down)
+             if (e.state == KeyState.Down)
             {
                 Hook.IO.KeyDown(e.vkCode);
             }
-            else if (e.state == LowLevelInput.Hooks.KeyState.Up)
+            else if (e.state == KeyState.Up)
             {
                 Hook.IO.KeyUp(e.vkCode);
             }
@@ -82,139 +83,137 @@ namespace AutoHamster.Core.Components
         }
         static void SendMouseEventRecord(Hook.HookMouseEvent e)
         {  
-            if (e.isMoveEvent && e.isMoveEventDelta)
+            if (e.IsMoveEvent && e.IsMoveEventDelta)
             {
                 if (Hook.IO.GetType() == typeof(AHIInputController))
                 {
-                    Hook.IO.MoveMouse(e.x, e.y);
+                    Hook.IO.MoveMouse(e.X, e.Y);
                     return;
                 }
             }
-            else if(e.isMoveEvent && e.isMoveEventDelta ==false)
+            else if(e.IsMoveEvent)
             {
-                Hook.IO.MoveMouseDirect(e.x, e.y);
+                Hook.IO.MoveMouseDirect(e.X, e.Y);
                 return;
-            }
-             
-            if(e.mouseButton == 0 && e.isMoveEvent == false)
+            } 
+            if(e.MouseButton == 0 && e.IsMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
                 {
-                    Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new System.Numerics.Vector2(e.x, e.y));
+                    Hook.IO.MouseClick(VirtualKeyCode.Lbutton, new System.Numerics.Vector2(e.X, e.Y));
                 }
                 else
                 {
-                    if (e.state == 0)
+                    if (e.State == 0)
                     {
-                        Hook.IO.MouseDown(LowLevelInput.Hooks.VirtualKeyCode.Lbutton);
+                        Hook.IO.MouseDown(VirtualKeyCode.Lbutton);
                     }
-                    if (e.state == 1)
+                    if (e.State == 1)
                     {
-                        Hook.IO.MouseUp(LowLevelInput.Hooks.VirtualKeyCode.Lbutton);
+                        Hook.IO.MouseUp(VirtualKeyCode.Lbutton);
                     }
                 }
             
        
             }
-            else if (e.mouseButton == 1 && e.isMoveEvent == false)
+            else if (e.MouseButton == 1 && e.IsMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
                 {
-                    Hook.IO.MouseClick(VirtualKeyCode.Rbutton, new System.Numerics.Vector2(e.x, e.y));
+                    Hook.IO.MouseClick(VirtualKeyCode.Rbutton, new System.Numerics.Vector2(e.X, e.Y));
                 }
                 else
                 {
-                    if (e.state == 0)
+                    if (e.State == 0)
                     {
-                        Hook.IO.MouseDown(LowLevelInput.Hooks.VirtualKeyCode.Rbutton);
+                        Hook.IO.MouseDown(VirtualKeyCode.Rbutton);
                     }
-                    if (e.state == 1)
+                    if (e.State == 1)
                     {
-                        Hook.IO.MouseUp(LowLevelInput.Hooks.VirtualKeyCode.Rbutton);
+                        Hook.IO.MouseUp(VirtualKeyCode.Rbutton);
                     }
                 }
  
             }
-            else if (e.mouseButton == 2 && e.isMoveEvent == false)
+            else if (e.MouseButton == 2 && e.IsMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
                 {
-                    Hook.IO.MouseClick(VirtualKeyCode.Mbutton, new System.Numerics.Vector2(e.x, e.y));
+                    Hook.IO.MouseClick(VirtualKeyCode.Mbutton, new System.Numerics.Vector2(e.X, e.Y));
                 }
                 else
                 {
-                    if (e.state == 0)
+                    if (e.State == 0)
                     {
                         Hook.IO.MouseDown(VirtualKeyCode.Mbutton);
                     }
-                    if (e.state == 1)
+                    if (e.State == 1)
                     {
                         Hook.IO.MouseUp(VirtualKeyCode.Mbutton);
                     }
                 }
             }
-            else if (e.mouseButton == 3 && e.isMoveEvent == false)
+            else if (e.MouseButton == 3 && e.IsMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
                 {
-                    Hook.IO.MouseClick(VirtualKeyCode.Xbutton1, new System.Numerics.Vector2(e.x, e.y));
+                    Hook.IO.MouseClick(VirtualKeyCode.Xbutton1, new System.Numerics.Vector2(e.X, e.Y));
                 }
                 else
                 {
-                    if (e.state == 0)
+                    if (e.State == 0)
                     {
                         Hook.IO.MouseDown(VirtualKeyCode.Xbutton1);
                     }
-                    if (e.state == 1)
+                    if (e.State == 1)
                     {
                         Hook.IO.MouseUp(VirtualKeyCode.Xbutton1);
                     }
                 }
             }
-            else if (e.mouseButton == 4 && e.isMoveEvent == false)
+            else if (e.MouseButton == 4 && e.IsMoveEvent == false)
             {
                 if (!IsMouseMoveRecordable)
                 {
-                    Hook.IO.MouseClick(VirtualKeyCode.Xbutton2, new System.Numerics.Vector2(e.x, e.y));
+                    Hook.IO.MouseClick(VirtualKeyCode.Xbutton2, new System.Numerics.Vector2(e.X, e.Y));
                 }
                 else
                 {
-                    if (e.state == 0)
+                    if (e.State == 0)
                     {
                         Hook.IO.MouseDown(VirtualKeyCode.Xbutton2);
                     }
-                    if (e.state == 1)
+                    if (e.State == 1)
                     {
                         Hook.IO.MouseUp(VirtualKeyCode.Xbutton2);
                     }
                 }
             }
-        }
-        public static RecordData processing_debug_rd;
+        } 
         public static void Play(System.Action finishCallback)
         { 
             if (IsRecording || IsPlaying) return;
             IsPlaying = true;
             Logger.Log("Recoder", "Play Record..");
-            StartTime = DateTime.MinValue;
-            EndTIme = DateTime.MinValue; 
+            _startTime = DateTime.MinValue;
+            _endTIme = DateTime.MinValue; 
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            token = tokenSource; 
-            List<RecordData> copyRecords = new List<RecordData>(recordDatas);  
+            _token = tokenSource; 
+            List<RecordData> copyRecords = new List<RecordData>(RecordDatas);  
             _ = Task.Run(() =>
             { 
-                if (StartTime == DateTime.MinValue)
-                    StartTime = System.DateTime.Now; 
-                while (copyRecords.Count != 0 && token.IsCancellationRequested == false)
+                if (_startTime == DateTime.MinValue)
+                    _startTime = System.DateTime.Now; 
+                while (copyRecords.Count != 0 && _token.IsCancellationRequested == false)
                 {
-                    double cur = (System.DateTime.Now - StartTime).TotalMilliseconds * 4;
+                    double cur = (System.DateTime.Now - _startTime).TotalMilliseconds * 4;
                     if (IsNodelay)
                     {
                         cur = 99999;
                     }
                     if (cur >= copyRecords[0].eventTime )
                     {
-                        processing_debug_rd = copyRecords[0];
+                        ProcessingDebugRd = copyRecords[0];
                         if (copyRecords[0].isMouseEvent)
                         {
                             SendMouseEventRecord(copyRecords[0].mouseEvent); 
@@ -222,7 +221,7 @@ namespace AutoHamster.Core.Components
                         else
                         {
                             Logger.Log("copyRecords Count : " + copyRecords.Count);
-                            Logger.Log("recordDatas Count : " + recordDatas.Count);
+                            Logger.Log("recordDatas Count : " + RecordDatas.Count);
                             SendKeyboardEventRecord(copyRecords[0].keyEvent);
                         
                         }
@@ -233,7 +232,7 @@ namespace AutoHamster.Core.Components
 
                 Logger.Log("Finish Callback..");
                 Logger.Log("copyRecords Count : " + copyRecords.Count);
-                Logger.Log("recordDatas Count : " + recordDatas.Count);
+                Logger.Log("recordDatas Count : " + RecordDatas.Count);
 
                 IsPlaying = false;
                 finishCallback?.Invoke();
@@ -245,9 +244,9 @@ namespace AutoHamster.Core.Components
         public static void Stop(System.Action callback = null)
         {
             Logger.Log("Recoder", "Stop..");
-            if(token != null && IsPlaying)
+            if(_token != null && IsPlaying)
             {
-                token.Cancel();
+                _token.Cancel();
                 IsPlaying = false;
                 callback?.Invoke();
             }
@@ -255,25 +254,25 @@ namespace AutoHamster.Core.Components
         }
         public static System.DateTime[] GetStartAndEndTime() 
         {
-            return new DateTime[] { StartTime, EndTIme };
+            return new DateTime[] { _startTime, _endTIme };
         }
 
         public static List<RecordData> GetRecordDatas()
         {
-            return recordDatas;
+            return RecordDatas;
         }
         [Run]
         public static void RegEvent()
         {
-            Hook.onKeyboardEvent += OnKeyEvent;
             Hook.onMouseEvent += OnMouseEvent;
         } 
 
         public static double GetEventTime()
         {
-            return (System.DateTime.Now - StartTime).TotalMilliseconds;
+            return (System.DateTime.Now - _startTime).TotalMilliseconds;
         }
-        public static void OnKeyEvent(Hook.HookKeyEvent e)
+
+        private static void OnKeyEvent(Hook.HookKeyEvent e)
         {
             if (e.vkCode == VirtualKeyCode.F2 || e.vkCode == VirtualKeyCode.F3) return;
 
@@ -281,43 +280,44 @@ namespace AutoHamster.Core.Components
             if (IsRecording)
             {
                 RecordData rd = new RecordData();
-                rd.order = recordDatas.Count;
+                rd.order = RecordDatas.Count;
                 rd.isMouseEvent = false;
                 rd.keyEvent = e;
-                rd.eventTime = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                recordDatas.Add(rd);
+                rd.eventTime = (System.DateTime.Now - _startTime).TotalMilliseconds;
+                RecordDatas.Add(rd);
             }
 
         }
-        public static void OnMouseEvent(Hook.HookMouseEvent e)
+
+        private static void OnMouseEvent(Hook.HookMouseEvent e)
         {
       
             if (IsRecording)
             { 
                 if(IsMouseMoveRecordable == false)
                 {
-                    if (e.isMoveEvent || e.isMoveEventDelta)
+                    if (e.IsMoveEvent || e.IsMoveEventDelta)
                     {
                         return;
                     }
                 } 
-                if (e.isMoveEvent)
+                if (e.IsMoveEvent)
                 {
                     RecordData rd = new RecordData();
-                    rd.order = recordDatas.Count;
+                    rd.order = RecordDatas.Count;
                     rd.isMouseEvent = true;
                     rd.mouseEvent = e; 
-                    rd.eventTime = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                    recordDatas.Add(rd);
+                    rd.eventTime = (System.DateTime.Now - _startTime).TotalMilliseconds;
+                    RecordDatas.Add(rd);
                 }
                 else
                 { 
                     RecordData rd = new RecordData();
-                    rd.order = recordDatas.Count;
+                    rd.order = RecordDatas.Count;
                     rd.isMouseEvent = true;
                     rd.mouseEvent = e;
-                    rd.eventTime = (System.DateTime.Now - StartTime).TotalMilliseconds;
-                    recordDatas.Add(rd); 
+                    rd.eventTime = (System.DateTime.Now - _startTime).TotalMilliseconds;
+                    RecordDatas.Add(rd); 
                 }
              
             }

@@ -24,7 +24,7 @@ namespace AutoHamster.Core
         /// <summary>
         /// 해당 커맨드에 대한 랜더러를 초기화 해야한다.
         /// </summary>
-        public GUI.Command.ICommandRenderer commandRenderer;
+        public GUI.Command.ICommandRenderer CommandRenderer;
         /// <summary>
         /// 커맨드는 순서대로 실행되므로, 인덱스가 곧 리스트이 순서가 된다
         /// </summary>

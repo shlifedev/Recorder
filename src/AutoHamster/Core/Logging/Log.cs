@@ -2,10 +2,10 @@
 
 public struct Log
 {
-    public DateTime TimeStamp;
-    public LogType Type;
-    public string Tag;
-    public string Msg;
+    public DateTime TimeStamp { get; }
+    public LogType @Type { get; }
+    public string Tag { get; }
+    public string Msg { get; }
 
     public Log(LogType type, string tag, string msg)
     {
@@ -29,7 +29,7 @@ public struct Log
     {
         if (datetime)
         {
-            return $"[{TimeStamp.ToString("hh:mm:ss")}] [{Tag}] {Msg}";
+            return $"[{TimeStamp:hh:mm:ss}] [{Tag}] {Msg}";
         }
         else
         {

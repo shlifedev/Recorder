@@ -7,7 +7,7 @@ namespace AutoHamster.Input
 {
     public static class Hook
     {
-        static IInputController io;
+        static IInputController _io;
 
         public enum ControllerType
         {
@@ -15,14 +15,14 @@ namespace AutoHamster.Input
         }
         public struct HookMouseEvent
         {
-            public ControllerType controllerType;
-            public bool isMoveEventDelta;
-            public bool isMoveEvent;
+            public ControllerType ControllerType;
+            public bool IsMoveEventDelta;
+            public bool IsMoveEvent;
             /// <summary>
             /// 0 = down
             /// 1 = up 
             /// </summary>
-            public int state;
+            public int State;
             /// <summary>
             /// 0 = left
             /// 1 = right
@@ -30,26 +30,26 @@ namespace AutoHamster.Input
             /// 3 = xButton1
             /// 4 = xButton2
             /// </summary>
-            public int mouseButton;
+            public int MouseButton;
             /// <summary>
             /// position
             /// </summary>
-            public int x, y;
+            public int X, Y;
 
             public HookMouseEvent(ControllerType ctrl, bool isMoveEvent, int state, int mouseButton, int x, int y, int deltaX, int deltaY)
             {
-                this.isMoveEvent = isMoveEvent;
-                this.state = state;
-                this.mouseButton = mouseButton;
-                this.x = x;
-                this.y = y;
-                this.isMoveEventDelta = false;
-                this.controllerType = ctrl;
+                this.IsMoveEvent = isMoveEvent;
+                this.State = state;
+                this.MouseButton = mouseButton;
+                this.X = x;
+                this.Y = y;
+                this.IsMoveEventDelta = false;
+                this.ControllerType = ctrl;
             }
 
             public override string ToString()
             {
-                return $"{state} {mouseButton} {x} {y}";
+                return $"{State} {MouseButton} {X} {Y}";
             }
         }
 
@@ -81,14 +81,14 @@ namespace AutoHamster.Input
         public static LowLevelInput.Hooks.InputManager inputManager;
 
         static VirtualKeyCode _ComboStartKey = VirtualKeyCode.Invalid;
-        public static IInputController IO { get => io; }
+        public static IInputController IO { get => _io; }
         public static void IOInitialize<T>() where T : IInputController
         {
             var type = typeof(T);
             if (type == typeof(User32InputController))
-                io = new User32InputController();
+                _io = new User32InputController();
             else if (type == typeof(AHIInputController))
-                io = AHIInputController.Instance;
+                _io = AHIInputController.Instance;
             else
             {
                 throw new Exception("Not Support " + type.Name);
@@ -187,13 +187,13 @@ namespace AutoHamster.Input
             {
                 onMouseEvent?.Invoke(new HookMouseEvent()
                 {
-                    controllerType = ControllerType.User32,
-                    isMoveEvent = true,
-                    isMoveEventDelta = delta,
-                    mouseButton = -1,
-                    state = -1,
-                    x = x,
-                    y = y
+                    ControllerType = ControllerType.User32,
+                    IsMoveEvent = true,
+                    IsMoveEventDelta = delta,
+                    MouseButton = -1,
+                    State = -1,
+                    X = x,
+                    Y = y
                 });
             }
             else
@@ -229,12 +229,12 @@ namespace AutoHamster.Input
                 {
                     onMouseEvent?.Invoke(new HookMouseEvent()
                     {
-                        controllerType = ControllerType.User32,
-                        isMoveEvent = false,
-                        mouseButton = mouseBtn,
-                        state = _state,
-                        x = x,
-                        y = y
+                        ControllerType = ControllerType.User32,
+                        IsMoveEvent = false,
+                        MouseButton = mouseBtn,
+                        State = _state,
+                        X = x,
+                        Y = y
                     });
                 }
 

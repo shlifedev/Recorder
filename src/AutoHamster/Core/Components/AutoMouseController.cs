@@ -17,14 +17,9 @@ namespace AutoHamster.Core.Components
         [RunInTask]
         public static void AddHook()
         {
-            System.Threading.Thread.Sleep(1000);
-
-
-            Hook.AddMouseEvent(VirtualKeyCode.Xbutton2, KeyState.Down, (x, y) => { IsRun = true; });
-
-            Hook.AddMouseEvent(VirtualKeyCode.Xbutton2, KeyState.Up, (x, y) => { IsRun = false; });
-                
-            
+            System.Threading.Thread.Sleep(1000); 
+            Hook.AddMouseEvent(VirtualKeyCode.Xbutton2, KeyState.Down, delegate { IsRun = true; }); 
+            Hook.AddMouseEvent(VirtualKeyCode.Xbutton2, KeyState.Up, delegate { IsRun = false; }); 
         }
 
         [RunInTask]
@@ -35,9 +30,8 @@ namespace AutoHamster.Core.Components
                 if (IsRun)
                 {
                     System.Threading.Thread.Sleep(Delay);
-                    Hook.IO.MouseDown(LowLevelInput.Hooks.VirtualKeyCode.Lbutton); 
-                    Hook.IO.MouseUp(LowLevelInput.Hooks.VirtualKeyCode.Lbutton);
-
+                    Hook.IO.MouseDown(VirtualKeyCode.Lbutton); 
+                    Hook.IO.MouseUp(VirtualKeyCode.Lbutton);
                 }
                 else
                 {

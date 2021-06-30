@@ -14,11 +14,11 @@ namespace AutoHamster
 {
     public partial class MainWindow : System.Windows.Window
     { 
-        public Process targetProcess = null; 
+        public Process TargetProcess = null; 
         [DllImport("kernel32.dll", EntryPoint = "AllocConsole", SetLastError = true, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern int AllocConsole(); 
         private Renderer externalOverlay = null;
-        private CropController cropController; 
+        private CropController _cropController; 
         public void InitializeExOverlayGUI()
         { 
             externalOverlay  = new Renderer(1920, 1080, (gf, gfx)=> {
@@ -43,7 +43,7 @@ namespace AutoHamster
         public static void InitGUIEventHandler() => GUIEventHandler.OnSelectProcess += (process) =>
         { 
             var mw = (AutoHamster.MainWindow)Application.Current.MainWindow;
-            mw.targetProcess = process; 
+            mw.TargetProcess = process; 
         };
 
 
@@ -66,7 +66,7 @@ namespace AutoHamster
 
                 Logger.Log(this, "io hooker initialized");
                 InitializeExOverlayGUI();
-                cropController = new CropController();
+                _cropController = new CropController();
                 Logger.Log(this, "crop controller initialized");  
                 RunAttributeInitializer.Init();  
             });   

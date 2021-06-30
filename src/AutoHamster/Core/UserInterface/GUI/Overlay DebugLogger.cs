@@ -74,9 +74,7 @@ namespace AutoHamster.GUI
                 return inst;
             }
         }
-        private static OverlayDebugLogger inst; 
-        private int inputX, inputY;
-
+        private static OverlayDebugLogger inst;  
 
 
         void DrawMenuBar()
@@ -148,7 +146,7 @@ namespace AutoHamster.GUI
             {
                 foreach (var value in ImageFactory.imageContainer)
                 {
-                    ImGui.Text(value.Value.tag);
+                    ImGui.Text(value.Value.Tag);
                 }
                 ImGui.EndMenu();
             }
@@ -177,7 +175,7 @@ namespace AutoHamster.GUI
                     ImGui.PopStyleColor();
                 }
                 ImGui.PopStyleColor();
-                var rd = IORecordController.processing_debug_rd;
+                var rd = IORecordController.ProcessingDebugRd;
 
                 ImGui.Text($"time|\tisMouseEvent|\torder"); 
                 ImGui.Text($"{(rd.eventTime / 1000).ToString("0.00")}\t{rd.isMouseEvent}\t{rd.order}");
@@ -274,7 +272,7 @@ namespace AutoHamster.GUI
                     ImGui.EndChild();
                 }
                 ImGui.SameLine(); 
-                var mouseEvents = (from x in list where (x.isMouseEvent && x.mouseEvent.isMoveEvent == false && x.mouseEvent.isMoveEventDelta == false) select x).ToList();
+                var mouseEvents = (from x in list where (x.isMouseEvent && x.mouseEvent.IsMoveEvent == false && x.mouseEvent.IsMoveEventDelta == false) select x).ToList();
                 if (ImGui.BeginChild($"mouseEvent", new Vector2(155, 100)))
                 {
                     ImGui.Text("time|state|btn|x|y");

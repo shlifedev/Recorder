@@ -19,33 +19,33 @@ namespace Pixel
     {
         public class Result : IDisposable
         {
-            public Bitmap src;
-            public Bitmap template; 
-            public Mat resultMat;
+            public Bitmap Src;
+            public Bitmap Template; 
+            public Mat ResultMat;
             /// <summary>
             /// 서칭된 포인트의 중앙값
             /// </summary>
-            public Point center;
+            public Point Center;
             /// <summary>
             /// Loc
             /// </summary>
-            public Point maxLoc;
+            public Point MaxLoc;
             /// <summary>
             /// 이미지 정확도
             /// </summary>
-            public double maxVal;
+            public double MaxVal;
             /// <summary>
             /// 회색 음영으로 테스트 했는지에 대한 여부
             /// </summary>
-            public bool isGrayScale;
-            public double accurity;
+            public bool IsGrayScale;
+            public double Accurity;
 
             public void Dispose()
             {
-                resultMat.Dispose();
+                ResultMat.Dispose();
             }
 
-            public bool IsMatch() { return maxVal >= accurity; }
+            public bool IsMatch() { return MaxVal >= Accurity; }
 
         }
         /// <summary>
@@ -75,7 +75,7 @@ namespace Pixel
         public static Result Match(this Bitmap src, Bitmap template, double accurity = 0.75f, bool grayscaleCheck = true)
         {
             Result result = new Result();
-            Match(src, out result.resultMat, out result.center, out result.maxLoc, template, accurity, grayscaleCheck);
+            Match(src, out result.ResultMat, out result.Center, out result.MaxLoc, template, accurity, grayscaleCheck);
             return result;
         }
         public static void Match(this Bitmap src, out Mat oResult, out Point oCenter, out Point oMaxLoc, Bitmap template, double accurity = 0.75f, bool grayscaleCheck = true)

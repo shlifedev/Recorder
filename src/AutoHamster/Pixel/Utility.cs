@@ -17,17 +17,15 @@ using System.Windows.Media.Imaging;
 using static Pixel.Utility.User32;
 
 namespace Pixel
-{
-
-
+{ 
     public static class Utility
     {
         public class AppCaptrue
         {
             [DllImport("user32.dll")]
-            public static extern bool GetWindowRect(IntPtr hWnd, out AppCaptureRect lpRect);
+            private static extern bool GetWindowRect(IntPtr hWnd, out AppCaptureRect lpRect);
             [DllImport("user32.dll")]
-            public static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
+            private static extern bool PrintWindow(IntPtr hWnd, IntPtr hdcBlt, int nFlags);
 
             public static Bitmap CaptrueHwnd(IntPtr hWnd)
             {
@@ -45,7 +43,7 @@ namespace Pixel
 
                 return bmp;
             }
-
+ 
             public static Bitmap Captrue(string procName)
             {
                 var proc = Process.GetProcessesByName(procName)[0];

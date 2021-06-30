@@ -12,14 +12,14 @@ namespace Pixel
         /// <summary>
         /// 구분태그
         /// </summary>
-        public string tag = "";
+        public string Tag = "";
         /// <summary>
         /// 경로
         /// </summary>
-        public string filename = "";
-        private Mat mat;
-        private Bitmap bitmap;
-        private ImageSource imageSource;
+        public string Filename = "";
+        private Mat _mat;
+        private Bitmap _bitmap;
+        private ImageSource _imageSource;
         public bool IsTemporaryImage = false;
         public Type CreatedType;
         public CreateImage(Type createdType)
@@ -30,23 +30,23 @@ namespace Pixel
         {
             get
             {
-                if (mat == null)
+                if (_mat == null)
                 {
-                    mat = BitmapConverter.ToMat(bitmap);
+                    _mat = BitmapConverter.ToMat(_bitmap);
                 }
-                return mat;
+                return _mat;
             }
         }
-        public Bitmap Bitmap { get => bitmap; set => bitmap = value; }
+        public Bitmap Bitmap { get => _bitmap; set => _bitmap = value; }
         public ImageSource ImageSource
         {
             get
             {
-                if (imageSource == null)
+                if (_imageSource == null)
                 {
-                    imageSource = Utility.BitMapToImageSource(Bitmap);
+                    _imageSource = Utility.BitMapToImageSource(Bitmap);
                 }
-                return imageSource;
+                return _imageSource;
             }
         }
     }

@@ -46,7 +46,7 @@ namespace Pixel
             var screen = Utility.CaptureScreenToCvMat();
             var sliceMat = screen.SubMat(new Rect(start.X, start.Y, end.X, end.Y));
             ci.Bitmap = sliceMat.ToBitmap();
-            ci.tag = tag;
+            ci.Tag = tag;
             if (tag == null)
             {
                 System.Random r = new Random();
@@ -57,12 +57,12 @@ namespace Pixel
                     rsTemp += (char)val;
                 }
                 ci.IsTemporaryImage = true;
-                ci.tag = rsTemp; 
+                ci.Tag = rsTemp; 
             }
             
 
-            ci.filename = null;
-            RegImage(ci, ci.tag);
+            ci.Filename = null;
+            RegImage(ci, ci.Tag);
             return ci;
         }
 
@@ -73,13 +73,13 @@ namespace Pixel
 
             CreateImage ci = new CreateImage(CreateImage.Type.File);
             ci.Bitmap = (Bitmap)Bitmap.FromFile(filename);
-            ci.tag = tag;
+            ci.Tag = tag;
             if (tag == null)
             {
-                ci.tag = filename;
+                ci.Tag = filename;
             }
-            ci.filename = filename; 
-            RegImage(ci, ci.tag);
+            ci.Filename = filename; 
+            RegImage(ci, ci.Tag);
             return ci;
         }
     }
