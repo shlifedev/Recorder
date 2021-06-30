@@ -1,5 +1,4 @@
-﻿using AutoHotInterception;
-using AutoHamster.Component;
+﻿using AutoHotInterception; 
 using LowLevelInput.Converters;
 using LowLevelInput.Hooks;
 using System;

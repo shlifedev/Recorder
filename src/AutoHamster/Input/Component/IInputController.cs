@@ -7,7 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoHamster.Component
+namespace AutoHamster.Input.Component
 {
     /// <summary>
     /// 해당 인터페이스를 상속받아 구현시키고, 인터페이스 객체에 구현객체를 생성하여

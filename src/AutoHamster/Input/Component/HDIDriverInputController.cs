@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoHamster.Component
+namespace AutoHamster.Input.Component
 {
     public class HDIDriverInputController : BaseInputController
     {

@@ -1,5 +1,6 @@
 ﻿using AutoHamster.Core.Attributes;
 using AutoHamster.Input;
+using AutoHamster.Input.Component;
 using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,7 @@ namespace AutoHamster.Core.Components
         {  
             if (e.isMoveEvent && e.isMoveEventDelta)
             {
-                if (Hook.IO.GetType() == typeof(Component.AHIInputController))
+                if (Hook.IO.GetType() == typeof(AHIInputController))
                 {
                     Hook.IO.MoveMouse(e.x, e.y);
                     return;

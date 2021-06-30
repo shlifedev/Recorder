@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoHamster.Component
+namespace AutoHamster.Input.Component
 {
 
     public abstract class BaseInputController : IInputController

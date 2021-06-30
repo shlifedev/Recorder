@@ -1,6 +1,6 @@
 ﻿using AutoHamster.Core.Components;
 using AutoHamster.Input;
-using AutoHamster.Component;
+using AutoHamster.Input.Component;
 using Coroutine;
 using ImGuiNET;
 using Pixel;

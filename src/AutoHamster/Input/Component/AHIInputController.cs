@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AutoHamster.Component
+namespace AutoHamster.Input.Component
 {
     public class AHIInputController : BaseInputController
     {

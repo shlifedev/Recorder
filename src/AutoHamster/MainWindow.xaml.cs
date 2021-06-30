@@ -13,8 +13,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using System.Numerics;
-using AutoHamster.Component;
+using System.Numerics; 
 
 namespace AutoHamster
 {
