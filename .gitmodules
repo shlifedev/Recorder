@@ -4,3 +4,6 @@
 [submodule "src/Lib.AHInterception"]
 	path = src/Lib.AHInterception
 	url = https://github.com/evilC/AutoHotInterception
+[submodule "src/Lib.InterceptionDriver"]
+	path = src/Lib.InterceptionDriver
+	url = https://github.com/oblitum/Interception.git
