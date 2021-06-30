@@ -1,19 +1,14 @@
-﻿using AutoHotInterception;
-using AutoHamster.Core;
+﻿using AutoHamster.Core;
 using AutoHamster.Core.Attributes;
 using AutoHamster.Core.Components;
 using AutoHamster.GUI;
 using AutoHamster.Input;
 using AutoHamster.OverlayGUI;
 using LowLevelInput.Hooks;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using System.Numerics; 
 
 namespace AutoHamster
 {

@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
 namespace AutoHamster.GUI
 {
 

@@ -3,14 +3,8 @@ using GameOverlay.Drawing;
 using AutoHamster.OverlayGUI;
 using LowLevelInput.Hooks;
 using OpenCvSharp;
-using OpenCvSharp.Extensions;
 using Pixel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using static Pixel.Utility;
 using Point = OpenCvSharp.Point;
 

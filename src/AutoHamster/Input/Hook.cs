@@ -1,14 +1,7 @@
-﻿using AutoHotInterception; 
-using LowLevelInput.Converters;
-using LowLevelInput.Hooks;
+﻿using LowLevelInput.Hooks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
+using AutoHamster.Input.Component;
 
 namespace AutoHamster.Input
 {

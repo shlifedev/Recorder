@@ -1,18 +1,8 @@
 ﻿using AutoHamster.GUI.Command;
 using AutoHamster.Input;
-using ClickableTransparentOverlay;
 using Coroutine;
-using ImGuiNET;
 using LowLevelInput.Hooks;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoHamster.GUI

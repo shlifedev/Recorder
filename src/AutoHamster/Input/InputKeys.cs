@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-public enum WM
+﻿public enum WM
 {
     WM_NULL = 0x0000,
     WM_CREATE = 0x0001,
