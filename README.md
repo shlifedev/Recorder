@@ -14,3 +14,11 @@
  
 # 주의사항
  - HID 인풋의 안정성을 위해 키보드, 마우스를 하나씩만 사용해야 합니다 
+
+
+# Memo
+```
+ git clone https://github.com/shlifedev/DroneSystemAutomation
+ cd DroneSystemAutomation
+ git submodule update --init --recursive
+```
