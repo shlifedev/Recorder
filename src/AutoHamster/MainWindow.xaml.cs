@@ -5,6 +5,7 @@ using AutoHamster.GUI;
 using AutoHamster.Input;
 using AutoHamster.OverlayGUI;
 using LowLevelInput.Hooks;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -48,8 +49,7 @@ namespace AutoHamster
 
 
  
-
- 
+         
 
         public MainWindow()
         {
@@ -69,8 +69,10 @@ namespace AutoHamster
                 _cropController = new CropController();
                 Logger.Log(this, "crop controller initialized");  
                 RunAttributeInitializer.Init();  
-            });   
+            });
 
+            var a = String.ENKR.GetKoreanWordToEnglish("하이염   빠이염ㅋㅋ");
+            Console.WriteLine(a);
         } 
     }
 }
