@@ -27,6 +27,7 @@ namespace AutoHamster.Core.Components
         {
             while (true)
             {
+                
                 if (IsRun)
                 {
                     System.Threading.Thread.Sleep(Delay);

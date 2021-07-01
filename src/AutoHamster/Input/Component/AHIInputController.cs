@@ -3,6 +3,7 @@ using LowLevelInput.Hooks;
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Windows.Controls;
 
 namespace AutoHamster.Input.Component
 {
@@ -140,15 +141,26 @@ namespace AutoHamster.Input.Component
                 Console.WriteLine(x);
             }));
 
+           
+            
             Im.SubscribeMouseButtons(MouseID, false, new Action<int, int>((key,state)=> {
                 if (Hook.IO.GetType() == typeof(AHIInputController))
-                {
+                { 
+                    Console.WriteLine($"{key} {state}");
                     VirtualKeyCode vk = VirtualKeyCode.Hotkey;
                     KeyState ks = KeyState.None;
                     vk = (key == 0) ? VirtualKeyCode.Lbutton :
                          (key == 1) ? VirtualKeyCode.Rbutton :
                          (key == 2) ? VirtualKeyCode.Mbutton :
-                         (key == 3) ? VirtualKeyCode.Xbutton1 : VirtualKeyCode.Xbutton2;
+                         (key == 3) ? VirtualKeyCode.Xbutton1 :
+                         (key == 4) ? VirtualKeyCode.Xbutton2 :
+                         VirtualKeyCode.Xbutton2;
+
+                    if(key == 5)
+                    {
+                        Logger.Warning(this, "Current Not Support Mouse Wheel");
+                        return;
+                    }
 
                     ks = (state == 1) ? KeyState.Down : KeyState.Up;
                     Hook.InputManager_OnMouseEvent(vk, ks, 0, 0);

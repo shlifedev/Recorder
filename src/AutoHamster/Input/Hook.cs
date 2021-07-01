@@ -182,7 +182,7 @@ namespace AutoHamster.Input
             MouseHook.TryGetValue((key, state), out callback);
 
 
-            Console.WriteLine($"{key}, {state}");
+            //Console.WriteLine($"{key}, {state}");
             if (key == VirtualKeyCode.Invalid)
             {
                 onMouseEvent?.Invoke(new HookMouseEvent()
@@ -254,7 +254,7 @@ namespace AutoHamster.Input
         public static void InputManager_OnKeyboardEvent(VirtualKeyCode key, KeyState state)
         {
             System.Action callback;
-            Console.WriteLine($"{key}, {state}");
+            //Console.WriteLine($"{key}, {state}");
 
             onKeyboardEvent?.Invoke(new HookKeyEvent()
             {
