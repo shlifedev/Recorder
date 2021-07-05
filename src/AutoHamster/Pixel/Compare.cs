@@ -79,7 +79,8 @@ namespace Pixel
             return result;
         }
         public static void Match(this Bitmap src, out Mat oResult, out Point oCenter, out Point oMaxLoc, Bitmap template, double accurity = 0.75f, bool grayscaleCheck = true)
-        { 
+        {
+       
             double threshhold = accurity;
 
             using Mat _src = BitmapConverter.ToMat(src);

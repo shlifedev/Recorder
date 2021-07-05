@@ -55,23 +55,36 @@ namespace AutoHamster
 
         public MainWindow()
         {
-            AllocConsole(); // 콘솔 할당 
-            InitializeComponent(); //component 초기화 
-            OverlayDebugLogger.Init();
- 
-            Overlay.Instance.Run(()=> {
-                Logger.Log(this, "imgui overlay initialized");
-            }); 
-            System.Threading.Thread.Sleep(250); // wait for coroutine 
-            Hook.HookInit(() => {
+            try
+            {
 
-                Logger.Log(this, "io hooker initialized");
-                InitializeExOverlayGUI();
-                _cropController = new CropController();
-                Logger.Log(this, "crop controller initialized");  
-                RunAttributeInitializer.Init();  
-            });
+                AllocConsole(); // 콘솔 할당 
+                InitializeComponent(); //component 초기화 
+                OverlayDebugLogger.Init();
 
+                Overlay.Instance.Run(() =>
+                {
+                    Logger.Log(this, "imgui overlay initialized");
+                });
+                System.Threading.Thread.Sleep(250); // wait for coroutine 
+                Hook.HookInit(() =>
+                {
+
+                    Logger.Log(this, "io hooker initialized");
+                    InitializeExOverlayGUI();
+                    _cropController = new CropController();
+                    Logger.Log(this, "crop controller initialized");
+                    RunAttributeInitializer.Init();
+                });
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error!!");
+                System.Threading.Thread.Sleep(3000);
+                Dispatcher.CurrentDispatcher.Invoke(() => {
+                    Process.GetCurrentProcess().Kill();
+                });
+            }
             
         } 
     }

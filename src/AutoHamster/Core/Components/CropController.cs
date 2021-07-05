@@ -7,6 +7,7 @@ using Pixel;
 using System.Threading.Tasks;
 using static Pixel.Utility;
 using Point = OpenCvSharp.Point;
+using System;
 
 namespace AutoHamster.Core.Components
 {
@@ -102,8 +103,13 @@ namespace AutoHamster.Core.Components
                     _distY = (_lY - _sY);
                     Cropping = false;
                     System.Threading.Thread.Sleep(500);
+                    Logger.Log("Captrue");
                     CreateImage croppedScreeen = ImageFactory.CreateScreenCropImage(new OpenCvSharp.Point(_sX, _sY), new OpenCvSharp.Point(_distX, _distY), null);
+                    CreateImage.SaveToFile(croppedScreeen); 
+
+                    Logger.Log("Captrue Saved, Start Matching...");
                     CaptureScreenToBitmap().Match(out var oResult, out var oCenter, out var maxLoc, croppedScreeen.Bitmap);
+                    Logger.Log("Captrue Match");
                     _cropImage = croppedScreeen;
                     _outputCenter = oCenter;
                     _outputResult = oResult;

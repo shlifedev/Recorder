@@ -40,13 +40,17 @@ namespace Pixel
         public static CreateImage CreateScreenCropImage(OpenCvSharp.Point start, OpenCvSharp.Point end, string tag)
         {
             if (IsExistTag(tag)) 
-                throw new Exception($"tag {tag} already exist. cannot create image"); 
-            
+                throw new Exception($"tag {tag} already exist. cannot create image");
+
+            Logger.Log("Run CreateScreenCropImage");
             CreateImage ci = new CreateImage(CreateImage.Type.Cropped);
             var screen = Utility.CaptureScreenToCvMat();
+            Logger.Log("Run screen");
             var sliceMat = screen.SubMat(new Rect(start.X, start.Y, end.X, end.Y));
             ci.Bitmap = sliceMat.ToBitmap();
             ci.Tag = tag;
+
+            Logger.Log("Create Tag");
             if (tag == null)
             {
                 System.Random r = new Random();
@@ -59,8 +63,9 @@ namespace Pixel
                 ci.IsTemporaryImage = true;
                 ci.Tag = rsTemp; 
             }
-            
 
+
+            Logger.Log("Create Tag => " + ci.Tag);
             ci.Filename = null;
             RegImage(ci, ci.Tag);
             return ci;

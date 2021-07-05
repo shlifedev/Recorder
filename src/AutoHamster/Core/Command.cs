@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pixel;
+using System;
 
 namespace AutoHamster.Core
 {
@@ -36,7 +37,8 @@ namespace AutoHamster.Core
 
     public class CommandImageFindAndClick : Command
     {
-        public override string CommandTitle => "해당 이미지를 찾은 후 클릭"; 
+        public override string CommandTitle => "해당 이미지를 찾은 후 클릭";
+        public CreateImage imageInfo;
         public override void Execute()
         {
             throw new NotImplementedException();
