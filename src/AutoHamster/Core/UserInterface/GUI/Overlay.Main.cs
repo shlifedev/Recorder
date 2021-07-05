@@ -29,14 +29,16 @@ namespace AutoHamster.GUI
         { 
             Task.Run(() =>
             { 
+
                 CoroutineHandler.Start(RenderMainOverlay()); 
                 CoroutineHandler.Start(OverlayDebugLogger.Instance.RenderDebugger());
-                CoroutineHandler.Start(OverlayProcessSelector.Instance.RenderProcessSelector());
-
-               
+                CoroutineHandler.Start(OverlayProcessSelector.Instance.RenderProcessSelector()); 
+                
                 MainLogicInputHook(); 
                 ClickableTransparentOverlay.Overlay.RunInfiniteLoop(); 
                 callback?.Invoke();
+            
+            
             }); 
         }
 

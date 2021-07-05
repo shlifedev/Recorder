@@ -76,7 +76,7 @@ namespace AutoHamster.Core.Components
 
         private void InitializeHookEvent()
         {
-            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.Four, () => {
+            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.F4, () => {
                 Use = !Use;
             });
 

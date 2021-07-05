@@ -39,6 +39,7 @@
     <PackageReference Include="GameOverlay.Net" Version="4.3.1" />
     <PackageReference Include="LowLevelInput.Net" Version="1.36.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="OpenCvSharp4" Version="4.5.2.20210404" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.5.2.20210404" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.5.2.20210404" />

@@ -3,12 +3,16 @@ using AutoHamster.Input;
 using AutoHamster.Input.Component;
 using Coroutine;
 using ImGuiNET;
+using Microsoft.Win32;
 using Pixel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
+using System.Windows;
+
 namespace AutoHamster.GUI
 {
 
@@ -22,9 +26,7 @@ namespace AutoHamster.GUI
 
         public static void Init()
         {
-            var x = OverlayDebugLogger.Instance; // run single ton
-
-  
+            var x = OverlayDebugLogger.Instance; // run single ton  
         }
         public static OverlayDebugLogger Instance
         {
@@ -42,33 +44,35 @@ namespace AutoHamster.GUI
                         OverlayDebugLogger.inst.show = !OverlayDebugLogger.inst.show;
                     });
 
-                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F2, LowLevelInput.Hooks.KeyState.Down, () => {
-            
-                        if (!IORecordController.IsRecording)
-                        { 
-                            IORecordController.StartRecord(); 
-                            return;
-                        }
-                        else
-                        { 
-                            IORecordController.StopRecord();
-                            return;
-                        }
-                    });
-                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F3, LowLevelInput.Hooks.KeyState.Down, () => {
-                        if (!IORecordController.IsPlaying)
-                        {
-                            IORecordController.Play(null);
-                            return;
-                        }
-                    });
-                    Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F4, LowLevelInput.Hooks.KeyState.Down, () => {
-                        if (IORecordController.IsPlaying)
-                        {
-                            IORecordController.Stop(null);
-                            return;
-                        }
-                    });
+                    //Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F2, LowLevelInput.Hooks.KeyState.Down, () =>
+                    //{
+                    //    if (!IORecordController.IsRecording)
+                    //    {
+                    //        IORecordController.StartRecord();
+                    //        return;
+                    //    }
+                    //    else
+                    //    {
+                    //        IORecordController.StopRecord();
+                    //        return;
+                    //    }
+                    //});
+                    //Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F3, LowLevelInput.Hooks.KeyState.Down, () =>
+                    //{
+                    //    if (!IORecordController.IsPlaying)
+                    //    {
+                    //        IORecordController.Play(null);
+                    //        return;
+                    //    }
+                    //});
+                    //Hook.AddKeyboardEvent(LowLevelInput.Hooks.VirtualKeyCode.F4, LowLevelInput.Hooks.KeyState.Down, () =>
+                    //{
+                    //    if (IORecordController.IsPlaying)
+                    //    {
+                    //        IORecordController.Stop(null);
+                    //        return;
+                    //    }
+                    //});
                     return inst;
                 }
                 return inst;
@@ -113,32 +117,7 @@ namespace AutoHamster.GUI
                 ImGui.EndMenuBar();
             }
         }
-        void DrawIODebuggerMenu()
-        {
-            ImGui.Separator();
-            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
-            if (ImGui.TreeNode("IO Controller Config"))
-            {
-                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1,1, 1));
-                ImGui.TextColored(new Vector4(0, 1, 0, 1), "- IO Info");
-                ImGui.Text($"MPos : {Hook.mouseX} {Hook.mouseY}");
-                ImGui.Text($"Current IO : {Hook.IO.GetType().Name}");
-                ImGui.TextColored(new Vector4(0, 1, 0, 1), "- Input Controller");
-                if (ImGui.Button("Use Ahi"))
-                {
-                    Hook.IOInitialize<AHIInputController>();
-                }
-                ImGui.SameLine();
-                if (ImGui.Button("Use Test"))
-                {
-                    Hook.IOInitialize<User32InputController>();
-                }
-                ImGui.TreePop();
-                ImGui.Separator();
-                ImGui.PopStyleColor();
-            }
-            ImGui.PopStyleColor();
-        }
+ 
 
         void DrawImageFactoryMenu()
         {
@@ -149,32 +128,76 @@ namespace AutoHamster.GUI
                     ImGui.Text(value.Value.Tag);
                 }
                 ImGui.EndMenu();
-            }
+            } 
         }
 
+
+        private string ioRecordFileName = "";
         private void DrawIORecordMenu()
         {
-
-            ImGui.Text($"Recording : {IORecordController.IsRecording} Playing : {IORecordController.IsPlaying}");
-            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 0, 1));
+           
             if (ImGui.TreeNode("IO Record Debug"))
             {
-                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
-                DrawIODebuggerMenu();
 
+                if (ImGui.TreeNode("Save Load"))
+                {
+                    if (ImGui.InputText("", ref ioRecordFileName, 64))
+                    {
 
+                    }
+                    ImGui.SameLine();
+                    if (ImGui.Button("Save")) { IORecordController.SaveRecord("record/" + ioRecordFileName+".json"); };
+
+                    ImGui.SameLine();
+                    if (ImGui.Button("Load")) { IORecordController.LoadRecord("record/" + ioRecordFileName + ".json"); };
+                    ImGui.TreePop();
+
+                    if (ImGui.BeginChild("##list", new Vector2(80,100)))
+                    {
+                        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo("record/");
+                        foreach(var value in di.GetFiles())
+                        {
+                            ImGui.Text(value.Name);
+                        }
+                        ImGui.EndChild();
+                    }
+
+                }
+
+                ImGui.Text($"Recording : {IORecordController.IsRecording} Playing : {IORecordController.IsPlaying}");
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));  
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
                 if (ImGui.TreeNode("IO Record Controller Config"))
-                {
-              
+                { 
+                    ImGui.PopStyleColor();
+                    ImGui.Text("- Input Controller Initializer");
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(1, 0, 0, 1));
+                    ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
+                    if (ImGui.Button("AHI"))
+                    {
+                        Hook.IOInitialize<AHIInputController>();
+                    }
+                    ImGui.SameLine();
+                    if (ImGui.Button("User32"))
+                    {
+                        Hook.IOInitialize<User32InputController>();
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+
+                    ImGui.Text("- IO Record Settings"); 
+
                     ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 1, 1, 1));
                     ImGui.TreePush("");
-                    ImGui.InputFloat("Speed Multiply", ref IORecordController.MultiplySpeed);
-                    ImGui.Checkbox("IsMouseMoveRecordable", ref IORecordController.IsMouseMoveRecordable);
+                    ImGui.InputFloat("Speed Multiply", ref IORecordController.MultiplySpeed); 
+                    ImGui.Checkbox("IsMouseMoveRecord", ref IORecordController.IsMouseMoveRecordable); 
+                    ImGui.SameLine();
+                    ImGui.Checkbox("IsKeyboardRecord", ref IORecordController.IsKeyboardRecord);
+
                     ImGui.Checkbox("IsRecordMouseStartPosFlag", ref IORecordController.IsRecordMouseStartPos);
-                    ImGui.Checkbox("NoDelay", ref IORecordController.IsNodelay);
-                    ImGui.TreePop();
-                    ImGui.PopStyleColor();
+                    ImGui.SameLine();
+                    ImGui.Checkbox("NoDelay", ref IORecordController.IsNoDelay);
+                    ImGui.TreePop(); 
                 }
                 ImGui.PopStyleColor();
                 var rd = IORecordController.ProcessingDebugRd;
@@ -302,8 +325,7 @@ namespace AutoHamster.GUI
                 ImGui.PopStyleColor();
             }
 
-            ImGui.TreePop();
-            ImGui.PopStyleColor();
+            ImGui.TreePop(); 
             ImGui.Separator();
         }
 

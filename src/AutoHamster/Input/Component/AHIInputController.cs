@@ -145,8 +145,7 @@ namespace AutoHamster.Input.Component
             
             Im.SubscribeMouseButtons(MouseID, false, new Action<int, int>((key,state)=> {
                 if (Hook.IO.GetType() == typeof(AHIInputController))
-                { 
-                    Console.WriteLine($"{key} {state}");
+                {  
                     VirtualKeyCode vk = VirtualKeyCode.Hotkey;
                     KeyState ks = KeyState.None;
                     vk = (key == 0) ? VirtualKeyCode.Lbutton :
@@ -158,7 +157,7 @@ namespace AutoHamster.Input.Component
 
                     if(key == 5)
                     {
-                        Logger.Warning(this, "Current Not Support Mouse Wheel");
+                       // Logger.Warning(this, "Current Not Support Mouse Wheel");
                         return;
                     }
 

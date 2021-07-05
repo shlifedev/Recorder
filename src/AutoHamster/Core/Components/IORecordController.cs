@@ -2,35 +2,85 @@
 using AutoHamster.Input;
 using AutoHamster.Input.Component;
 using LowLevelInput.Hooks;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using static AutoHamster.Core.Components.IORecordController;
 
 namespace AutoHamster.Core.Components
 {
+    public class IORecordSaveFile : IDisposable
+    {
+        public float MultiplaySpeed = 1.0f;
+        public bool IsMouseMoveRecordable = true;
+        public bool IsRecordMouseStartPos = false;
+        public bool IsNodelay = false;
+        public bool IsKeyboardRecord = false;
+        public List<RecordData> RecordDatas = new List<RecordData>();
+
+        public IORecordSaveFile(float multiplaySpeed, bool isMouseMoveRecordable, bool isRecordMouseStartPos, bool isNodelay, List<RecordData> recordDatas, bool isKeyboardRecord)
+        {
+            MultiplaySpeed = multiplaySpeed;
+            IsKeyboardRecord = isKeyboardRecord;
+            IsMouseMoveRecordable = isMouseMoveRecordable;
+            IsRecordMouseStartPos = isRecordMouseStartPos;
+            IsNodelay = isNodelay;
+            RecordDatas = recordDatas;
+        }
+
+        public void Dispose()
+        {
+           
+        }
+    }
     public static partial class IORecordController
     {
         public static RecordData ProcessingDebugRd;
-        static readonly List<RecordData> RecordDatas = new List<RecordData>();
+        public static List<RecordData> RecordDatas = new List<RecordData>();
         public static bool IsRecording = false;
         public static bool IsPlaying = false;
-        public static bool IsNodelay = true;
+        public static bool IsNoDelay = false;
+        public static bool IsKeyboardRecord = true;
         /// <summary>
         /// 마우스 움직임 자체를 녹화함
         /// true인경우 : Down, Up 이벤트로 동작하며 Move이벤트로 동작
         /// false인경우 : 마우스 클릭 위치만 기록되며, x,y위치로 마우스가 순간이동
         /// </summary>
         public static bool IsMouseMoveRecordable = true;
-        public static bool IsRecordMouseStartPos = true;
+        public static bool IsRecordMouseStartPos = false;
         private static System.DateTime _startTime;
         private static System.DateTime _endTIme;
         private static CancellationTokenSource _token;
         public static float MultiplySpeed = 1.0f;
+
+        public static void SaveRecord(string path)
+        { 
+            IORecordSaveFile iosave = new IORecordSaveFile(MultiplySpeed, IsMouseMoveRecordable, IsRecordMouseStartPos, IsNoDelay, RecordDatas, IsKeyboardRecord);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(iosave);
+            var dir = System.IO.Path.GetDirectoryName(path); 
+            System.IO.Directory.CreateDirectory(dir); 
+            System.IO.File.WriteAllText(path, json);
+        }
+
+        public static void LoadRecord(string filepath)
+        {
+            var file = System.IO.File.ReadAllText(filepath);
+            using var deserializedObject = Newtonsoft.Json.JsonConvert.DeserializeObject<IORecordSaveFile>(file);
+            IsNoDelay = deserializedObject.IsNodelay;
+            IsMouseMoveRecordable = deserializedObject.IsMouseMoveRecordable;
+            IsKeyboardRecord = deserializedObject.IsKeyboardRecord;
+            IsRecordMouseStartPos = deserializedObject.IsRecordMouseStartPos;
+            deserializedObject.MultiplaySpeed = MultiplySpeed;
+            RecordDatas.Clear();
+            RecordDatas.AddRange(deserializedObject.RecordDatas); 
+        }
         public static void StartRecord()
         {
-            if (IsRecording == true && IsPlaying == true)
+            if (IsRecording == true || IsPlaying == true)
                 return;
             StackTrace st = new StackTrace(true);
             Logger.Log("Recoder", "Start Record..");
@@ -139,7 +189,7 @@ namespace AutoHamster.Core.Components
                 while (copyRecords.Count != 0 && _token.IsCancellationRequested == false)
                 {
                     double cur = (System.DateTime.Now - _startTime).TotalMilliseconds * MultiplySpeed;
-                    if (IsNodelay)
+                    if (IsNoDelay)
                     {
                         cur = 99999;
                     }
@@ -207,6 +257,8 @@ namespace AutoHamster.Core.Components
 
         private static void OnKeyEvent(Hook.HookKeyEvent e)
         {
+            if (IsKeyboardRecord == false)
+                return;
             if (e.vkCode == VirtualKeyCode.F2 || e.vkCode == VirtualKeyCode.F3) return;
 
 

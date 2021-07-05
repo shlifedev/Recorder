@@ -11,7 +11,7 @@ namespace AutoHamster.Input.Component
         public static extern uint MapVirtualKey(int wCode, int wMapType);
         public User32InputController()
         {
-            Logger.Log(this, "Instantiate TestInputController");
+            Logger.Log(this, "Instantiate User32InputController");
         }
 
         public override void KeyDown(VirtualKeyCode keycode)

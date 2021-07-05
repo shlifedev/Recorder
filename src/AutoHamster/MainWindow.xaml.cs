@@ -5,9 +5,11 @@ using AutoHamster.GUI;
 using AutoHamster.Input;
 using AutoHamster.OverlayGUI;
 using LowLevelInput.Hooks;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -33,7 +35,7 @@ namespace AutoHamster
         [Run]
         public static void HookForDebug()
         { 
-            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.One, () => { 
+            Hook.AddKeyboardCombo(VirtualKeyCode.Lcontrol, VirtualKeyCode.F1, () => { 
                 Dispatcher.CurrentDispatcher.Invoke(() => {
                     Process.GetCurrentProcess().Kill();
                 }); 
@@ -56,8 +58,7 @@ namespace AutoHamster
             AllocConsole(); // 콘솔 할당 
             InitializeComponent(); //component 초기화 
             OverlayDebugLogger.Init();
-
-
+ 
             Overlay.Instance.Run(()=> {
                 Logger.Log(this, "imgui overlay initialized");
             }); 
@@ -71,8 +72,7 @@ namespace AutoHamster
                 RunAttributeInitializer.Init();  
             });
 
-            var a = String.ENKR.GetKoreanWordToEnglish("하이염   빠이염ㅋㅋ");
-            Console.WriteLine(a);
+            
         } 
     }
 }
